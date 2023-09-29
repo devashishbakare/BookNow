@@ -14,11 +14,11 @@ export const Homepage = () => {
           className="h-full w-full object-cover"
         />
         <div className="absolute top-[70%] left-[2%] bottom-7 flex flex-col-reverse gap-3">
-          <span className="font-gilroy-bold  tracking-tighter leading-[22.5px]">
+          <span className="font-gilroy-bold leading-[22.5px]">
             Search deals on hotes, home, and much more...
           </span>
-          <span className="text-[40px] font-gilroy-bold font-semibold tracking-tighter leading-[22.5px] text-[#f8f8f8]">
-            find your next stay..
+          <span className="text-[40px] font-gilroy-bold font-bold leading-[22.5px] text-[#f8f8f8]">
+            Find your next stay..
           </span>
         </div>
       </div>
@@ -34,6 +34,14 @@ export const Homepage = () => {
         />
       </div>
       <div className="h-auto w-auto flex flex-col centerDiv">
+        <div className="h-[9vh] min-h-[81px] w-[100vw] flex flex-col justify-center gap-1">
+          <span className="ml-3 font-bold text-[20px] font-gilroy-bold leading-[22.5px] sm:text-[25px]">
+            Trending Destinations
+          </span>
+          <span className="ml-3">
+            Most popular choices for travellers from idea
+          </span>
+        </div>
         <div className="w-[100vw] centerDiv flex gap-3 flex-col sm:hidden">
           <div className="h-full w-full relative p-2">
             <img
@@ -96,7 +104,7 @@ export const Homepage = () => {
               className="h-full w-full object-cover rounded-[10px]"
             />
             <span className="absolute top-[12%] left-[5%] text-[40px] font-gilroy-bold font-semibold tracking-tighter leading-[22.5px] text-[#FFBF00] sm:text-[30px]">
-              Goa
+              Chennai
             </span>
           </div>
           <div className="h-full w-full relative p-2">
@@ -106,7 +114,7 @@ export const Homepage = () => {
               className="h-full w-full object-cover rounded-[10px]"
             />
             <span className="absolute top-[12%] left-[5%] text-[40px] font-gilroy-bold font-semibold tracking-tighter leading-[22.5px] text-[#FFBF00] sm:text-[30px]">
-              Pondecheri
+              Pune
             </span>
           </div>
         </div>
