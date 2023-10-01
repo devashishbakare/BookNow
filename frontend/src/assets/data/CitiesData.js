@@ -1,6 +1,7 @@
 const cities = [
   {
     cityName: "Delhi",
+    backgroundImage: "https://i.ibb.co/dK3FMhC/delhi-Special-Place.jpg",
     rooms: [
       {
         roomImages: [
@@ -79,6 +80,7 @@ const cities = [
 
   {
     cityName: "Banglore",
+    backgroundImage: "https://i.ibb.co/M6gBW0G/banglore-famous-places.jpg",
     rooms: [
       {
         roomImages: [
@@ -157,6 +159,7 @@ const cities = [
   },
   {
     cityName: "Mumbai",
+    backgroundImage: "",
     rooms: [
       {
         roomImages: [
@@ -389,6 +392,8 @@ const cities = [
   },
   {
     cityName: "Pune",
+    backgroundImage:
+      "https://cf.bstatic.com/xdata/images/city/1680x560/684820.webp?k=d39c1142b83721b8a0dbf38372e401fc97bdb693537cbe4e7818ac0a20aad63b&o=",
     rooms: [
       {
         roomImages: [
