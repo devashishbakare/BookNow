@@ -1,5 +1,6 @@
 const cities = [
   {
+    id: 1,
     cityName: "Delhi",
     backgroundImage: "https://i.ibb.co/dK3FMhC/delhi-Special-Place.jpg",
     rooms: [
@@ -47,7 +48,7 @@ const cities = [
           "https://cf.bstatic.com/xdata/images/hotel/max1024x768/474518926.jpg?k=0f41d498d966d504b508bd4e3e6640b5168411b0e2bbcb876c58de947b03d854&o=&hp=1",
           "https://cf.bstatic.com/xdata/images/hotel/max1024x768/474518954.jpg?k=3f9946bf2966013c5bd7e1eee58157d1dfebcb74e11e66727465f41a54076026&o=&hp=1",
         ],
-        name: "Hindustan by Backpackers Heaven Near",
+        name: "Hindustan by Backpackers Heaven",
         price: 2999,
         rating: 4.5,
         availableDates: [],
@@ -79,6 +80,7 @@ const cities = [
   },
 
   {
+    id: 2,
     cityName: "Banglore",
     backgroundImage: "https://i.ibb.co/M6gBW0G/banglore-famous-places.jpg",
     rooms: [
@@ -158,6 +160,7 @@ const cities = [
     ],
   },
   {
+    id: 3,
     cityName: "Mumbai",
     backgroundImage: "",
     rooms: [
@@ -236,6 +239,7 @@ const cities = [
     ],
   },
   {
+    id: 4,
     cityName: "Mumbai",
     rooms: [
       {
@@ -313,6 +317,7 @@ const cities = [
     ],
   },
   {
+    id: 5,
     cityName: "Chennai",
     rooms: [
       {
@@ -391,6 +396,7 @@ const cities = [
     ],
   },
   {
+    id: 6,
     cityName: "Pune",
     backgroundImage:
       "https://cf.bstatic.com/xdata/images/city/1680x560/684820.webp?k=d39c1142b83721b8a0dbf38372e401fc97bdb693537cbe4e7818ac0a20aad63b&o=",
@@ -471,3 +477,5 @@ const cities = [
     ],
   },
 ];
+
+export default cities;

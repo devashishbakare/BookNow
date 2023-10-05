@@ -1,14 +1,15 @@
-import { Homepage } from "./Components/Homepage";
-import { Navbar } from "./Components/Navbar";
+import { Home } from "./Components/Home";
+import { City } from "./Components/City";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 function App() {
   return (
     <>
-      <div className="h-[8vh] w-[100vw] min-h-[72px]">
-        <Navbar />
-      </div>
-      <div className="h-auto w-[100vw]">
-        <Homepage />
-      </div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/city" element={<City />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }
