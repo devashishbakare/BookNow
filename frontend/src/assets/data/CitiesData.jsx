@@ -24,9 +24,9 @@ const cities = [
         ],
         address: "B 14 Captain Gaur Marg, 110065 New Delhi, India",
         roomInfo: "1 Room, 2 Adults, 1 Bathroom",
-        Description:
+        description:
           "Located in New Delhi, 5.5 km from Humayun's Tomb, Hotel FabStays - South Delhi provides accommodation with a garden, free private parking and a terrace. This 4-star hotel offers room service, a 24-hour front desk and free WiFi. The property is non-smoking and is situated 7.6 km from India Gate.At the hotel, all rooms include a wardrobe. Complete with a private bathroom equipped with a shower and free toiletries, all units at Hotel FabStays - South Delhi have a flat-screen TV and air conditioning, and selected rooms include a balcony. At the accommodation every room is equipped with bed linen and towels. Pragati Maidan is 7.7 km from the hotel, while Lodhi Gardens is 8.3 km away. The nearest airport is Delhi International Airport, 21 km from Hotel FabStays - South Delhi.",
-        fasility: [0, 1, 1, 0, 1, 0, 1, 1],
+        facility: [0, 1, 1, 0, 1, 0, 1, 1, 1, 1],
         selectedDates: [],
         map: (
           <iframe
@@ -60,9 +60,9 @@ const cities = [
         address:
           "1518, Ranjeet Gali, Sangatrashan, Paharganj, New Delhi, 110055, Paharganj, 110055 New Delhi",
         roomInfo: "1 Room, 2 Adults, 1 Bathroom",
-        Description:
+        description:
           "Conveniently located in New Delhi, Hindustan by Backpackers Heaven Near New Delhi Railway Station offers air-conditioned rooms, free bikes, free WiFi and a shared lounge. Boasting room service, this property also has a restaurant and a terrace. The accommodation provides a 24-hour front desk, a concierge service and currency exchange for guests.Every room includes a flat-screen TV, and some units at the hotel have a city view. At Hindustan by Backpackers Heaven Near New Delhi Railway Station all rooms include bed linen and towels.Gurudwara Bangla Sahib is 2.5 km from the accommodation, while Jantar Mantar is 3.4 km from the property. The nearest airport is Delhi International, 15 km from Hindustan by Backpackers Heaven Near New Delhi Railway Station, and the property offers a paid airport shuttle service. Hindustan by Backpackers Heaven Near New Delhi Railway Station has been welcoming Booking.com guests since 15 Feb 2018.Distance in property description is calculated using © OpenStreetMap",
-        fasility: [0, 1, 1, 0, 1, 0, 1, 1],
+        facility: [0, 1, 1, 0, 1, 0, 1, 1, 1, 1],
         selectedDates: [],
         map: (
           <iframe
@@ -105,9 +105,9 @@ const cities = [
         address:
           "SV Plaza, 1325/85, Arakere Bannerghatta Rd, Venugopal Reddy Layout, Arekere, Bengaluru, Karnataka 560076, 560076 Bangalore, India",
         roomInfo: "1 Room, 2 Adults, 1 Bathroom",
-        Description:
+        description:
           "Offering city views, Hotel BNS Comforts by Agira Hotels is an accommodation located in Bangalore, 8.6 km from ISKCON Hare Krishna Temple and 11 km from Bull Temple. The air-conditioned accommodation is 7.9 km from Forum Mall, Koramangala, and guests benefit from private parking available on site and free WiFi.",
-        fasility: [0, 1, 1, 0, 1, 0, 1, 1],
+        facility: [0, 1, 1, 0, 1, 0, 1, 1, 1, 1],
         selectedDates: [],
         map: (
           <iframe
@@ -141,9 +141,9 @@ const cities = [
         address:
           "301, Ammanamma Layout Rustam Bagh Main Road, Bangalore, 560017 Bangalore, India",
         roomInfo: "1 Room, 2 Adults, 1 Bathroom",
-        Description:
+        description:
           "SPOT ON Helloworld Dom features free WiFi throughout the property and rooms with air conditioning in Bangalore. The property is situated 3.9 km from The Heritage Centre & Aerospace Museum, 6.5 km from Brigade Road and 7.6 km from Commercial Street. Forum Mall, Koramangala is 7.8 km away and Chinnaswamy Stadium is 8.1 km from the hotel.",
-        fasility: [0, 1, 1, 0, 1, 0, 1, 1],
+        facility: [0, 1, 1, 0, 1, 0, 1, 1, 1, 1],
         selectedDates: [],
         map: (
           <iframe
@@ -185,9 +185,9 @@ const cities = [
         address:
           "Apollo Bunder Road The Taj Mahal Palace, Colaba, 400001 Mumbai, India",
         roomInfo: "1 Room, 2 Adults, 1 Bathroom",
-        Description:
+        description:
           "Built in 1903, the iconic Taj Mahal Palace stands majestically opposite the Gateway of India, overlooking the Arabian Sea. Sprawled over 2.6 acres, this 5-star deluxe hotel boasts 9 restaurants and a variety of traditional Indian therapies at J Wellness. Guests are spoiled for choice in dining options – the famous Wasabi by Morimoto offers innovative Japanese cuisine, while other culinary highlights include the Golden Dragon Chinese Restaurant and the poolside Aquarius Lounge.  An exclusive private dining experience can be arranged at Chef’s Studio.",
-        fasility: [1, 1, 1, 1, 1, 1, 1, 1],
+        facility: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         selectedDates: [],
         map: (
           <iframe
@@ -220,9 +220,9 @@ const cities = [
         ],
         address: "Nariman Point, 400021 Mumbai, India",
         roomInfo: "1 Room, 2 Adults, 1 Bathroom",
-        Description:
+        description:
           "Centrally located in Mumbai's business district, close to South Mumbai's shopping and entertainment areas, The Oberoi offers luxury and convenience with its outdoor heated pool, 24-hour spa, fitness and concierge service. It also features 5 food and beverage options offering a variety of cuisines. Complimentary WiFi is available in all rooms. The hotel's elegant rooms feature wooden floors, large windows offering beautiful views and en suite bathroom separated by a glass panel with electronic blinds. Rooms are equipped with an LCD TV, tea/coffee maker and iPod docking station.",
-        fasility: [1, 1, 1, 1, 1, 1, 1, 1],
+        facility: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         selectedDates: [],
         map: (
           <iframe
@@ -263,9 +263,9 @@ const cities = [
         address:
           "Apollo Bunder Road The Taj Mahal Palace, Colaba, 400001 Mumbai, India",
         roomInfo: "1 Room, 2 Adults, 1 Bathroom",
-        Description:
+        description:
           "Built in 1903, the iconic Taj Mahal Palace stands majestically opposite the Gateway of India, overlooking the Arabian Sea. Sprawled over 2.6 acres, this 5-star deluxe hotel boasts 9 restaurants and a variety of traditional Indian therapies at J Wellness. Guests are spoiled for choice in dining options – the famous Wasabi by Morimoto offers innovative Japanese cuisine, while other culinary highlights include the Golden Dragon Chinese Restaurant and the poolside Aquarius Lounge.  An exclusive private dining experience can be arranged at Chef’s Studio.",
-        fasility: [1, 1, 1, 1, 1, 1, 1, 1],
+        facility: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         selectedDates: [],
         map: (
           <iframe
@@ -298,9 +298,9 @@ const cities = [
         ],
         address: "Nariman Point, 400021 Mumbai, India",
         roomInfo: "1 Room, 2 Adults, 1 Bathroom",
-        Description:
+        description:
           "Centrally located in Mumbai's business district, close to South Mumbai's shopping and entertainment areas, The Oberoi offers luxury and convenience with its outdoor heated pool, 24-hour spa, fitness and concierge service. It also features 5 food and beverage options offering a variety of cuisines. Complimentary WiFi is available in all rooms. The hotel's elegant rooms feature wooden floors, large windows offering beautiful views and en suite bathroom separated by a glass panel with electronic blinds. Rooms are equipped with an LCD TV, tea/coffee maker and iPod docking station.",
-        fasility: [1, 1, 1, 1, 1, 1, 1, 1],
+        facility: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         selectedDates: [],
         map: (
           <iframe
@@ -341,9 +341,9 @@ const cities = [
         address:
           "Opp. Elcot Sez, IT Expressway, Old Mahabalipuram Rd, Sholinganallurur, Sholinganallur, 600119 Chennai, India",
         roomInfo: "1 Room, 2 Adults, 1 Bathroom",
-        Description:
+        description:
           "Ibis Chennai OMR is located in the IT corridor, Sholinganallur on Rajiv Gandhi IT expressway and is 7 minutes from the ECR beaches. This pet-friendly hotel features a fitness centre, garden, terrace, and free WiFi throughout the property. Rooms feature LCD TV, tea and coffee making facilities, minibar, walk in shower with fair trade range of bathroom amenities. HEPA filters and ozonizers ensure enhanced indoor air quality.",
-        fasility: [1, 1, 1, 1, 1, 1, 1, 1],
+        facility: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         selectedDates: [],
         map: (
           <iframe
@@ -377,9 +377,9 @@ const cities = [
         address:
           "601, Near US Embassy, Anna Salai, Nungambakkam, T - Nagar, 600006 Chennai, India ",
         roomInfo: "1 Room, 2 Adults, 1 Bathroom",
-        Description:
+        description:
           "Located in Chennai’s business district, standing on the historic premises of the erstwhile Gemini Film Studios, The Park offers rooms with a flat-screen TV and rainshower facilities. The hotel’s 5-star facilities include free parking, an outdoor pool and 4 dining options.Modern décor and hardwood flooring feature throughout the air-conditioned guestrooms at The Park, Chennai. Each well-appointed room is fitted with a minibar and private bathroom with a bathtub.",
-        fasility: [1, 1, 1, 1, 1, 1, 1, 1],
+        facility: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         selectedDates: [],
         map: (
           <iframe
@@ -422,9 +422,9 @@ const cities = [
         address:
           "Weikfield IT City Infopark, Survey No. 30/3, Ramwadi, Viman Nagar, 411014 Pune, India –",
         roomInfo: "1 Room, 2 Adults, 1 Bathroom",
-        Description:
+        description:
           "Featuring an open-air swimming pool, and a fitness centre. It is just an 8-minute drive from the Pune Airport and 850 meters from the Phoenix Market City. Free WiFi access is available. The property offers free parking. Shirdi is 3.5 hours away from the property.Air-conditioned rooms here will provide you with a flat-screen satellite TV and a seating area. It also has a minibar and tea/coffee maker. Featuring a shower, private bathrooms also come with free toiletries and slippers.",
-        fasility: [1, 1, 1, 1, 1, 1, 1, 1],
+        facility: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         selectedDates: [],
         map: (
           <iframe
@@ -458,9 +458,9 @@ const cities = [
         address:
           "Kalyani Nagar, 88 Nagar Road (Adj. Aga Khan Palace), Kalyani Nagar, 411006 Pune, India –",
         roomInfo: "1 Room, 2 Adults, 1 Bathroom",
-        Description:
+        description:
           "Hyatt Pune is a part of the incredible world of Hyatt. Located just 10 minutes from Pune Airport, 5 minutes from Phoenix Market City, and 15 minutes from the IT hub, Hyatt Pune has the perfect location, whether you’re traveling for work or leisure. Take advantage of our world-class spa or Ayurvedic treatments, reiki, and yoga to relax and re-energize yourself. There’s something for everyone, with a scenic outdoor pool, garden suites, and round-the-clock room service, you will be spoilt for choice.",
-        fasility: [1, 1, 1, 1, 1, 1, 1, 1],
+        facility: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         selectedDates: [],
         map: (
           <iframe
