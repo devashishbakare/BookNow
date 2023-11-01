@@ -4,9 +4,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Hotel } from "./Components/Hotel";
 import { Calendar } from "./Components/Calendar";
 function App() {
+  const date = new Date();
   const dates = {
-    year: 2023,
-    month: 12,
+    year: date.getFullYear(),
+    month: date.getMonth() + 1,
     availableDates: [1, 2, 4, 6, 7],
   };
   return (
