@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Navbar } from "./Navbar";
+import { Contact } from "./Contact";
+import { Calendar } from "./Calendar";
 import Slider from "react-slick";
 import cities from "../assets/data/CitiesData";
 import {
@@ -15,9 +17,20 @@ import {
   MdAcUnit,
   MdOutlineLuggage,
   MdSmokingRooms,
+  MdOutlineStarPurple500,
+  MdVerified,
 } from "react-icons/md";
 
 export const Hotel = () => {
+  const reviewSettings = {
+    className: "center",
+    centerMode: true,
+    infinite: true,
+    centerPadding: "30px",
+    slidesToShow: 1,
+    speed: 500,
+  };
+
   var settings = {
     dots: true,
     infinite: true,
@@ -28,8 +41,14 @@ export const Hotel = () => {
     pauseOnHover: true,
     arrows: false,
   };
+  const date = new Date();
+  const dates = {
+    year: date.getFullYear(),
+    month: date.getMonth() + 1,
+    availableDates: [1, 2, 3, 4, 5, 6, 7],
+  };
   const data = cities[2].rooms[0];
-  console.log(data.roomImages[0]);
+  console.log("data" + data.reviews[0].name);
   const [showMoreDesc, setShowMoreDesc] = useState(false);
   return (
     <>
@@ -140,75 +159,116 @@ export const Hotel = () => {
             </div>
           </div>
         </div>
-        <hr className="border-1 border-gray-400 w-[95%]" />
-        <div className="h-auto w-full addBorder flex flex-col">
-          <div className="">available dates for this month</div>
-          <div class="max-w-2xl mx-auto">
-            <table class="table-auto border border-gray-300">
-              <thead>
-                <tr>
-                  <th class="p-2">Sun</th>
-                  <th class="p-2">Mon</th>
-                  <th class="p-2">Tue</th>
-                  <th class="p-2">Wed</th>
-                  <th class="p-2">Thu</th>
-                  <th class="p-2">Fri</th>
-                  <th class="p-2">Sat</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="p-2">1</td>
-                  <td class="p-2">2</td>
-                  <td class="p-2">3</td>
-                  <td class="p-2">4</td>
-                  <td class="p-2">5</td>
-                  <td class="p-2">6</td>
-                  <td class="p-2">7</td>
-                </tr>
-              </tbody>
-              <tbody>
-                <tr>
-                  <td class="p-2">8</td>
-                  <td class="p-2">9</td>
-                  <td class="p-2">10</td>
-                  <td class="p-2">11</td>
-                  <td class="p-2">12</td>
-                  <td class="p-2">13</td>
-                  <td class="p-2">14</td>
-                </tr>
-              </tbody>
-              <tbody>
-                <tr>
-                  <td class="p-2">15</td>
-                  <td class="p-2">16</td>
-                  <td class="p-2">17</td>
-                  <td class="p-2">18</td>
-                  <td class="p-2">19</td>
-                  <td class="p-2">20</td>
-                  <td class="p-2">21</td>
-                </tr>
-              </tbody>
-              <tbody>
-                <tr>
-                  <td class="p-2">22</td>
-                  <td class="p-2">23</td>
-                  <td class="p-2">24</td>
-                  <td class="p-2">25</td>
-                  <td class="p-2">26</td>
-                  <td class="p-2">27</td>
-                  <td class="p-2">28</td>
-                </tr>
-              </tbody>
-              <tbody>
-                <tr>
-                  <td class="p-2">29</td>
-                  <td class="p-2">30</td>
-                  <td class="p-2">31</td>
-                </tr>
-              </tbody>
-            </table>
+        <hr className="border-1 border-gray-400 w-[95%] mt-2" />
+        <div className="h-[auto] w-auto flex flex-col">
+          <div className="h-[70px] w-[100vw] flex items-center addFont text-[20px] pl-[20px]">
+            Available Dates for this vanue
           </div>
+          <div className="h-full min-w-[350px] addBorder centerDiv">
+            <Calendar
+              year={dates.year}
+              month={dates.month}
+              availableDates={dates.availableDates}
+            />
+          </div>
+        </div>
+        <hr className="border-1 border-gray-400 w-[95%]" />
+        <div className="h-auto w-[100vw] flex flex-col md:hidden">
+          <div className="h-[70px] w-full flex items-center addFont text-[20px] pl-[20px] mb-1">
+            Reviews
+          </div>
+          <div className="h-[300px] w-[100vw]">
+            <Slider {...reviewSettings}>
+              {data.reviews.map((reviewObject, index) => (
+                <div
+                  className="h-[300px] w-[100vw] shadow-lg flex flex-col"
+                  key={data.name + "review" + index}
+                >
+                  <div className="h-[20%] w-full centerDiv">
+                    <span className="h-full w-[60%] flex items-center pl-3 text-[1.1rem] font-bold addFont">
+                      {reviewObject.name}
+                    </span>
+                    <span className="h-full w-[40%] centerDiv font-semibold addFont">
+                      {reviewObject.date}
+                    </span>
+                  </div>
+                  <div className="h-[80%] w-full flex flex-col">
+                    <span className="h-auto w-full mt-1 mb-2 text-[15px] addFont font-thin p-3">
+                      {reviewObject.review}
+                    </span>
+                    <span className="h-[20%] w-full flex gap-1 pl-3">
+                      {Array.from(
+                        { length: reviewObject.rating },
+                        (_, index) => (
+                          <span className="centerDiv">
+                            <MdOutlineStarPurple500 className="text-[1.4rem]" />
+                          </span>
+                        )
+                      )}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </Slider>
+          </div>
+        </div>
+        <hr className="border-1 border-gray-400 w-[95%]" />
+        <div className="h-auto w-[100vw] flex flex-col gap-2 pl-2">
+          <div className="h-auto w-full flex flex-col gap-1 mt-2">
+            <span className="h-auto w-full text-[1.2rem] addFont flex items-center p-2">
+              Hosted By {data.hostedBy.name}
+            </span>
+            <span className="h-auto w-full text-[1.1rem] pl-2 addFont font-light">
+              Joined in {data.hostedBy.joinDate}{" "}
+            </span>
+          </div>
+          <div className="h-auto w-full flex flex-col">
+            <div className="h-[40px] w-full flex gap-1 items-center">
+              <MdOutlineStarPurple500 className="text-[1.7rem] ml-2" />
+              <span className="text-[1rem] ml-2">
+                {data.reviews.length} reviews
+              </span>
+            </div>
+            <div className="h-[40px] w-full flex gap-1 items-center">
+              <MdVerified className="text-[1.7rem] ml-2" />
+              <span className="text-[1rem] ml-2">Identity Verify</span>
+            </div>
+          </div>
+          <div className="h-auto w-[100vw] flex flex-col gap-3">
+            <div className="h-auto w-full flex flex-col">
+              <span className="p-2 text-[1rem] addFont">During your stay</span>
+              <span className="pl-2 text-[1rem] ">
+                I will be avaible to property sometimes at the property, but
+                always available on calls and massege
+              </span>
+            </div>
+            <div className="h-auto w-full flex flex-col gap-1">
+              <span className="pl-2 text-[1.1rem]">Response rate : 100%</span>
+              <span className="pl-2 text-[1rem] ">
+                Response time : within hour
+              </span>
+              <span className="pl-2 text-[1rem] ">
+                Contact Number : {data.hostedBy.contactNumber}
+              </span>
+            </div>
+          </div>
+        </div>
+        <hr className="border-1 border-gray-400 w-[95%] mt-2" />
+        <div className="h-[40vh] w-full flex flex-col gap-3 pl-2 mt-2">
+          <span className="h-auto w-full text-[1.2rem] addFont flex items-center p-2">
+            Where you'll be
+          </span>
+          <iframe
+            src={data.map}
+            className="h-full w-full"
+            style={{ border: 0 }}
+            allowFullScreen
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+        <div className="h-full w-full">
+          <Contact />
         </div>
       </div>
     </>

@@ -49,8 +49,8 @@ export const Calendar = ({ year, month, availableDates }) => {
 
   return (
     <>
-      <div className="h-full w-full centerDiv flex-col gap-5">
-        <span className="">
+      <div className="h-full w-full flex-col gap-5 pl-[30px]">
+        <span className="h-full w-full pl-2 addBorder">
           {new Date(year, month - 1).toLocaleString("default", {
             month: "long",
             year: "numeric",
