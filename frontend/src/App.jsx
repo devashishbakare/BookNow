@@ -3,6 +3,8 @@ import { City } from "./Components/City";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Hotel } from "./Components/Hotel";
 import { Calendar } from "./Components/Calendar";
+import { SignInHomePage } from "./Components/SignInHomePage";
+import { UpdateImages } from "./Components/updateImages";
 function App() {
   const date = new Date();
   const dates = {
@@ -17,6 +19,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/city" element={<City />} />
           <Route path="/city/hotel" element={<Hotel />} />
+          <Route path="/signIn" element={<SignInHomePage />} />
+          <Route path="/uploadImages" element={<UpdateImages />} />
           <Route
             path="/cal"
             element={

@@ -30,3 +30,13 @@ body {
   background-color: black;
   border: 1px solid white;
 }
+.baseColor {
+  background-color: #f9f9f8;
+}
+.theamColor {
+  color: #003b95;
+}
+.placeHolder::placeholder {
+  opacity: 0.9;
+  transform: translateX(3%);
+}
