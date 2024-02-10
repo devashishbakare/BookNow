@@ -16,6 +16,18 @@ export const SignInHomePage = () => {
             <SignInForm />
           </div>
         </div>
+        <div className="hidden md:flex h-[65%] w-[767px] border-2 border-gray-400 baseColor">
+          <div className="h-full w-[50%]">
+            <img
+              src="http://res.cloudinary.com/djgouef8q/image/upload/v1707548707/jilrdxdgvnvtkobg0oew.jpg"
+              alt="hotelImage"
+              className="h-full w-full object-cover"
+            />
+          </div>
+          <div className="h-full w-[50%] min-w-[370px] centerDiv">
+            <SignInForm />
+          </div>
+        </div>
       </div>
     </>
   );
