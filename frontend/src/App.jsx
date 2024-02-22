@@ -5,6 +5,7 @@ import { Hotel } from "./Components/Hotel";
 import { Calendar } from "./Components/Calendar";
 import { SignInHomePage } from "./Components/SignInHomePage";
 import { UpdateImages } from "./Components/updateImages";
+import { BookingDetails } from "./Components/BookingDetails";
 function App() {
   const date = new Date();
   const dates = {
@@ -21,6 +22,7 @@ function App() {
           <Route path="/city/hotel" element={<Hotel />} />
           <Route path="/signIn" element={<SignInHomePage />} />
           <Route path="/uploadImages" element={<UpdateImages />} />
+          <Route path="/bookingDetails" element={<BookingDetails />} />
           <Route
             path="/cal"
             element={

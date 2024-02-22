@@ -7,7 +7,7 @@ export const Navbar = () => {
         <div className="h-full w-[10%] min-w-[150px] centerDiv gap-2">
           <img
             className="h-[40px] w-[40px] rounded-[50%] object-cover"
-            src="https://www.linkpicture.com/q/Screenshot-2023-09-26-at-2.54.58-PM.jpg"
+            src="http://res.cloudinary.com/djgouef8q/image/upload/v1707109963/p8lfmwymj1fnxoddeaaa.png"
             alt="logoImage"
           />
           <span className="text-[#ffffff]">BookNow</span>

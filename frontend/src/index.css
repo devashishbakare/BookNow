@@ -40,3 +40,8 @@ body {
   opacity: 0.9;
   transform: translateX(3%);
 }
+
+.textAreaPlaceHolder::placeholder {
+  opacity: 0.9;
+  transform: translate(10px, 10px);
+}
