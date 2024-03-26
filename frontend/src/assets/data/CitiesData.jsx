@@ -1,3 +1,5 @@
+// while adding each room, keep in mind add a city in each hotel
+
 const cities = [
   {
     id: 1,

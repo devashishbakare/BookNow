@@ -7,6 +7,7 @@ import { SignInHomePage } from "./Components/SignInHomePage";
 import { UpdateImages } from "./Components/updateImages";
 import { BookingDetails } from "./Components/BookingDetails";
 import { BookingConfirmation } from "./Components/BookingConfirmation";
+import { ProfilePage } from "./Components/ProfilePage";
 function App() {
   const date = new Date();
   const dates = {
@@ -24,6 +25,7 @@ function App() {
           <Route path="/signIn" element={<SignInHomePage />} />
           <Route path="/uploadImages" element={<UpdateImages />} />
           <Route path="/bookingDetails" element={<BookingDetails />} />
+          <Route path="/profile" element={<ProfilePage />} />
           <Route
             path="/bookingConfirmation"
             element={<BookingConfirmation />}

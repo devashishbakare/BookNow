@@ -7,7 +7,7 @@ export const BookingConfirmation = () => {
   return (
     <>
       <div className="flex centerDiv flex-col baseColor">
-        <div className="h-[8vh] w-[100%] centerDiv">
+        <div className="h-[8vh] w-[100%] centerDiv max-w-[1150px]">
           <Navbar />
         </div>
         <div className="max-w-[1150px] w-[100vw] h-[100%] flex md:flex md:items-center md:justify-center">
