@@ -10,6 +10,7 @@ export const SignInForm = () => {
     email: "",
     password: "",
     confirm_password: "",
+    phoneNumber: "",
   };
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
@@ -25,23 +26,23 @@ export const SignInForm = () => {
   //console.log(handleSubmit);
   return (
     <>
-      <div className="h-full w-full centerDiv">
+      <div className="h-full w-full centerDiv overflow-y-scroll">
         <form
           onSubmit={handleSubmit}
-          className="h-[500px] w-[370px] flex flex-col gap-2"
+          className="h-full w-[370px] flex flex-col gap-2"
         >
           {isUserSignIn ? (
             <>
               <div className="h-[85%] w-full flex flex-col">
-                <div className="h-[8%] w-[80%] text-[19px] addFont ml-3">
+                <div className="h-[8%] w-[80%] text-[19px] addFont m-3">
                   Sign In
                 </div>
-                <div className="h-[18%] w-full flex flex-col gap-1 centerDiv">
-                  <div className="h-[60%] w-[95%] flex items-center rounded-3xl border-[1px] border-gray-500">
+                <div className="h-[18%] w-full flex flex-col gap-1 centerDiv min-h-[90px]">
+                  <div className="h-[60%] w-[95%] flex items-center rounded-3xl border-[1px] border-gray-500 min-h-[50px]">
                     <input
                       type="email"
                       name="email"
-                      className="h-[85%] w-[90%] ml-2 outline-none baseColor placeHolder"
+                      className="h-[85%] w-[90%] ml-4 outline-none baseColor placeHolder"
                       placeholder="Email"
                       value={values.email}
                       onChange={handleChange}
@@ -50,18 +51,18 @@ export const SignInForm = () => {
                   </div>
                   {errors.email && touched.email ? (
                     <>
-                      <p className="h-auto w-full pl-5 theamColor addFont text-[15px]">
+                      <p className="h-auto w-full pl-5 theamColor addFont text-[15px] truncate">
                         {errors.email}
                       </p>
                     </>
                   ) : null}
                 </div>
-                <div className="h-[18%] w-full flex flex-col gap-1 centerDiv">
-                  <div className="h-[60%] w-[95%] flex items-center rounded-3xl border-[1px] border-gray-500">
+                <div className="h-[18%] w-full flex flex-col gap-1 centerDiv min-h-[90px]">
+                  <div className="h-[60%] w-[95%] flex items-center rounded-3xl border-[1px] border-gray-500 min-h-[50px]">
                     <input
                       type="password"
                       name="password"
-                      className="h-[85%] w-[90%] ml-2 outline-none baseColor placeHolder"
+                      className="h-[85%] w-[90%] ml-4 outline-none baseColor placeHolder"
                       placeholder="Password"
                       value={values.password}
                       onChange={handleChange}
@@ -70,7 +71,7 @@ export const SignInForm = () => {
                   </div>
                   {errors.password && touched.password ? (
                     <>
-                      <p className="h-auto w-full pl-5 theamColor addFont text-[15px]">
+                      <p className="h-auto w-full pl-5 theamColor addFont text-[15px] truncate">
                         {errors.password}
                       </p>
                     </>
@@ -84,7 +85,7 @@ export const SignInForm = () => {
                 <div className="h-[12%] w-full flex items-center centerDiv mt-2">
                   <button
                     type="submit"
-                    className="h-[90%] w-[90%] rounded-full text-[white] bg-[#003b95] text-[1rem] cursor-pointer"
+                    className="h-[90%] w-[90%] rounded-full text-[white] bg-[#003b95] text-[1rem] cursor-pointer min-h-[50px]"
                   >
                     Sign-In
                   </button>
@@ -94,11 +95,11 @@ export const SignInForm = () => {
                   <p className="">or</p>
                   <hr className="w-[40%] border-gray-400 mr-4" />
                 </div>
-                <div className="h-[15%] w-full centerDiv">
+                <div className="h-[15%] w-full centerDiv min-h-[50px]">
                   <FcGoogle className="text-[35px] mr-4 cursor-pointer" />
                 </div>
               </div>
-              <div className="h-[15%] w-full centerDiv gap-1">
+              <div className="h-[15%] w-full centerDiv gap-1 min-h-[50px]">
                 <span className="addFont text-[15px]">
                   Don't have an account?{" "}
                 </span>
@@ -113,16 +114,16 @@ export const SignInForm = () => {
             </>
           ) : (
             <>
-              <div className="h-[90%] w-full flex flex-col">
-                <div className="h-[8%] w-[80%] text-[19px] addFont ml-3 mb-2">
+              <div className="min-h-[500px] w-full flex flex-col">
+                <div className="h-[8%] w-[80%] text-[19px] addFont ml-4 flex items-center min-h-[50px]">
                   Sign Up
                 </div>
-                <div className="h-[20%] w-full flex flex-col gap-1 centerDiv">
-                  <div className="h-[60%] w-[95%] flex items-center rounded-3xl border-[1px] border-gray-500">
+                <div className="h-[20%] w-full flex flex-col gap-1 centerDiv min-h-[70px]">
+                  <div className="h-[60%] w-[95%] flex items-center rounded-3xl border-[1px] border-gray-500 addBorder min-h-[40px]">
                     <input
                       type="text"
                       name="name"
-                      className="h-[85%] w-[90%] ml-2 outline-none baseColor placeHolder"
+                      className="h-[85%] w-[90%] ml-4 outline-none baseColor placeHolder"
                       placeholder="name"
                       value={values.name}
                       onChange={handleChange}
@@ -131,18 +132,18 @@ export const SignInForm = () => {
                   </div>
                   {errors.name && touched.name ? (
                     <>
-                      <p className="h-auto w-full pl-5 theamColor addFont text-[15px]">
+                      <p className="h-auto w-full pl-5 theamColor addFont text-[15px] truncate">
                         {errors.name}
                       </p>
                     </>
                   ) : null}
                 </div>
-                <div className="h-[20%] w-full flex flex-col gap-1 centerDiv">
-                  <div className="h-[60%] w-[95%] flex items-center rounded-3xl border-[1px] border-gray-500">
+                <div className="h-[20%] w-full flex flex-col gap-1 centerDiv  min-h-[70px]">
+                  <div className="h-[60%] w-[95%] flex items-center rounded-3xl border-[1px] border-gray-500 addBorder min-h-[40px]">
                     <input
                       type="email"
                       name="email"
-                      className="h-[85%] w-[90%] ml-2 outline-none baseColor placeHolder"
+                      className="h-[85%] w-[90%] ml-4 outline-none baseColor placeHolder"
                       placeholder="Email"
                       value={values.email}
                       onChange={handleChange}
@@ -151,18 +152,18 @@ export const SignInForm = () => {
                   </div>
                   {errors.email && touched.email ? (
                     <>
-                      <p className="h-auto w-full pl-5 theamColor addFont text-[15px]">
+                      <p className="h-auto w-full pl-5 theamColor addFont text-[15px] truncate">
                         {errors.email}
                       </p>
                     </>
                   ) : null}
                 </div>
-                <div className="h-[20%] w-full flex flex-col gap-1 centerDiv">
-                  <div className="h-[60%] w-[95%] flex items-center rounded-3xl border-[1px] border-gray-500">
+                <div className="h-[20%] w-full flex flex-col gap-1 centerDiv  min-h-[70px]">
+                  <div className="h-[60%] w-[95%] flex items-center rounded-3xl border-[1px] border-gray-500 addBorder min-h-[40px]">
                     <input
                       type="password"
                       name="password"
-                      className="h-[85%] w-[90%] ml-2 outline-none baseColor placeHolder"
+                      className="h-[85%] w-[90%] ml-4 outline-none baseColor placeHolder"
                       placeholder="Password"
                       value={values.password}
                       onChange={handleChange}
@@ -171,18 +172,18 @@ export const SignInForm = () => {
                   </div>
                   {errors.password && touched.password ? (
                     <>
-                      <p className="h-auto w-full pl-5 theamColor addFont text-[15px]">
+                      <p className="h-auto w-full pl-5 theamColor addFont text-[15px] truncate">
                         {errors.password}
                       </p>
                     </>
                   ) : null}
                 </div>
-                <div className="h-[20%] w-full flex flex-col gap-1 centerDiv">
-                  <div className="h-[60%] w-[95%] flex items-center rounded-3xl border-[1px] border-gray-500">
+                <div className="h-[20%] w-full flex flex-col gap-1 centerDiv  min-h-[70px]">
+                  <div className="h-[60%] w-[95%] flex items-center rounded-3xl border-[1px] border-gray-500 addBorder min-h-[40px]">
                     <input
                       type="password"
                       name="confirm_password"
-                      className="h-[85%] w-[90%] ml-2 outline-none baseColor placeHolder"
+                      className="h-[85%] w-[90%] ml-4 outline-none baseColor placeHolder"
                       placeholder="confirm password"
                       value={values.confirm_password}
                       onChange={handleChange}
@@ -191,8 +192,29 @@ export const SignInForm = () => {
                   </div>
                   {errors.confirm_password && touched.confirm_password ? (
                     <>
-                      <p className="h-auto w-full pl-5 theamColor addFont text-[15px]">
+                      <p className="h-auto w-full pl-5 theamColor addFont text-[15px] truncate">
                         {errors.confirm_password}
+                      </p>
+                    </>
+                  ) : null}
+                </div>
+
+                <div className="h-[20%] w-full flex flex-col gap-1 centerDiv  min-h-[70px]">
+                  <div className="h-[60%] w-[95%] flex items-center rounded-3xl border-[1px] border-gray-500 addBorder min-h-[40px]">
+                    <input
+                      type="text"
+                      name="phone_number"
+                      className="h-[85%] w-[90%] ml-4 outline-none baseColor placeHolder"
+                      placeholder="Phone Number"
+                      value={values.phone_number}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                    />
+                  </div>
+                  {errors.phone_number && touched.phone_number ? (
+                    <>
+                      <p className="min-h-[40px] w-full pl-5 theamColor addFont text-[15px] truncate">
+                        {errors.phone_number}
                       </p>
                     </>
                   ) : null}
@@ -201,7 +223,7 @@ export const SignInForm = () => {
                 <div className="h-[13%] w-full flex items-center centerDiv mt-2">
                   <button
                     type="submit"
-                    className="h-[90%] w-[90%] rounded-full text-[white] bg-[#003b95] text-[1rem] cursor-pointer"
+                    className="h-[90%] w-[90%] rounded-full text-[white] bg-[#003b95] text-[1rem] cursor-pointer min-h-[50px]"
                   >
                     Sign-up
                   </button>
@@ -211,21 +233,21 @@ export const SignInForm = () => {
                   <p className="">or</p>
                   <hr className="w-[40%] border-gray-400 mr-4" />
                 </div>
-                <div className="h-[15%] w-full centerDiv">
+                <div className="h-[15%] w-full centerDiv min-h-[40px]">
                   <FcGoogle className="text-[35px] mr-4 cursor-pointer" />
                 </div>
-              </div>
-              <div className="h-[10%] w-full centerDiv gap-1">
-                <span className="addFont text-[15px]">
-                  Already have account?{" "}
-                </span>
-                <span
-                  className="addFont text-[15px] theamColor underline cursor-pointer"
-                  onClick={() => setIsUserSignIn(true)}
-                >
-                  Sign-In
-                </span>
-                <span className="addFont text-[15px]">here</span>
+                <div className="h-[10%] w-full centerDiv gap-1 min-h-[50px]">
+                  <span className="addFont text-[15px]">
+                    Already have account?{" "}
+                  </span>
+                  <span
+                    className="addFont text-[15px] theamColor underline cursor-pointer"
+                    onClick={() => setIsUserSignIn(true)}
+                  >
+                    Sign-In
+                  </span>
+                  <span className="addFont text-[15px]">here</span>
+                </div>
               </div>
             </>
           )}

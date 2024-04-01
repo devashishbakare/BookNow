@@ -6,4 +6,8 @@ export const signInUpSchema = yup.object({
   confirm_password: yup
     .string()
     .oneOf([yup.ref("password"), null], "Password must match"),
+  phone_number: yup
+    .number()
+    .min(10)
+    .required("Please enter valid mobile number"),
 });
