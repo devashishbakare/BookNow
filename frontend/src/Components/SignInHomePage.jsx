@@ -25,7 +25,7 @@ export const SignInHomePage = () => {
               className="h-full w-full object-cover"
             />
           </div>
-          <div className="h-full w-[50%] min-w-[370px] centerDiv addBorder">
+          <div className="h-full w-[50%] min-w-[370px] centerDiv">
             <SignInForm />
           </div>
         </div>

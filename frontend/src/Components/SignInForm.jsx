@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { useFormik } from "formik";
-import { signInUpSchema } from "../ValidationSchemas";
+import { SignInSchema } from "../ValidationSchemas/SignInSchema";
+import { SignUpSchema } from "../ValidationSchemas/signUpSchema";
+import { signIn, signUp } from "../utils/api";
 export const SignInForm = () => {
   const [isUserSignIn, setIsUserSignIn] = useState(true);
 
@@ -10,29 +12,50 @@ export const SignInForm = () => {
     email: "",
     password: "",
     confirm_password: "",
-    phoneNumber: "",
+    phone_number: "",
   };
 
-  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
-    useFormik({
-      initialValues,
-      validationSchema: signInUpSchema,
-      onSubmit: (values, action) => {
-        // here we got the all values to make backend call to save a data
-        console.log(values);
-        action.resetForm();
-      },
-    });
-  //console.log(handleSubmit);
+  const signUpFormik = useFormik({
+    initialValues: { ...initialValues, formType: "signup" },
+    validationSchema: SignUpSchema,
+    onSubmit: async (values, action) => {
+      console.log("from signup oyy");
+      console.log(values);
+      const response = await signUp(values);
+      if (response.sucess === true) {
+        //do something with it
+      } else {
+        //push notification here
+      }
+      action.resetForm();
+    },
+  });
+
+  const signInFormik = useFormik({
+    initialValues: { ...initialValues, formType: "signin" },
+    validationSchema: SignInSchema,
+    onSubmit: async (values, action) => {
+      console.log("from signup oyy");
+      console.log(values);
+      const response = await signUp(values);
+      if (response.sucess === true) {
+        //do something with it
+      } else {
+        //push notification here
+      }
+      action.resetForm();
+    },
+  });
+
   return (
     <>
       <div className="h-full w-full centerDiv overflow-y-scroll">
-        <form
-          onSubmit={handleSubmit}
-          className="h-full w-[370px] flex flex-col gap-2"
-        >
-          {isUserSignIn ? (
-            <>
+        {isUserSignIn ? (
+          <>
+            <form
+              onSubmit={signInFormik.handleSubmit}
+              className="h-full w-[370px] flex flex-col gap-2"
+            >
               <div className="h-[85%] w-full flex flex-col">
                 <div className="h-[8%] w-[80%] text-[19px] addFont m-3">
                   Sign In
@@ -44,15 +67,15 @@ export const SignInForm = () => {
                       name="email"
                       className="h-[85%] w-[90%] ml-4 outline-none baseColor placeHolder"
                       placeholder="Email"
-                      value={values.email}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
+                      value={signInFormik.values.email}
+                      onChange={signInFormik.handleChange}
+                      onBlur={signInFormik.handleBlur}
                     />
                   </div>
-                  {errors.email && touched.email ? (
+                  {signInFormik.errors.email && signInFormik.touched.email ? (
                     <>
                       <p className="h-auto w-full pl-5 theamColor addFont text-[15px] truncate">
-                        {errors.email}
+                        {signInFormik.errors.email}
                       </p>
                     </>
                   ) : null}
@@ -64,15 +87,16 @@ export const SignInForm = () => {
                       name="password"
                       className="h-[85%] w-[90%] ml-4 outline-none baseColor placeHolder"
                       placeholder="Password"
-                      value={values.password}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
+                      value={signInFormik.values.password}
+                      onChange={signInFormik.handleChange}
+                      onBlur={signInFormik.handleBlur}
                     />
                   </div>
-                  {errors.password && touched.password ? (
+                  {signInFormik.errors.password &&
+                  signInFormik.touched.password ? (
                     <>
                       <p className="h-auto w-full pl-5 theamColor addFont text-[15px] truncate">
-                        {errors.password}
+                        {signInFormik.errors.password}
                       </p>
                     </>
                   ) : null}
@@ -111,110 +135,118 @@ export const SignInForm = () => {
                 </span>
                 <span className="addFont text-[15px]">here</span>
               </div>
-            </>
-          ) : (
-            <>
+            </form>
+          </>
+        ) : (
+          <>
+            <form
+              onSubmit={signUpFormik.handleSubmit}
+              className="h-full w-[370px] flex flex-col gap-2"
+            >
               <div className="min-h-[500px] w-full flex flex-col">
                 <div className="h-[8%] w-[80%] text-[19px] addFont ml-4 flex items-center min-h-[50px]">
                   Sign Up
                 </div>
                 <div className="h-[20%] w-full flex flex-col gap-1 centerDiv min-h-[70px]">
-                  <div className="h-[60%] w-[95%] flex items-center rounded-3xl border-[1px] border-gray-500 addBorder min-h-[40px]">
+                  <div className="h-[60%] w-[95%] flex items-center rounded-3xl border-[1px] border-gray-500 min-h-[40px]">
                     <input
                       type="text"
                       name="name"
                       className="h-[85%] w-[90%] ml-4 outline-none baseColor placeHolder"
                       placeholder="name"
-                      value={values.name}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
+                      value={signUpFormik.values.name}
+                      onChange={signUpFormik.handleChange}
+                      onBlur={signUpFormik.handleBlur}
                     />
                   </div>
-                  {errors.name && touched.name ? (
+                  {signUpFormik.errors.name && signUpFormik.touched.name ? (
                     <>
                       <p className="h-auto w-full pl-5 theamColor addFont text-[15px] truncate">
-                        {errors.name}
+                        {signUpFormik.errors.name}
                       </p>
                     </>
                   ) : null}
                 </div>
                 <div className="h-[20%] w-full flex flex-col gap-1 centerDiv  min-h-[70px]">
-                  <div className="h-[60%] w-[95%] flex items-center rounded-3xl border-[1px] border-gray-500 addBorder min-h-[40px]">
+                  <div className="h-[60%] w-[95%] flex items-center rounded-3xl border-[1px] border-gray-500 min-h-[40px]">
                     <input
                       type="email"
                       name="email"
                       className="h-[85%] w-[90%] ml-4 outline-none baseColor placeHolder"
                       placeholder="Email"
-                      value={values.email}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
+                      value={signUpFormik.values.email}
+                      onChange={signUpFormik.handleChange}
+                      onBlur={signUpFormik.handleBlur}
                     />
                   </div>
-                  {errors.email && touched.email ? (
+                  {signUpFormik.errors.email && signUpFormik.touched.email ? (
                     <>
                       <p className="h-auto w-full pl-5 theamColor addFont text-[15px] truncate">
-                        {errors.email}
+                        {signUpFormik.errors.email}
                       </p>
                     </>
                   ) : null}
                 </div>
                 <div className="h-[20%] w-full flex flex-col gap-1 centerDiv  min-h-[70px]">
-                  <div className="h-[60%] w-[95%] flex items-center rounded-3xl border-[1px] border-gray-500 addBorder min-h-[40px]">
+                  <div className="h-[60%] w-[95%] flex items-center rounded-3xl border-[1px] border-gray-500 min-h-[40px]">
                     <input
                       type="password"
                       name="password"
                       className="h-[85%] w-[90%] ml-4 outline-none baseColor placeHolder"
                       placeholder="Password"
-                      value={values.password}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
+                      value={signUpFormik.values.password}
+                      onChange={signUpFormik.handleChange}
+                      onBlur={signUpFormik.handleBlur}
                     />
                   </div>
-                  {errors.password && touched.password ? (
+                  {signUpFormik.errors.password &&
+                  signUpFormik.touched.password ? (
                     <>
-                      <p className="h-auto w-full pl-5 theamColor addFont text-[15px] truncate">
-                        {errors.password}
+                      <p className="h-auto w-full pl-5 theamColor addFont text-[15px]">
+                        {signUpFormik.errors.password}
                       </p>
                     </>
                   ) : null}
                 </div>
                 <div className="h-[20%] w-full flex flex-col gap-1 centerDiv  min-h-[70px]">
-                  <div className="h-[60%] w-[95%] flex items-center rounded-3xl border-[1px] border-gray-500 addBorder min-h-[40px]">
+                  <div className="h-[60%] w-[95%] flex items-center rounded-3xl border-[1px] border-gray-500 min-h-[40px]">
                     <input
                       type="password"
                       name="confirm_password"
                       className="h-[85%] w-[90%] ml-4 outline-none baseColor placeHolder"
                       placeholder="confirm password"
-                      value={values.confirm_password}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
+                      value={signUpFormik.values.confirm_password}
+                      onChange={signUpFormik.handleChange}
+                      onBlur={signUpFormik.handleBlur}
                     />
                   </div>
-                  {errors.confirm_password && touched.confirm_password ? (
+                  {signUpFormik.errors.confirm_password &&
+                  signUpFormik.touched.confirm_password ? (
                     <>
                       <p className="h-auto w-full pl-5 theamColor addFont text-[15px] truncate">
-                        {errors.confirm_password}
+                        {signUpFormik.errors.confirm_password}
                       </p>
                     </>
                   ) : null}
                 </div>
 
                 <div className="h-[20%] w-full flex flex-col gap-1 centerDiv  min-h-[70px]">
-                  <div className="h-[60%] w-[95%] flex items-center rounded-3xl border-[1px] border-gray-500 addBorder min-h-[40px]">
+                  <div className="h-[60%] w-[95%] flex items-center rounded-3xl border-[1px] border-gray-500 min-h-[40px]">
                     <input
                       type="text"
                       name="phone_number"
                       className="h-[85%] w-[90%] ml-4 outline-none baseColor placeHolder"
                       placeholder="Phone Number"
-                      value={values.phone_number}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
+                      value={signUpFormik.values.phone_number}
+                      onChange={signUpFormik.handleChange}
+                      onBlur={signUpFormik.handleBlur}
                     />
                   </div>
-                  {errors.phone_number && touched.phone_number ? (
+                  {signUpFormik.errors.phone_number &&
+                  signUpFormik.touched.phone_number ? (
                     <>
-                      <p className="min-h-[40px] w-full pl-5 theamColor addFont text-[15px] truncate">
-                        {errors.phone_number}
+                      <p className="min-h-[40px] w-full pl-5 theamColor addFont text-[15px]">
+                        {signUpFormik.errors.phone_number}
                       </p>
                     </>
                   ) : null}
@@ -249,9 +281,9 @@ export const SignInForm = () => {
                   <span className="addFont text-[15px]">here</span>
                 </div>
               </div>
-            </>
-          )}
-        </form>
+            </form>
+          </>
+        )}
       </div>
     </>
   );
