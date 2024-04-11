@@ -1,7 +1,7 @@
 import axios from "axios";
 import { baseUrl } from "./constants";
 
-const signIn = async (signInData) => {
+export const signIn = async (signInData) => {
   try {
     const response = await axios.post(`${baseUrl}/signIn`, signInData);
     const { data } = response.data;
@@ -11,7 +11,7 @@ const signIn = async (signInData) => {
   }
 };
 
-const signUp = async (signUpData) => {
+export const signUp = async (signUpData) => {
   try {
     const response = await axios.post(`${baseUrl}/signUp`, signUpData);
     const { data } = response.data;
@@ -19,9 +19,4 @@ const signUp = async (signUpData) => {
   } catch (error) {
     return { success: false, error: error.response.data.error };
   }
-};
-
-export default {
-  signIn,
-  signUp,
 };

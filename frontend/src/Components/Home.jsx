@@ -1,14 +1,15 @@
-import React from "react";
 import { Navbar } from "./Navbar";
 import { Homepage } from "./Homepage";
 export const Home = () => {
   return (
     <>
-      <div className="h-[8vh] w-[100vw] min-h-[72px]">
-        <Navbar />
-      </div>
-      <div className="h-auto w-[100vw]">
-        <Homepage />
+      <div className="h-[100vh] w-[100vw] flex flex-col centerDiv">
+        <div className="h-[8vh] w-full min-h-[72px] max-w-[1235px]">
+          <Navbar />
+        </div>
+        <div className="h-[92vh] w-full overflow-y-scroll max-w-[1235px] border-[0.5px] border-gray-400 shadow-md">
+          <Homepage />
+        </div>
       </div>
     </>
   );

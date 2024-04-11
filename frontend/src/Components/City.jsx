@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import cities from "../assets/data/CitiesData";
 import { Navbar } from "./Navbar";
 import { MdDateRange, MdLocationOn, MdTune, MdClose } from "react-icons/md";
@@ -31,7 +31,7 @@ export const City = () => {
           <span className="h-[30px] w-full ml-3 addFont font-semibold text-[19px]">
             Price
           </span>
-          <div class="flex flex-col gap-6">
+          <div className="flex flex-col gap-6">
             <label className="flex gap-2 ml-5 text-[17px]">
               <input type="checkbox" name="filterOption1" value="option1" />
               highest to lowest
@@ -44,7 +44,7 @@ export const City = () => {
           <span className="h-[30px] w-full ml-3 addFont font-semibold text-[19px]">
             Sort
           </span>
-          <div class="flex flex-col gap-6">
+          <div className="flex flex-col gap-6">
             <label className="flex gap-2 ml-5 text-[17px]">
               <input type="checkbox" name="filterOption1" value="option1" />
               highest rating to lowest
@@ -81,7 +81,7 @@ export const City = () => {
             <span className="h-[30px] w-full ml-3 addFont font-semibold text-[19px]">
               Price
             </span>
-            <div class="flex flex-col gap-6">
+            <div className="flex flex-col gap-6">
               <label className="flex gap-2 ml-5 text-[17px]">
                 <input type="checkbox" name="filterOption1" value="option1" />
                 highest to lowest
@@ -94,7 +94,7 @@ export const City = () => {
             <span className="h-[30px] w-full ml-3 addFont font-semibold text-[19px]">
               Sort
             </span>
-            <div class="flex flex-col gap-6">
+            <div className="flex flex-col gap-6">
               <label className="flex gap-2 ml-5 text-[17px]">
                 <input type="checkbox" name="filterOption1" value="option1" />
                 highest rating to lowest

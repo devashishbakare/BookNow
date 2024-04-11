@@ -1,9 +1,15 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { useFormik } from "formik";
 import { SignInSchema } from "../ValidationSchemas/SignInSchema";
 import { SignUpSchema } from "../ValidationSchemas/signUpSchema";
 import { signIn, signUp } from "../utils/api";
+import {
+  showErrorNotification,
+  showSuccessNotification,
+} from "../utils/notification";
+import { ToastContainer } from "react-toastify";
+
 export const SignInForm = () => {
   const [isUserSignIn, setIsUserSignIn] = useState(true);
 
@@ -19,13 +25,11 @@ export const SignInForm = () => {
     initialValues: { ...initialValues, formType: "signup" },
     validationSchema: SignUpSchema,
     onSubmit: async (values, action) => {
-      console.log("from signup oyy");
-      console.log(values);
       const response = await signUp(values);
-      if (response.sucess === true) {
-        //do something with it
+      if (response.success === true) {
+        showSuccessNotification("Login Successfull");
       } else {
-        //push notification here
+        showErrorNotification(response.error);
       }
       action.resetForm();
     },
@@ -35,13 +39,11 @@ export const SignInForm = () => {
     initialValues: { ...initialValues, formType: "signin" },
     validationSchema: SignInSchema,
     onSubmit: async (values, action) => {
-      console.log("from signup oyy");
-      console.log(values);
-      const response = await signUp(values);
-      if (response.sucess === true) {
-        //do something with it
+      const response = await signIn(values);
+      if (response.success === true) {
+        showSuccessNotification("Login Successfull");
       } else {
-        //push notification here
+        showErrorNotification(response.error);
       }
       action.resetForm();
     },
@@ -125,7 +127,7 @@ export const SignInForm = () => {
               </div>
               <div className="h-[15%] w-full centerDiv gap-1 min-h-[50px]">
                 <span className="addFont text-[15px]">
-                  Don't have an account?{" "}
+                  Don&apost;t have an account?{" "}
                 </span>
                 <span
                   className="addFont text-[15px] theamColor underline cursor-pointer"
@@ -284,6 +286,7 @@ export const SignInForm = () => {
             </form>
           </>
         )}
+        <ToastContainer />
       </div>
     </>
   );
