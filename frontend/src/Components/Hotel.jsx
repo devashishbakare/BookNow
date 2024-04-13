@@ -47,7 +47,7 @@ export const Hotel = () => {
     month: date.getMonth() + 1,
     availableDates: [1, 2, 3, 4, 5, 6, 7],
   };
-  const data = cities[2].rooms[0];
+  const data = cities[4].rooms[0];
   console.log("data" + data.reviews[0].name);
   const [showMoreDesc, setShowMoreDesc] = useState(false);
   return (

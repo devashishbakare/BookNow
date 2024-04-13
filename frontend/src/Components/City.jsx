@@ -3,7 +3,7 @@ import cities from "../assets/data/CitiesData";
 import { Navbar } from "./Navbar";
 import { MdDateRange, MdLocationOn, MdTune, MdClose } from "react-icons/md";
 export const City = () => {
-  const data = cities[0];
+  const data = cities[4];
   const [showFilter, setShowFilter] = useState(false);
   return (
     <>
@@ -57,9 +57,14 @@ export const City = () => {
         </div>
         <div className="h-[25vh] min-h-[225px] max-w-[1150px] w-[100vw] relative md:h-[30vh] ">
           <img
-            src={data.backgroundImage}
+            src={data.backgroundImage[0]}
             alt="CityImage"
-            className="h-full w-full object-cover max-w-[1150px]"
+            className="h-full w-full object-cover max-w-[1150px] md:hidden"
+          />
+          <img
+            src={data.backgroundImage[1]}
+            alt="CityImage"
+            className="hidden md:flex md:h-full md:w-full md:object-cover md:max-w-[1150px]"
           />
           <div className="absolute top-3 left-4 md:left-10">
             <MdTune
