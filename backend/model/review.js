@@ -15,14 +15,18 @@ const reviewSchema = mongoose.Schema(
       required: true,
       min: 4,
     },
+    hotelName: {
+      type: String,
+      required: true,
+    },
+    rating: {
+      type: Number,
+      required: true,
+    },
     reviewText: {
       type: String,
       required: true,
       trim: true,
-    },
-    hotelName: {
-      type: String,
-      required: true,
     },
     date: {
       type: Date,

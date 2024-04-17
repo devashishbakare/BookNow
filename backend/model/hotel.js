@@ -8,7 +8,6 @@ string : hotel distription
 string : map
 boolean[feature1 : true, feature2 : false] : hotelServiceAvailability 
 objects[roomPackage]
-object[{month, int[dates]}] : available dates 
 object[{month, int[]}] : selected dates
 object[review] : reviews[];
 object[host] : host{hostName, hostJoinedDate, hostContactNumber} 
@@ -52,18 +51,19 @@ const hotelSchema = mongoose.Schema({
     type: [Boolean],
     default: [],
   },
-  availableDates: [
-    {
-      month: Number,
-      dates: [Number],
-    },
-  ],
-  selectedDates: [
-    {
-      month: Number,
-      dates: [Number],
-    },
-  ],
+  rating: {
+    type: Number,
+    default: 0,
+  },
+  selectedDates: {
+    type: [
+      {
+        month: Number,
+        dates: [Number],
+      },
+    ],
+    default: [],
+  },
   roomPackages: [
     {
       type: mongoose.Schema.Types.ObjectId,

@@ -5,6 +5,14 @@
  numberOfBeds : 2
  numberOfBathrooms : 2
  total Price: The total price for the booking, including taxes and any additional fees.
+ {
+  "roomType": "Standard",
+  "roomCapacity": 2,
+  "numberOfBeds": 1,
+  "numberOfBathrooms": 1,
+  "mealsIncluded": false,
+  "price": 9999
+}
 */
 const mongoose = require("mongoose");
 const roomPackageSchema = mongoose.Schema({
@@ -12,7 +20,7 @@ const roomPackageSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  roomCapacity: {
+  numberOfPeopleAllowed: {
     type: Number,
     required: true,
   },
