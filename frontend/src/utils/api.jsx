@@ -20,3 +20,13 @@ export const signUp = async (signUpData) => {
     return { success: false, error: error.response.data.error };
   }
 };
+
+export const getHotelsFromCity = async (cityName) => {
+  try {
+    const response = await axios.get(`${baseUrl}/hotel/city/${cityName}`);
+    const { data } = response.data;
+    return { success: true, data };
+  } catch (error) {
+    return { success: false, error: error.response.data.error };
+  }
+};

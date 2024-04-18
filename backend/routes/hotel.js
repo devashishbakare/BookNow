@@ -164,4 +164,101 @@ router.post("/rating", hotelController.getRating);
 
 router.post("/addHotel", hotelController.addHotel);
 
+/**
+ * @swagger
+ * /hotel/city/{cityName}:
+ *   get:
+ *     summary: Get hotels in a specific city
+ *     tags: [Hotel]
+ *     parameters:
+ *       - in: path
+ *         name: cityName
+ *         required: true
+ *         description: The name of the city to search for hotels.
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Successful response with hotels in the specified city
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *             properties:
+ *               cityName:
+ *                 type: string
+ *                 description: The name of the city where the accommodation is located.
+ *               backgroundImage:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                   description: URL pointing to an image used as a background image.
+ *                 description: An array of URLs pointing to images used as background images.
+ *               name:
+ *                 type: string
+ *                 description: The name of the accommodation.
+ *               images:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                   description: URL pointing to an image of the accommodation.
+ *                 description: An array of URLs pointing to images of the accommodation.
+ *               address:
+ *                 type: string
+ *                 description: The address of the accommodation.
+ *               description:
+ *                 type: string
+ *                 description: Description for the hotel.
+ *               map:
+ *                 type: string
+ *                 description: URL of the map to locate the hotel.
+ *               facilities:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                   description: Facilities added in hotel room.
+ *                 description: Facilities added in hotel room.
+ *               rating:
+ *                 type: number
+ *                 description: Hotel rating, calculated from reviews.
+ *               roomPackages:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                   description: Object ID of hotel's package documents representing information about hotel rooms.
+ *                 description: List of object IDs of room packages that hotel can offer.
+ *               reviews:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                   description: Object ID of reviews for this hotel.
+ *                 description: List of object IDs of reviews for this hotel.
+ *               host:
+ *                 type: string
+ *                 description: Object ID of host document.
+ *
+ *       400:
+ *         description: Bad request. cityName parameter is missing or invalid.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   description: cityName parameter is missing or invalid.
+ *       500:
+ *         description: Internal server error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   description: Something went wrong while processing the request.
+ */
+
+router.get("/city/:cityName", hotelController.getCityHotel);
+
 module.exports = router;

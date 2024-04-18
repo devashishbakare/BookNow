@@ -3,8 +3,15 @@ import {
   tredingSmallImages,
   trendingBigImages,
 } from "../assets/data/trendingData";
+import { useNavigate } from "react-router-dom";
 import { Contact } from "./Contact";
 export const Homepage = () => {
+  // navigate to city as user clicked
+  const navigate = useNavigate();
+  const navigateToCity = (cityName) => {
+    navigate(`/city/${cityName}`);
+  };
+
   return (
     <>
       <div className="h-[35vh] min-h-[315px] w-full bg-[#FF385C] relative">
@@ -48,7 +55,10 @@ export const Homepage = () => {
           </span>
         </div>
         <div className="w-[100vw] centerDiv flex gap-3 flex-col sm:hidden">
-          <div className="h-full w-full relative p-2">
+          <div
+            onClick={() => navigateToCity("Delhi")}
+            className="h-full w-full relative p-2"
+          >
             <img
               src={tredingSmallImages[0]}
               alt="newDelhi"
@@ -58,10 +68,13 @@ export const Homepage = () => {
               Delhi
             </span>
           </div>
-          <div className="h-full w-full relative p-2">
+          <div
+            onClick={() => navigateToCity("Banglore")}
+            className="h-full w-full relative p-2"
+          >
             <img
               src={tredingSmallImages[1]}
-              alt="newDelhi"
+              alt="Banglore"
               className="h-full w-full object-cover rounded-[10px]"
             />
             <span className="absolute top-[12%] left-[5%] text-[40px] font-gilroy-bold font-semibold tracking-tighter leading-[22.5px] text-[#FFBF00]">
@@ -70,7 +83,10 @@ export const Homepage = () => {
           </div>
         </div>
         <div className="hidden sm:flex sm:w-full sm:centerDiv sm:addBorder gap-3">
-          <div className="h-full w-[50%] relative p-2">
+          <div
+            onClick={() => navigateToCity("Delhi")}
+            className="h-full w-[50%] relative p-2"
+          >
             <img
               src={trendingBigImages[0]}
               alt="newDelhi"
@@ -80,10 +96,13 @@ export const Homepage = () => {
               Delhi
             </span>
           </div>
-          <div className="h-full w-[50%] relative p-2">
+          <div
+            onClick={() => navigateToCity("Banglore")}
+            className="h-full w-[50%] relative p-2"
+          >
             <img
               src={trendingBigImages[1]}
-              alt="newDelhi"
+              alt="Banglore"
               className="h-full w-full object-cover rounded-[10px]"
             />
             <span className="absolute top-[12%] left-[5%] text-[40px] font-gilroy-bold font-semibold tracking-tighter leading-[22.5px] text-[#FFBF00]">
@@ -92,30 +111,39 @@ export const Homepage = () => {
           </div>
         </div>
         <div className="w-full centerDiv gap-2 flex flex-col sm:flex-row sm:h-[35vh] md:h-[40vh]">
-          <div className="h-full w-full relative p-2">
+          <div
+            onClick={() => navigateToCity("Mumbai")}
+            className="h-full w-full relative p-2"
+          >
             <img
               src={tredingSmallImages[2]}
-              alt="newDelhi"
+              alt="Mumbai"
               className="h-full w-full object-cover rounded-[10px]"
             />
             <span className="absolute top-[12%] left-[5%] text-[40px] font-gilroy-bold font-semibold tracking-tighter leading-[22.5px] text-[#FFBF00] sm:text-[30px]">
               Mumbai
             </span>
           </div>
-          <div className="h-full w-full relative p-2">
+          <div
+            onClick={() => navigateToCity("Chennai")}
+            className="h-full w-full relative p-2"
+          >
             <img
               src={tredingSmallImages[3]}
-              alt="newDelhi"
+              alt="Chennai"
               className="h-full w-full object-cover rounded-[10px]"
             />
             <span className="absolute top-[12%] left-[5%] text-[40px] font-gilroy-bold font-semibold tracking-tighter leading-[22.5px] text-[#FFBF00] sm:text-[30px]">
               Chennai
             </span>
           </div>
-          <div className="h-full w-full relative p-2">
+          <div
+            onClick={() => navigateToCity("Pune")}
+            className="h-full w-full relative p-2"
+          >
             <img
               src={tredingSmallImages[4]}
-              alt="newDelhi"
+              alt="Pune"
               className="h-full w-full object-cover rounded-[10px]"
             />
             <span className="absolute top-[12%] left-[5%] text-[40px] font-gilroy-bold font-semibold tracking-tighter leading-[22.5px] text-[#FFBF00] sm:text-[30px]">

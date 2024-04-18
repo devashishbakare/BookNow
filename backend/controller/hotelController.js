@@ -126,6 +126,24 @@ const addHotel = async (req, res) => {
   }
 };
 
+const getCityHotel = async (req, res) => {
+  try {
+    const cityName = req.params.cityName;
+    const regex = new RegExp("^" + cityName + "$", "i");
+    if (!cityName) {
+      return res.status(400).json({ message: "params missing" });
+    }
+    const cityHotel = await Hotel.find({ cityName: regex });
+    return res
+      .status(200)
+      .json({ data: cityHotel, message: "list of city hotels" });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "something went wrong which fetching city hotels" });
+  }
+};
+
 module.exports = {
   confirmBooking,
   deleteAllDocuments,
@@ -133,4 +151,5 @@ module.exports = {
   getHotelReview,
   getRating,
   addHotel,
+  getCityHotel,
 };

@@ -1,9 +1,13 @@
-import React from "react";
 import { ScaleLoader } from "react-spinners";
-import style from "./spinnner.css";
 const Spinners = () => {
+  const spinnerStyle = {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "100vh",
+  };
   return (
-    <div className={style.spinnerStyle}>
+    <div style={spinnerStyle}>
       <ScaleLoader color={"#123abc"} loading={true} />
     </div>
   );
