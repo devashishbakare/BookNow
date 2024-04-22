@@ -144,6 +144,27 @@ const getCityHotel = async (req, res) => {
   }
 };
 
+const getHotelData = async (req, res) => {
+  try {
+    const hotelId = req.params.hotelId;
+    if (!hotelId) {
+      return res.status(400).json({ message: "input is missing" });
+    }
+
+    const hotelData = await Hotel.findById(hotelId)
+      .populate("host")
+      .populate("roomPackages")
+      .populate("reviews")
+      .exec();
+
+    return res.status(200).json({ data: hotelData, message: "hotel data" });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "something went wrong while sending data" });
+  }
+};
+
 module.exports = {
   confirmBooking,
   deleteAllDocuments,
@@ -152,4 +173,5 @@ module.exports = {
   getRating,
   addHotel,
   getCityHotel,
+  getHotelData,
 };

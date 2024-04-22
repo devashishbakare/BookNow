@@ -260,5 +260,5 @@ router.post("/addHotel", hotelController.addHotel);
  */
 
 router.get("/city/:cityName", hotelController.getCityHotel);
-
+router.get("/:hotelId", hotelController.getHotelData);
 module.exports = router;
