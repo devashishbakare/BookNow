@@ -517,7 +517,18 @@ const cities = [
         roomInfo: "1 Room, 2 Adults, 1 Bathroom",
         description:
           "Featuring an open-air swimming pool, and a fitness centre. It is just an 8-minute drive from the Pune Airport and 850 meters from the Phoenix Market City. Free WiFi access is available. The property offers free parking. Shirdi is 3.5 hours away from the property.Air-conditioned rooms here will provide you with a flat-screen satellite TV and a seating area. It also has a minibar and tea/coffee maker. Featuring a shower, private bathrooms also come with free toiletries and slippers.",
-        facility: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        facility: [
+          false,
+          true,
+          true,
+          true,
+          false,
+          true,
+          false,
+          true,
+          true,
+          true,
+        ],
         selectedDates: [],
         hostedBy: {
           name: "Mrutyunjay Bandwane",
@@ -574,7 +585,18 @@ const cities = [
         roomInfo: "1 Room, 2 Adults, 1 Bathroom",
         description:
           "Hyatt Pune is a part of the incredible world of Hyatt. Located just 10 minutes from Pune Airport, 5 minutes from Phoenix Market City, and 15 minutes from the IT hub, Hyatt Pune has the perfect location, whether you’re traveling for work or leisure. Take advantage of our world-class spa or Ayurvedic treatments, reiki, and yoga to relax and re-energize yourself. There’s something for everyone, with a scenic outdoor pool, garden suites, and round-the-clock room service, you will be spoilt for choice.",
-        facility: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        facility: [
+          false,
+          true,
+          true,
+          true,
+          false,
+          true,
+          false,
+          true,
+          true,
+          true,
+        ],
         selectedDates: [],
         hostedBy: {
           name: "Mrutyunjay Bandwane",

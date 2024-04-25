@@ -147,6 +147,7 @@ const getCityHotel = async (req, res) => {
 const getHotelData = async (req, res) => {
   try {
     const hotelId = req.params.hotelId;
+    //console.log(hotelId);
     if (!hotelId) {
       return res.status(400).json({ message: "input is missing" });
     }

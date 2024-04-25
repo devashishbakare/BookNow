@@ -6,13 +6,13 @@ import Spinners from "../utils/Spinners";
 import { getHotelsFromCity } from "../utils/api";
 import { showErrorNotification } from "../utils/notification";
 import { ToastContainer } from "react-toastify";
-
+import { useNavigate } from "react-router-dom";
 export const City = () => {
   const { cityName } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [hotels, setHotels] = useState();
   const [showFilter, setShowFilter] = useState(false);
-
+  const navigate = useNavigate();
   useEffect(() => {
     setIsLoading(true);
     const fetchCityData = async (fetchForCity) => {
@@ -28,6 +28,10 @@ export const City = () => {
     fetchCityData(cityName);
   }, [cityName]);
 
+  const handleHotelNavigation = (hotelId) => {
+    console.log(hotelId + " this is id ");
+    navigate(`/hotel/${hotelId}`);
+  };
   return (
     <>
       <div className="h-auto w-[100vw] centerDiv flex-col">
@@ -165,6 +169,7 @@ export const City = () => {
                     <>
                       <div
                         key={hotel._id}
+                        onClick={() => handleHotelNavigation(hotel._id)}
                         className="h-auto w-[80%] max-w-[350px] shadow-lg rounded-[20px] p-3 flex flex-col mt-3 md:flex-row md:max-w-[750px]"
                       >
                         <img

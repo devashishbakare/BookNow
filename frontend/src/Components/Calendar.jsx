@@ -6,16 +6,19 @@ export const Calendar = ({
   selectedDates,
   updateUserDateSelection,
 }) => {
-  const [userSelectedDates, setUserSelectedDates] = useState(new Set());
+  const [monthDateSelectionMapper, setMonthDateSelectionMapper] = useState({});
   let totalDayInMonth = new Date(year, month, 0).getDate();
   let selectedDateMapper = new Array(totalDayInMonth + 1).fill(0);
-  selectedDates.selectedDates.forEach((monthData) => {
-    if (monthData.month == month) {
-      monthData.dates.forEach(
-        (selectedDaysInMonth) => (selectedDateMapper[selectedDaysInMonth] = 1)
-      );
-    }
-  });
+  if (selectedDates.length > 0) {
+    selectedDates.selectedDates.forEach((monthData) => {
+      if (monthData.month == month) {
+        monthData.dates.forEach(
+          (selectedDaysInMonth) => (selectedDateMapper[selectedDaysInMonth] = 1)
+        );
+      }
+    });
+  }
+
   //console.log(selectedDateMapper);
   let weekInMonth = [];
   let day = 1;
@@ -32,21 +35,26 @@ export const Calendar = ({
   }
   if (week.length > 0) weekInMonth.push(week);
 
-  const updateUserSelection = (day) => {
-    console.log(day + " day ");
-    if (selectedDateMapper[day] == 0) {
-      if (userSelectedDates.has(day)) {
-        updateUserDateSelection(day);
-        setUserSelectedDates((prevSelection) =>
-          new Set(prevSelection).delete(day)
-        );
+  const updateDateSelection = (month, day, dateAlreadyAdded) => {
+    let newMap = { ...monthDateSelectionMapper };
+    if (dateAlreadyAdded == true) {
+      // we have to remove it
+      let set = newMap[month];
+      set.delete(day);
+      newMap[month] = new Set(set);
+    } else {
+      // we have to add
+      if (newMap[month]) {
+        let set = newMap[month];
+        set.add(day);
+        newMap[month] = set;
       } else {
-        updateUserDateSelection(day);
-        setUserSelectedDates((prevSelection) =>
-          new Set(prevSelection).add(day)
-        );
+        newMap[month] = new Set();
+        newMap[month].add(day);
       }
     }
+    updateUserDateSelection(newMap);
+    setMonthDateSelectionMapper(newMap);
   };
 
   return (
@@ -55,19 +63,30 @@ export const Calendar = ({
         {weekInMonth &&
           weekInMonth.map((dayInWeek, weekIndex) => (
             <>
-              <div key={`week-${weekIndex}-${month}`} className="flex gap-2">
-                {dayInWeek.map((day, dayIndex) => (
+              <div
+                key={`week-${weekIndex}-${dayInWeek[0]}-`}
+                className="flex gap-2"
+              >
+                {dayInWeek.map((day) => (
                   <>
                     <span
-                      key={`${day}-${dayIndex}-${month}`}
-                      onClick={() => updateUserSelection(day)}
+                      key={`week-${weekIndex}-${dayInWeek[0]}-${day}`}
+                      onClick={() =>
+                        updateDateSelection(
+                          month,
+                          day,
+                          monthDateSelectionMapper[month] &&
+                            monthDateSelectionMapper[month].has(day)
+                        )
+                      }
                       className={`h-[35px] w-[35px] rounded-[50%] addBorder centerDiv ${
                         selectedDateMapper[day] == 1
                           ? `text-[red] cursor-none`
                           : `text-[green] cursor-pointer`
                       }
                        ${
-                         userSelectedDates.has(day)
+                         monthDateSelectionMapper[month] &&
+                         monthDateSelectionMapper[month].has(day)
                            ? "bg-[black] text-[white]"
                            : ""
                        }
@@ -88,6 +107,6 @@ export const Calendar = ({
 Calendar.propTypes = {
   year: propTypes.number.isRequired,
   month: propTypes.number.isRequired,
-  selectedDates: propTypes.object,
+  selectedDates: propTypes.array,
   updateUserDateSelection: propTypes.func,
 };

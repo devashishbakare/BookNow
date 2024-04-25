@@ -30,3 +30,13 @@ export const getHotelsFromCity = async (cityName) => {
     return { success: false, error: error.response.data.error };
   }
 };
+
+export const getHotelDetails = async (hotelId) => {
+  try {
+    const response = await axios.get(`${baseUrl}/hotel/${hotelId}`);
+    const { data } = response.data;
+    return { success: true, data };
+  } catch (error) {
+    return { success: false, error: error.response.data.error };
+  }
+};
