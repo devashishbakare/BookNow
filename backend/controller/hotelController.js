@@ -146,7 +146,7 @@ const getCityHotel = async (req, res) => {
 
 const getHotelData = async (req, res) => {
   try {
-    const hotelId = req.params.hotelId;
+    const hotelId = req.query.hotelId;
     //console.log(hotelId);
     if (!hotelId) {
       return res.status(400).json({ message: "input is missing" });
@@ -166,6 +166,40 @@ const getHotelData = async (req, res) => {
   }
 };
 
+const fetchSearchResult = async (req, res) => {
+  try {
+    const searchKey = req.query.key;
+    if (!searchKey) {
+      return res.status(400).json({ message: "search key not found" });
+    }
+
+    const searchWords = searchKey.split(" ");
+    const regexPatterns = searchWords.map((word) => new RegExp(word, "i"));
+    const searchFor = {
+      $or: [{ cityName: regexPatterns }, { name: regexPatterns }],
+    };
+
+    const result = await Hotel.find(searchFor);
+    const searchResult = result.map((data) => {
+      return {
+        id: data._id,
+        image: data.images[0],
+        hotelName: data.name,
+      };
+    });
+
+    return res.status(200).json({
+      data: searchResult,
+      message: "Search Result",
+      regex: searchWords,
+    });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "something went wrong while fetching result" });
+  }
+};
+
 module.exports = {
   confirmBooking,
   deleteAllDocuments,
@@ -175,4 +209,5 @@ module.exports = {
   addHotel,
   getCityHotel,
   getHotelData,
+  fetchSearchResult,
 };

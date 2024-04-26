@@ -33,7 +33,19 @@ export const getHotelsFromCity = async (cityName) => {
 
 export const getHotelDetails = async (hotelId) => {
   try {
-    const response = await axios.get(`${baseUrl}/hotel/${hotelId}`);
+    const response = await axios.get(`${baseUrl}/hotel?hotelId=${hotelId}`);
+    const { data } = response.data;
+    return { success: true, data };
+  } catch (error) {
+    return { success: false, error: error.response.data.error };
+  }
+};
+
+export const getSearchResult = async (searchKey) => {
+  try {
+    const response = await axios.get(
+      `${baseUrl}/hotel/search?key=${searchKey}`
+    );
     const { data } = response.data;
     return { success: true, data };
   } catch (error) {

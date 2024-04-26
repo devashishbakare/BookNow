@@ -5,6 +5,7 @@ const loginController = require("../controller/loginController");
 const hotelController = require("../controller/hotelController");
 
 router.get("/", homeController.testAPI);
+
 router.use("/host", require("./host"));
 router.use("/review", require("./review"));
 router.use("/hotel", require("./hotel"));

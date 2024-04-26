@@ -260,5 +260,7 @@ router.post("/addHotel", hotelController.addHotel);
  */
 
 router.get("/city/:cityName", hotelController.getCityHotel);
-router.get("/:hotelId", hotelController.getHotelData);
+// todo : here you need to add swagger code
+router.get("/", hotelController.getHotelData);
+router.get("/search", hotelController.fetchSearchResult);
 module.exports = router;
