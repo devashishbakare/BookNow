@@ -1,4 +1,3 @@
-import React from "react";
 import { Navbar } from "./Navbar";
 import { useEffect, useState } from "react";
 import { FcPlus } from "react-icons/fc";
@@ -43,21 +42,18 @@ export const BookingDetails = () => {
 
   return (
     <>
-      <div className="h-[100vh] w-[100vw] centerDiv flex-col">
+      <div className="h-auto w-[100vw] flex flex-col centerDiv">
         <div className="h-[8vh] w-[100vw] min-h-[72px] max-w-[1150px]">
           <Navbar />
         </div>
-        <div className="h-auto w-full flex centerDiv gap-3 addBorder max-w-[1150px]">
-          <div className="h-full w-[100vw] flex flex-col md:w-[63%]">
-            <div className="h-[7vh] w-full min-h-[64px] pl-2 addFont text-[1.2rem] flex items-center max-w-[1150px]">
+        <div className="h-auto w-full flex centerDiv gap-3 border-2 border-red-500 max-w-[1150px]">
+          <div className="h-full w-full flex flex-col border-2 border-red-500 md:w-[63%]">
+            <div className="h-[7vh] w-full min-h-[64px] pl-[3%] addFont text-[1.2rem] flex items-center max-w-[1150px]">
               Booking Details
             </div>
-            <form
-              action=""
-              className="w-full flex flex-col gap-2 h-[71vh] max-h-[650px] overflow-y-auto md:h-full md:max-h-[680px]"
-            >
+            <form action="" className="h-auto w-full flex flex-col gap-2 ">
               <div className="min-h-[60px] w-full flex flex-col gap-1 centerDiv">
-                <div className="h-[90%] w-[95%] flex items-center rounded-3xl border-[1px] border-gray-500">
+                <div className="h-[55px] w-[95%] flex items-center rounded-lg border-[1px] border-gray-500">
                   <input
                     type="text"
                     name="name"
@@ -70,7 +66,7 @@ export const BookingDetails = () => {
                 </div>
               </div>
               <div className="min-h-[60px] w-full flex flex-col gap-1 centerDiv">
-                <div className="h-[90%] w-[95%] flex items-center rounded-3xl border-[1px] border-gray-500">
+                <div className="h-[55px] w-[95%] flex items-center rounded-lg border-[1px] border-gray-500">
                   <input
                     type="email"
                     name="email"
@@ -83,7 +79,7 @@ export const BookingDetails = () => {
                 </div>
               </div>
               <div className="min-h-[60px] w-full flex flex-col gap-1 centerDiv">
-                <div className="h-[90%] w-[95%] flex items-center rounded-3xl border-[1px] border-gray-500">
+                <div className="h-[55px] w-[95%] flex items-center rounded-lg border-[1px] border-gray-500">
                   <input
                     type="number"
                     name="phone_Number"
@@ -95,12 +91,12 @@ export const BookingDetails = () => {
                   />
                 </div>
               </div>
-              <div className="h-auto w-auto ml-4">
+              <div className="h-auto w-full pl-3">
                 <textarea
                   name="additional_contact_information"
                   rows="4"
                   cols="45"
-                  className="rounded-lg border-[1px] border-gray-500 textAreaPlaceHolder outline-none overflow-x-hidden baseColor p-3 w-[96%]"
+                  className="rounded-lg border-[1px] border-gray-500 textAreaPlaceHolder outline-none overflow-x-hidden baseColor p-3 w-[97%]"
                   placeholder="Additional Contact Information"
                   //value={values.additional_contact_information}
                   // onChange={handleChange}
@@ -201,7 +197,7 @@ export const BookingDetails = () => {
                 </div>
                 <div className="h-auto min-h-[72px] w-full mt-5 flex ml-2 flex-col overflow-visible">
                   <div
-                    className="h-[50px] w-[95%] border-[1px] border-gray-500 bg-[#f9f8f8] ml-1 flex items-center"
+                    className="h-[50px] w-[95%] border-[1px] border-gray-500 bg-[#f9f8f8] ml-1 flex items-center rounded-lg"
                     onClick={() =>
                       setShowSpecialRequestDropdown(!showSpecialRequestDropdown)
                     }

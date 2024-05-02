@@ -260,7 +260,231 @@ router.post("/addHotel", hotelController.addHotel);
  */
 
 router.get("/city/:cityName", hotelController.getCityHotel);
-// todo : here you need to add swagger code
+
+/**
+ * @swagger
+ * /hotel:
+ *   get:
+ *     summary: Fetch hotel data by hotel ID
+ *     tags: [Hotel]
+ *     parameters:
+ *       - in: query
+ *         name: hotelId
+ *         required: true
+ *         description: The ID of the hotel to fetch data for.
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Successful response with hotel data.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: object
+ *                   description: Hotel data.
+ *                   properties:
+ *                     _id:
+ *                       type: string
+ *                       description: The ID of the hotel.
+ *                     cityName:
+ *                       type: string
+ *                       description: The name of the city where the hotel is located.
+ *                     backgroundImage:
+ *                       type: array
+ *                       items:
+ *                         type: string
+ *                         description: URL pointing to an image used as a background image.
+ *                       description: An array of URLs pointing to images used as background images.
+ *                     name:
+ *                       type: string
+ *                       description: The name of the hotel.
+ *                     images:
+ *                       type: array
+ *                       items:
+ *                         type: string
+ *                         description: URL pointing to an image of the hotel.
+ *                       description: An array of URLs pointing to images of the hotel.
+ *                     address:
+ *                       type: string
+ *                       description: The address of the hotel.
+ *                     description:
+ *                       type: string
+ *                       description: Description of the hotel.
+ *                     map:
+ *                       type: string
+ *                       description: URL of the map to locate the hotel.
+ *                     facilities:
+ *                       type: array
+ *                       items:
+ *                         type: boolean
+ *                         description: Boolean flags for facilities added in hotel rooms.
+ *                       description: Facilities added in hotel rooms.
+ *                     rating:
+ *                       type: number
+ *                       description: The rating of the hotel.
+ *                     roomPackages:
+ *                       type: array
+ *                       items:
+ *                         type: object
+ *                         properties:
+ *                           _id:
+ *                             type: string
+ *                             description: The ID of the room package.
+ *                           roomType:
+ *                             type: string
+ *                             description: The type of the room.
+ *                           numberOfPeopleAllowed:
+ *                             type: number
+ *                             description: The number of people allowed in the room.
+ *                           numberOfBeds:
+ *                             type: number
+ *                             description: The number of beds in the room.
+ *                           numberOfBathrooms:
+ *                             type: number
+ *                             description: The number of bathrooms in the room.
+ *                           mealsIncluded:
+ *                             type: boolean
+ *                             description: Whether meals are included in the room package.
+ *                           price:
+ *                             type: number
+ *                             description: The price of the room package.
+ *                       description: List of room packages offered by the hotel.
+ *                     reviews:
+ *                       type: array
+ *                       items:
+ *                         type: object
+ *                         properties:
+ *                           _id:
+ *                             type: string
+ *                             description: The ID of the review.
+ *                           name:
+ *                             type: string
+ *                             description: The name of the reviewer.
+ *                           rating:
+ *                             type: number
+ *                             description: The rating given in the review.
+ *                           reviewText:
+ *                             type: string
+ *                             description: The text of the review.
+ *                           date:
+ *                             type: string
+ *                             format: date-time
+ *                             description: The date of the review.
+ *                           createdAt:
+ *                             type: string
+ *                             format: date-time
+ *                             description: The creation date of the review.
+ *                           updatedAt:
+ *                             type: string
+ *                             format: date-time
+ *                             description: The last update date of the review.
+ *                       description: List of reviews for the hotel.
+ *                     host:
+ *                       type: object
+ *                       properties:
+ *                         _id:
+ *                           type: string
+ *                           description: The ID of the host.
+ *                         name:
+ *                           type: string
+ *                           description: The name of the host.
+ *                         joinDate:
+ *                           type: string
+ *                           format: date-time
+ *                           description: The join date of the host.
+ *                         phoneNumber:
+ *                           type: string
+ *                           description: The phone number of the host.
+ *                       description: Details of the host of the hotel.
+ *                 message:
+ *                   type: string
+ *                   description: A message indicating the success of fetching the hotel data.
+ *       400:
+ *         description: Bad request. Hotel ID is missing in the query parameters.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Error message indicating that the hotel ID is missing.
+ *       500:
+ *         description: Internal server error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Error message indicating that something went wrong while fetching the hotel data.
+ */
+
 router.get("/", hotelController.getHotelData);
+/**
+ * @swagger
+ * /hotel/search:
+ *   get:
+ *     summary: Fetch search results based on a key
+ *     tags: [Hotel]
+ *     parameters:
+ *       - in: query
+ *         name: key
+ *         required: true
+ *         description: The search key to search for hotels by city name or hotel name.
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Successful response with search results.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: array
+ *                   description: List of search results.
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: string
+ *                         description: The ID of the hotel.
+ *                       image:
+ *                         type: string
+ *                         description: URL of the first image of the hotel.
+ *                       hotelName:
+ *                         type: string
+ *                         description: The name of the hotel.
+ *                 message:
+ *                   type: string
+ *                   description: A message indicating the success of the search.
+ *       400:
+ *         description: Bad request. Search key not found in the query parameters.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Error message indicating that the search key was not found.
+ *       500:
+ *         description: Internal server error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Error message indicating that something went wrong while fetching the search result.
+ */
+
 router.get("/search", hotelController.fetchSearchResult);
 module.exports = router;

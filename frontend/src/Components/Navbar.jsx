@@ -123,7 +123,7 @@ export const Navbar = () => {
         </div>
         <div className="hidden sm:flex h-full flex-grow items-center">
           <div className="h-full w-full centerDiv flex gap-1">
-            <div className=" h-[70%] w-[88%] rounded-[40px] centerDiv bg-white mr-5 addBorder relative">
+            <div className=" h-[70%] w-[88%] rounded-[40px] centerDiv bg-white mr-5 relative">
               <input
                 className="h-[85%] w-[90%] border-none outline-none"
                 type="text"

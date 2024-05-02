@@ -36,9 +36,14 @@ const boookingDetailsSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    checkInDate: {
-      type: Date,
-      required: true,
+    selectedDates: {
+      type: [
+        {
+          month: Number,
+          dates: [Number],
+        },
+      ],
+      default: [],
     },
     formData: {
       type: mongoose.Schema.Types.Mixed,

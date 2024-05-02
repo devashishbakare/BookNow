@@ -1,12 +1,11 @@
 import propTypes from "prop-types";
-import { useState } from "react";
 export const Calendar = ({
   year,
   month,
   selectedDates,
-  updateUserDateSelection,
+  userMonthDateSelection,
+  setUserMonthDateSelection,
 }) => {
-  const [monthDateSelectionMapper, setMonthDateSelectionMapper] = useState({});
   let totalDayInMonth = new Date(year, month, 0).getDate();
   let selectedDateMapper = new Array(totalDayInMonth + 1).fill(0);
   if (selectedDates.length > 0) {
@@ -36,7 +35,7 @@ export const Calendar = ({
   if (week.length > 0) weekInMonth.push(week);
 
   const updateDateSelection = (month, day, dateAlreadyAdded) => {
-    let newMap = { ...monthDateSelectionMapper };
+    let newMap = { ...userMonthDateSelection };
     if (dateAlreadyAdded == true) {
       // we have to remove it
       let set = newMap[month];
@@ -53,8 +52,7 @@ export const Calendar = ({
         newMap[month].add(day);
       }
     }
-    updateUserDateSelection(newMap);
-    setMonthDateSelectionMapper(newMap);
+    setUserMonthDateSelection(newMap);
   };
 
   return (
@@ -75,8 +73,8 @@ export const Calendar = ({
                         updateDateSelection(
                           month,
                           day,
-                          monthDateSelectionMapper[month] &&
-                            monthDateSelectionMapper[month].has(day)
+                          userMonthDateSelection[month] &&
+                            userMonthDateSelection[month].has(day)
                         )
                       }
                       className={`h-[35px] w-[35px] rounded-[50%] addBorder centerDiv ${
@@ -85,8 +83,8 @@ export const Calendar = ({
                           : `text-[green] cursor-pointer`
                       }
                        ${
-                         monthDateSelectionMapper[month] &&
-                         monthDateSelectionMapper[month].has(day)
+                         userMonthDateSelection[month] &&
+                         userMonthDateSelection[month].has(day)
                            ? "bg-[black] text-[white]"
                            : ""
                        }
@@ -108,5 +106,6 @@ Calendar.propTypes = {
   year: propTypes.number.isRequired,
   month: propTypes.number.isRequired,
   selectedDates: propTypes.array,
-  updateUserDateSelection: propTypes.func,
+  userMonthDateSelection: propTypes.object,
+  setUserMonthDateSelection: propTypes.func,
 };

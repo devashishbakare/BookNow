@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Navbar } from "./Navbar";
 import { Contact } from "./Contact";
 import { Calendar } from "./Calendar";
 import Slider from "react-slick";
-import cities from "../assets/data/CitiesData";
-import { sampleDates, sampleRoomPackage, map } from "../utils/constants";
+import { sampleRoomPackage } from "../utils/constants";
 import { getHotelDetails } from "../utils/api";
 import { showErrorNotification } from "../utils/notification";
 import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
@@ -49,34 +48,41 @@ export const Hotel = () => {
     speed: 500,
   };
 
-  const date = new Date();
-  const dates = {
-    year: date.getFullYear(),
-    month: date.getMonth() + 1,
-  };
+  const navigate = useNavigate();
+  const [navigateData, setNavigateData] = useState();
   const { hotelId } = useParams();
-
   const [showMoreDesc, setShowMoreDesc] = useState(false);
   const [userWidePackageSelection, setUserWidePackageSelection] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [hotelDetails, setHotelDetails] = useState();
   const [roomPackageSelectionIndex, setRoomPackageSelectionIndex] = useState(0);
+  const [calanderDetails, setCalendarDetails] = useState({
+    month: dates.month,
+    monthName,
+  });
+  const date = new Date();
+  const dates = {
+    year: date.getFullYear(),
+    month: date.getMonth() + 1,
+  };
   let monthName = new Date(dates.year, dates.month - 1).toLocaleString(
     "default",
     {
       month: "long",
     }
   );
-  const [calanderDetails, setCalendarDetails] = useState({
-    month: dates.month,
-    monthName,
-  });
 
   useEffect(() => {
     setIsLoading(true);
     const fetchHotelData = async (id) => {
       const response = await getHotelDetails(id);
       if (response.success === true) {
+        const data = {
+          id: response.data._id,
+          selectedDates: response.data.selectedDates,
+          roomPackages: response.data.roomPackages,
+        };
+        setNavigateData(data);
         setUserWidePackageSelection(
           new Array(response.data.reviews.length).fill(false)
         );
@@ -113,17 +119,16 @@ export const Hotel = () => {
     }
   };
   const [userMonthDateSelection, setUserMonthDateSelection] = useState({});
-  const updateUserDateSelection = (updatedMonthDateMapper) => {
-    setUserMonthDateSelection(updatedMonthDateMapper);
-  };
-
   const handleWidePackageSelection = (index) => {
     const prevSelection = { ...userWidePackageSelection };
     prevSelection[index] = !prevSelection[index];
     setUserWidePackageSelection(prevSelection);
   };
 
-  const handleBookNow = () => {};
+  const handleBookNow = () => {
+    console.log(navigateData);
+    navigate("/bookHotel", { state: navigateData });
+  };
   return (
     <>
       {isLoading ? (
@@ -153,7 +158,7 @@ export const Hotel = () => {
                   className="h-full w-full object-cover"
                 /> */}
               </div>
-              <div className="h-full w-full flex flex-col md:flex-row">
+              <div className="h-full w-full flex flex-col pt-[20px] md:flex-row">
                 <div className="h-auto w-[100%] flex flex-col centerDiv md:w-[65%]">
                   <div className="h-auto min-h-[20vh] w-full flex flex-col p-3">
                     <div className="addFont text-[20px] p-2 font-semibold">
@@ -310,7 +315,7 @@ export const Hotel = () => {
                       <div className="h-[35px] w-full items-center addFont text-[20px] pl-[20px]">
                         Available Dates for this vanue
                       </div>
-                      <div className="h-[70px] w-[320px] flex ml-3 centerDiv">
+                      <div className="h-[70px] w-[320px] flex ml-3 centerDiv border-2 border-gray-400">
                         {dates.month != calanderDetails.month && (
                           <span
                             onClick={() => updateMonth("prev")}
@@ -332,12 +337,13 @@ export const Hotel = () => {
                         )}
                       </div>
                     </div>
-                    <div className="h-full w-full pl-5 mt-3 mb-3">
+                    <div className="h-full ml-[12px] w-[320px] p-2 mb-3 border-2 border-gray-400">
                       <Calendar
                         year={dates.year}
                         month={calanderDetails.month}
                         selectedDates={hotelDetails.selectedDates}
-                        updateUserDateSelection={updateUserDateSelection}
+                        userMonthDateSelection={userMonthDateSelection}
+                        setUserMonthDateSelection={setUserMonthDateSelection}
                       />
                     </div>
                   </div>
@@ -553,7 +559,10 @@ export const Hotel = () => {
                           }{" "}
                           Room
                         </div>
-                        <button className="h-[50px] w-[150px] addFont ml-[3%] rounded-md bg-[#274195] text-white">
+                        <button
+                          onClick={() => handleBookNow()}
+                          className="h-[50px] w-[150px] addFont ml-[3%] rounded-md bg-[#274195] text-white"
+                        >
                           Book Now
                         </button>
                       </div>
@@ -570,7 +579,7 @@ export const Hotel = () => {
                             <div
                               onClick={() => handleWidePackageSelection(index)}
                               key={roomPackage._id}
-                              className={`h-[70px] w-full flex border-2 border-black rounded-lg mt-4 ${
+                              className={`h-[70px] w-full flex border-2 border-gray-400 rounded-lg mt-4 ${
                                 userWidePackageSelection[index]
                                   ? "bg-[#003b95] text-[white] border-none rounded-none"
                                   : ""
