@@ -200,6 +200,18 @@ const fetchSearchResult = async (req, res) => {
   }
 };
 
+const bookHotel = async (req, res) => {
+  try {
+    // console.log(req.userId);
+    // console.log(req.body);
+    return res.status(200).json({ message: "request processed" });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "something went wrong while booking hotel" });
+  }
+};
+
 module.exports = {
   confirmBooking,
   deleteAllDocuments,
@@ -210,4 +222,5 @@ module.exports = {
   getCityHotel,
   getHotelData,
   fetchSearchResult,
+  bookHotel,
 };

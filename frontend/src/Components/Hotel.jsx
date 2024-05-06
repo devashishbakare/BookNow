@@ -56,14 +56,12 @@ export const Hotel = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [hotelDetails, setHotelDetails] = useState();
   const [roomPackageSelectionIndex, setRoomPackageSelectionIndex] = useState(0);
-  const [calanderDetails, setCalendarDetails] = useState({
-    month: dates.month,
-    monthName,
-  });
+
   const date = new Date();
   const dates = {
     year: date.getFullYear(),
     month: date.getMonth() + 1,
+    day: date.getDate(),
   };
   let monthName = new Date(dates.year, dates.month - 1).toLocaleString(
     "default",
@@ -71,6 +69,10 @@ export const Hotel = () => {
       month: "long",
     }
   );
+  const [calanderDetails, setCalendarDetails] = useState({
+    month: dates.month,
+    monthName,
+  });
 
   useEffect(() => {
     setIsLoading(true);
@@ -127,7 +129,7 @@ export const Hotel = () => {
 
   const handleBookNow = () => {
     console.log(navigateData);
-    navigate("/bookHotel", { state: navigateData });
+    navigate(`/bookHotel/${hotelId}`, { state: navigateData });
   };
   return (
     <>
@@ -341,6 +343,7 @@ export const Hotel = () => {
                       <Calendar
                         year={dates.year}
                         month={calanderDetails.month}
+                        day={dates.day}
                         selectedDates={hotelDetails.selectedDates}
                         userMonthDateSelection={userMonthDateSelection}
                         setUserMonthDateSelection={setUserMonthDateSelection}

@@ -2,13 +2,16 @@ import { useRef, useState } from "react";
 import { IoSearchOutline, IoArrowBack } from "react-icons/io5";
 import { getSearchResult } from "../utils/api";
 import { showErrorNotification } from "../utils/notification";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 export const Navbar = () => {
+  const navigate = useNavigate();
+  const timeoutId = useRef(null);
+  const location = useLocation();
+  const currentPath = location.pathname;
+  const token = localStorage.getItem("token");
   const [searchBarClicked, setSearchBarClicked] = useState(false);
   const [searchResult, setSearchResult] = useState();
   const [searchKey, setSearchKey] = useState();
-  const navigate = useNavigate();
-  const timeoutId = useRef(null);
 
   const handleInput = (event) => {
     let key = event.target.value;
@@ -19,7 +22,6 @@ export const Navbar = () => {
     }, 800);
   };
   const fetchResultForSearch = async (searchFor) => {
-    console.log("searchFor " + searchFor);
     const response = await getSearchResult(searchFor);
     console.log(response);
     if (response.success == true) {
@@ -37,6 +39,15 @@ export const Navbar = () => {
   const navigateToHotel = (hotelId) => {
     closeSearchResult();
     navigate(`/hotel/${hotelId}`);
+  };
+
+  const navigatePage = () => {
+    navigate("/signIn", { state: currentPath });
+  };
+
+  const signOutUser = () => {
+    localStorage.removeItem("token");
+    navigate("/");
   };
 
   return (
@@ -167,10 +178,22 @@ export const Navbar = () => {
             </div>
           </div>
         </div>
-        {!searchBarClicked && (
+        {!searchBarClicked && token == null ? (
           <>
-            <div className="h-full w-[80px] flex-shrink-0 centerDiv text-[1.1rem] text-[#ffffff] pr-3">
+            <div
+              onClick={() => navigatePage()}
+              className="h-full w-[80px] flex-shrink-0 centerDiv text-[1.1rem] text-[#ffffff] pr-3"
+            >
               Sign-In
+            </div>
+          </>
+        ) : (
+          <>
+            <div
+              onClick={() => signOutUser()}
+              className="h-full w-[80px] flex-shrink-0 centerDiv text-[1.1rem] text-[#ffffff] pr-3"
+            >
+              Sign-out
             </div>
           </>
         )}

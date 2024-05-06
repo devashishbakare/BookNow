@@ -1,5 +1,5 @@
 import axios from "axios";
-import { baseUrl } from "./constants";
+import { baseUrl, createHeader } from "./constants";
 
 export const signIn = async (signInData) => {
   try {
@@ -45,6 +45,21 @@ export const getSearchResult = async (searchKey) => {
   try {
     const response = await axios.get(
       `${baseUrl}/hotel/search?key=${searchKey}`
+    );
+    const { data } = response.data;
+    return { success: true, data };
+  } catch (error) {
+    return { success: false, error: error.response.data.error };
+  }
+};
+
+export const confirmBooking = async (token, bookingInformation) => {
+  try {
+    const headers = createHeader(token);
+    const response = await axios.post(
+      `${baseUrl}/hotel/confirmBooking`,
+      bookingInformation,
+      { headers }
     );
     const { data } = response.data;
     return { success: true, data };

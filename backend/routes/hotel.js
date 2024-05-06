@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const hotelController = require("../controller/hotelController");
+const authenticate = require("../config/authMiddleware");
 
 router.get("/fetchReview", hotelController.getHotelReview);
 
@@ -487,4 +488,7 @@ router.get("/", hotelController.getHotelData);
  */
 
 router.get("/search", hotelController.fetchSearchResult);
+
+router.post("/confirmBooking", authenticate, hotelController.bookHotel);
+
 module.exports = router;

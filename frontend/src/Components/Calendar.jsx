@@ -2,6 +2,7 @@ import propTypes from "prop-types";
 export const Calendar = ({
   year,
   month,
+  day,
   selectedDates,
   userMonthDateSelection,
   setUserMonthDateSelection,
@@ -20,36 +21,41 @@ export const Calendar = ({
 
   //console.log(selectedDateMapper);
   let weekInMonth = [];
-  let day = 1;
+  let dayCounter = 1;
   let week = [];
-  while (day <= totalDayInMonth) {
-    if (day % 7 != 0) {
-      week.push(day);
+  while (dayCounter <= totalDayInMonth) {
+    if (dayCounter % 7 != 0) {
+      week.push(dayCounter);
     } else {
-      week.push(day);
+      week.push(dayCounter);
       weekInMonth.push(week);
       week = [];
     }
-    day++;
+    dayCounter++;
   }
   if (week.length > 0) weekInMonth.push(week);
 
-  const updateDateSelection = (month, day, dateAlreadyAdded) => {
+  const updateDateSelection = (month, selectedDay, dateAlreadyAdded) => {
+    if (selectedDay < day) return;
     let newMap = { ...userMonthDateSelection };
     if (dateAlreadyAdded == true) {
       // we have to remove it
       let set = newMap[month];
-      set.delete(day);
-      newMap[month] = new Set(set);
+      set.delete(selectedDay);
+      if (set.size == 0) {
+        delete newMap[month];
+      } else {
+        newMap[month] = new Set(set);
+      }
     } else {
       // we have to add
       if (newMap[month]) {
         let set = newMap[month];
-        set.add(day);
+        set.add(selectedDay);
         newMap[month] = set;
       } else {
         newMap[month] = new Set();
-        newMap[month].add(day);
+        newMap[month].add(selectedDay);
       }
     }
     setUserMonthDateSelection(newMap);
@@ -65,32 +71,32 @@ export const Calendar = ({
                 key={`week-${weekIndex}-${dayInWeek[0]}-`}
                 className="flex gap-2"
               >
-                {dayInWeek.map((day) => (
+                {dayInWeek.map((weekDay) => (
                   <>
                     <span
-                      key={`week-${weekIndex}-${dayInWeek[0]}-${day}`}
+                      key={`week-${weekIndex}-${dayInWeek[0]}-${weekDay}`}
                       onClick={() =>
                         updateDateSelection(
                           month,
-                          day,
+                          weekDay,
                           userMonthDateSelection[month] &&
-                            userMonthDateSelection[month].has(day)
+                            userMonthDateSelection[month].has(weekDay)
                         )
                       }
                       className={`h-[35px] w-[35px] rounded-[50%] addBorder centerDiv ${
-                        selectedDateMapper[day] == 1
-                          ? `text-[red] cursor-none`
+                        selectedDateMapper[weekDay] == 1 || weekDay < day
+                          ? `text-[red] cursor-none opacity-40`
                           : `text-[green] cursor-pointer`
                       }
                        ${
                          userMonthDateSelection[month] &&
-                         userMonthDateSelection[month].has(day)
+                         userMonthDateSelection[month].has(weekDay)
                            ? "bg-[black] text-[white]"
                            : ""
                        }
                       `}
                     >
-                      {day}
+                      {weekDay}
                     </span>
                   </>
                 ))}
@@ -105,6 +111,7 @@ export const Calendar = ({
 Calendar.propTypes = {
   year: propTypes.number.isRequired,
   month: propTypes.number.isRequired,
+  day: propTypes.number.isRequired,
   selectedDates: propTypes.array,
   userMonthDateSelection: propTypes.object,
   setUserMonthDateSelection: propTypes.func,

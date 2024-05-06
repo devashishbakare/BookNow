@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { useFormik } from "formik";
 import { SignInSchema } from "../ValidationSchemas/SignInSchema";
@@ -11,8 +12,9 @@ import {
 import { ToastContainer } from "react-toastify";
 
 export const SignInForm = () => {
+  const navigate = useNavigate();
+  const pathToNavigate = useLocation().state;
   const [isUserSignIn, setIsUserSignIn] = useState(true);
-
   const initialValues = {
     name: "",
     email: "",
@@ -27,7 +29,9 @@ export const SignInForm = () => {
     onSubmit: async (values, action) => {
       const response = await signUp(values);
       if (response.success === true) {
-        showSuccessNotification("Login Successfull");
+        localStorage.setItem("token", response.data);
+        showSuccessNotification("Sign Up Successfull");
+        navigate(`${pathToNavigate}`);
       } else {
         showErrorNotification(response.error);
       }
@@ -41,7 +45,9 @@ export const SignInForm = () => {
     onSubmit: async (values, action) => {
       const response = await signIn(values);
       if (response.success === true) {
+        localStorage.setItem("token", response.data);
         showSuccessNotification("Login Successfull");
+        navigate(`${pathToNavigate}`);
       } else {
         showErrorNotification(response.error);
       }

@@ -20,7 +20,7 @@ function App() {
           <Route path="/uploadImages" element={<UpdateImages />} />
           <Route path="/bookingDetails" element={<BookingDetails />} />
           <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/bookHotel" element={<ConfirmBooking />} />
+          <Route path="/bookHotel/:hotelId" element={<ConfirmBooking />} />
           <Route
             path="/bookingConfirmation"
             element={<BookingConfirmation />}

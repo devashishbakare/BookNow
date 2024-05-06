@@ -25,7 +25,7 @@ const boookingDetailsSchema = mongoose.Schema(
 
 const mongoose = require("mongoose");
 const AutoIncrement = require("mongoose-sequence")(mongoose);
-
+//todo : in formData you need to add which payment system he used to book a hotel
 const boookingDetailsSchema = mongoose.Schema(
   {
     bookingId: {
