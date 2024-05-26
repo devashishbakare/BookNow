@@ -5,7 +5,8 @@ const loginController = require("../controller/loginController");
 const hotelController = require("../controller/hotelController");
 
 router.get("/", homeController.testAPI);
-
+router.post("/addToQueue", homeController.addToEmailQueue);
+router.use("/payment", require("./payments"));
 router.use("/host", require("./host"));
 router.use("/review", require("./review"));
 router.use("/hotel", require("./hotel"));

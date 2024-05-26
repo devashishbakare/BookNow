@@ -1,49 +1,43 @@
-import React from "react";
 import { Navbar } from "./Navbar";
-import { FcApproval } from "react-icons/fc";
-import BookingDetailsData from "../assets/data/BookingDetailsData";
 import { BookingSummery } from "./BookingSummery";
+import { useLocation } from "react-router-dom";
 export const BookingConfirmation = () => {
+  const location = useLocation();
+  const sharedObject = location.state;
+  const bookingDetails = sharedObject.data;
+  const roomType = sharedObject.selectedPackage;
   return (
     <>
       <div className="flex centerDiv flex-col baseColor">
-        <div className="h-[8vh] w-[100%] centerDiv max-w-[1150px]">
+        <div className="h-[8vh] w-[100%] centerDiv max-w-[1150px] shadow-xl">
           <Navbar />
         </div>
-        <div className="max-w-[1150px] w-[100vw] h-[100%] flex md:flex md:items-center md:justify-center">
-          <div className="flex flex-col h-full w-full overflow-y-scroll  md:w-[50%] md:flex md:items-center md:justify-center">
-            <div className="h-[8vh]  min-h-[64px] w-full flex centerDiv addFont text-[1.2rem]">
-              Your booking is confirmed{" "}
-              <FcApproval className="ml-2 text-[1.8rem]" />
-            </div>
-            <div className="h-auto w-full pt-5 pb-5 pl-10 pr-10 centerDiv md:hidden">
-              Thank you for booking with us here is your booking summery ...
-            </div>
-            <div className="hidden md:flex h-[5vh] w-full centerDiv mb-3">
-              Thank you for booking with us
-            </div>
-            <div className="min-h-[500px] h-auto w-full flex flex-col gap-1 centerDiv md:hidden">
-              <BookingSummery />
-            </div>
-            <div className="hidden md:flex h-[500px] w-[80%]">
-              <img
-                src="http://res.cloudinary.com/djgouef8q/image/upload/v1711367354/vnvwlp1kwlwyb2bpwxod.jpg"
-                alt=""
-                className="h-full w-full object-cover"
+        <div className="max-w-[1150px] w-[100vw] h-[92vh] flex shadow-xl">
+          <div className="flex flex-col h-full w-full overflow-y-scroll md:w-[50%] md:flex md:items-center md:justify-center">
+            <div className="h-auto w-full flex flex-col gap-3 pt-2 md:hidden">
+              <BookingSummery
+                bookingDetails={bookingDetails}
+                roomType={roomType}
               />
             </div>
-            <div className="h-[5vh] min-h-[50px] w-full centerDiv mt-3">
-              <button className="mr-2 p-3 rounded-lg bg-[#003b95] text-white shadow-md">
-                Explore More
-              </button>
+            <div className="hidden rounded-lg md:flex flex-col justify-between h-[720px] w-[80%] bg-[#003b95] text-[#f8f8f8] lg:w-[65%]">
+              <div className="mt-2 pl-5 pt-5 font-gilroy-bold text-[45px] tracking-tighter leading-[61.5px] text-left font-bold">
+                BookNow
+              </div>
+              <div className="mb-6 pr-7 pb-5 font-gilroy-bold text-[45px] tracking-tight leading-[60.5px] text-right font-bold">
+                Thank you for booking with us
+              </div>
             </div>
           </div>
-          <div className="hidden md:flex h-full w-[50%] flex-col">
-            <div className="h-auto w-full min-h-[64px] flex centerDiv addFont text-[1.2rem]">
+          <div className="hidden md:flex h-full w-[50%] flex-col gap-3">
+            <div className="h-auto w-[85%] min-h-[64px] mb-[20px] flex centerDiv addFont text-[1.2rem]">
               Booking Summery
             </div>
-            <div className="min-h-[500px] h-auto w-full flex flex-col gap-1 centerDiv">
-              <BookingSummery />
+            <div className="min-h-[500px] h-auto w-full flex flex-col gap-3">
+              <BookingSummery
+                bookingDetails={bookingDetails}
+                roomType={roomType}
+              />
             </div>
           </div>
         </div>

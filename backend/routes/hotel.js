@@ -489,6 +489,154 @@ router.get("/", hotelController.getHotelData);
 
 router.get("/search", hotelController.fetchSearchResult);
 
+/**
+ * @swagger
+ * /hotel/confirmBooking:
+ *   post:
+ *     summary: Book a hotel
+ *     tags: [Hotel]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 description: Name of the person booking the hotel
+ *               email:
+ *                 type: string
+ *                 description: Email of the person booking the hotel
+ *               phone_number:
+ *                 type: string
+ *                 description: Phone number of the person booking the hotel
+ *               additional_contact_information:
+ *                 type: string
+ *                 description: Additional contact information
+ *               hotelName:
+ *                 type: string
+ *                 description: Name of the hotel
+ *               hotelId:
+ *                 type: string
+ *                 description: ID of the hotel
+ *               dataforDateSelection:
+ *                 type: array
+ *                 items:
+ *                   type: object
+ *                   properties:
+ *                     month:
+ *                       type: integer
+ *                       description: Month for the date selection
+ *                     dates:
+ *                       type: array
+ *                       items:
+ *                         type: integer
+ *                         description: Dates for the selected month
+ *                   description: Array of months with selected dates
+ *                 description: Date selection data
+ *               userPackageSelection_id:
+ *                 type: string
+ *                 description: ID of the selected room package
+ *               paymentSelectionType:
+ *                 type: integer
+ *                 description: Type of payment selection (0 for Pay On Arrival, 1 for Online Payment)
+ *               totalAmount:
+ *                 type: number
+ *                 description: Total amount to be paid
+ *     responses:
+ *       200:
+ *         description: Successfully booked the hotel
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: object
+ *                   description: Booking details
+ *                   properties:
+ *                     _id:
+ *                       type: string
+ *                       description: ID of the booking
+ *                     name:
+ *                       type: string
+ *                       description: Name of the person who booked the hotel
+ *                     email:
+ *                       type: string
+ *                       description: Email of the person who booked the hotel
+ *                     phoneNumber:
+ *                       type: string
+ *                       description: Phone number of the person who booked the hotel
+ *                     additionalContactInformation:
+ *                       type: string
+ *                       description: Additional contact information
+ *                     hotelName:
+ *                       type: string
+ *                       description: Name of the hotel
+ *                     hotelId:
+ *                       type: string
+ *                       description: ID of the hotel
+ *                     selectedDates:
+ *                       type: array
+ *                       items:
+ *                         type: object
+ *                         properties:
+ *                           month:
+ *                             type: integer
+ *                             description: Month for the date selection
+ *                           dates:
+ *                             type: array
+ *                             items:
+ *                               type: integer
+ *                               description: Dates for the selected month
+ *                         description: Array of months with selected dates
+ *                       description: Date selection data
+ *                     totalAmount:
+ *                       type: number
+ *                       description: Total amount to be paid
+ *                     paymentMethod:
+ *                       type: string
+ *                       description: Method of payment
+ *                     roomPackage:
+ *                       type: string
+ *                       description: ID of the selected room package
+ *                     createdAt:
+ *                       type: string
+ *                       format: date-time
+ *                       description: Creation date of the booking
+ *                     updatedAt:
+ *                       type: string
+ *                       format: date-time
+ *                       description: Last update date of the booking
+ *                 message:
+ *                   type: string
+ *                   description: Request processed message
+ *       400:
+ *         description: Bad request. Missing required fields in the request body.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Error message indicating missing required fields
+ *       500:
+ *         description: Internal server error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error_message:
+ *                   type: string
+ *                   description: Detailed error message
+ *                 message:
+ *                   type: string
+ *                   description: Error message indicating that something went wrong while booking the hotel
+ */
+
 router.post("/confirmBooking", authenticate, hotelController.bookHotel);
 
 module.exports = router;

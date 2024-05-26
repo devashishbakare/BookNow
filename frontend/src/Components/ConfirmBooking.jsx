@@ -4,20 +4,28 @@ import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { Calendar } from "./Calendar";
 import { IoArrowBack, IoArrowForward } from "react-icons/io5";
 import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
+import { MdCurrencyRupee } from "react-icons/md";
 import { FaSortDown, FaSortUp } from "react-icons/fa";
 import { useFormik } from "formik";
 import Spinners from "../utils/Spinners";
 import { HotelBookingFormSchema } from "../ValidationSchemas/hotelBookingFormSchema";
-import { getHotelDetails, confirmBooking } from "../utils/api";
+import {
+  getHotelDetails,
+  confirmBooking,
+  razorpayCreateOrder,
+  varifyBooking,
+} from "../utils/api";
 import {
   showErrorNotification,
   showSuccessNotification,
+  showWarningNotification,
 } from "../utils/notification";
 import { ToastContainer } from "react-toastify";
 export const ConfirmBooking = () => {
   const { hotelId } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
+  const [totalAmount, setTotalAmount] = useState(0);
   const [packageDropDownBox, setPackageDropDownBox] = useState(false);
   const [paymentSelection, setPaymentSelection] = useState(false);
   const [userMonthDateSelection, setUserMonthDateSelection] = useState({});
@@ -79,38 +87,70 @@ export const ConfirmBooking = () => {
         if (localStorage.getItem("token") == null) {
           const currentPath = location.pathname;
           navigate("/signIn", { state: currentPath });
-        } else if (
-          toggleCollection.selectedPackageIndex == -1 ||
-          Object.keys(userMonthDateSelection).length == 0
-        ) {
+        } else if (totalAmount == 0) {
           showErrorNotification("Date and Package Required");
         } else {
           let selectedPayment = paymentSelection == false ? 0 : 1;
-          const dataforDateSelection = getDateSection(userMonthDateSelection);
+          let dataforDateSelection = getDateSection(userMonthDateSelection);
           console.log(dataforDateSelection);
-          const data = {
+          const userCollecetedData = {
             name: values.name,
             email: values.email,
             phone_number: values.phone_number,
             additional_contact_information:
               values.additional_contact_information,
+            hotelId: hotelDetails._id,
+            hotelName: hotelDetails.name,
             dataforDateSelection,
             userPackageSelection_id:
               hotelDetails.roomPackages[toggleCollection.selectedPackageIndex]
                 ._id,
             paymentSelectionType: selectedPayment,
+            totalAmount,
           };
           const token = localStorage.getItem("token");
-          const response = await confirmBooking(token, data);
-          if (response.success == true) {
-            showSuccessNotification("Your booking is confirmed");
+
+          if (paymentSelection == false) {
+            const response = await confirmBooking(token, userCollecetedData);
+            if (response.success == true) {
+              showSuccessNotification("Your booking is confirmed");
+              const sharedDate = {
+                data: response.data,
+                selectedPackage:
+                  hotelDetails.roomPackages[
+                    toggleCollection.selectedPackageIndex
+                  ].roomType,
+              };
+              navigate("/bookingConfirmation", { state: sharedDate });
+            } else {
+              console.log("request faild " + response.error);
+              showErrorNotification(
+                "Un-Authorized request, please login and try again"
+              );
+            }
           } else {
-            showErrorNotification(
-              "Un-Authorized request, please login and try again"
+            const selectedPackageData = {
+              amount: totalAmount,
+              roomPackageId:
+                hotelDetails.roomPackages[toggleCollection.selectedPackageIndex]
+                  ._id,
+            };
+            setIsLoading(true);
+            const response = await razorpayCreateOrder(
+              token,
+              selectedPackageData
             );
+            if (response.success == true) {
+              console.log("booking has been created");
+              handleOpenRazorpay(response.data, userCollecetedData);
+            } else {
+              showErrorNotification(response.error);
+            }
+            setIsLoading(false);
           }
           setPackageDropDownBox(false);
           setUserMonthDateSelection({});
+          setTotalAmount(0);
           const packageSelectionData = {
             selectedPackageIndex: -1,
             packageOption: new Array(hotelDetails.roomPackages.length).fill(
@@ -123,8 +163,62 @@ export const ConfirmBooking = () => {
       },
     });
 
+  const handleOpenRazorpay = (createdBookingDetails, userCollecetedData) => {
+    console.log("handle razer pay open");
+    console.log(createdBookingDetails);
+    var options = {
+      key: import.meta.env.REZ_KEY,
+      amount: Number(createdBookingDetails.amount),
+      currency: createdBookingDetails.currency,
+      name: "BookNow",
+      description: "Test Transaction",
+      image:
+        "http://res.cloudinary.com/djgouef8q/image/upload/v1707109963/p8lfmwymj1fnxoddeaaa.png",
+      order_id: createdBookingDetails.id,
+      handler: async function (response) {
+        const data = {
+          booking_id: createdBookingDetails.id,
+          razorpay_order_id: response.razorpay_order_id,
+          razorpay_signature: response.razorpay_signature,
+          razorpay_payment_id: response.razorpay_payment_id,
+        };
+        const responseForVarification = await varifyBooking(data);
+        if (responseForVarification.success === true) {
+          confirmBookingWithPaymentGateway(userCollecetedData);
+        }
+      },
+      prefill: {},
+      notes: {
+        address: "Razorpay Corporate Office",
+      },
+      theme: {
+        color: "#3399cc",
+      },
+    };
+    var rzp = new window.Razorpay(options);
+    rzp.open();
+  };
+
+  const confirmBookingWithPaymentGateway = async (userCollecetedData) => {
+    const token = localStorage.getItem("token");
+    const response = await confirmBooking(token, userCollecetedData);
+    if (response.success == true) {
+      showSuccessNotification("Your booking is confirmed");
+      const sharedDate = {
+        data: response.data,
+        selectedPackage:
+          hotelDetails.roomPackages[toggleCollection.selectedPackageIndex]
+            .roomType,
+      };
+      navigate("/bookingConfirmation", { state: sharedDate });
+    } else {
+      showErrorNotification(
+        "Un-Authorized request, please login and try again"
+      );
+    }
+  };
   const getDateSection = () => {
-    const storeResult = [];
+    let storeResult = [];
     for (let key in userMonthDateSelection) {
       let storeCurrentMonth = key;
       let storeCurrentSelectedDate = [];
@@ -163,7 +257,12 @@ export const ConfirmBooking = () => {
     }
   };
 
-  const updateToggleSelection = (index) => {
+  const updateToggleSelection = async (index) => {
+    if (Object.keys(userMonthDateSelection).length == 0) {
+      showWarningNotification("Please select Date first");
+      return;
+    }
+    const totalDaysSelected = await getDateSelectionCount();
     const updatedPackageOption = new Array(
       toggleCollection.packageOption.length
     ).fill(false);
@@ -172,7 +271,26 @@ export const ConfirmBooking = () => {
       selectedPackageIndex: index,
       packageOption: updatedPackageOption,
     };
+    let packageSelectionPrice =
+      hotelDetails.roomPackages[packageSelectionData.selectedPackageIndex]
+        .price;
+    setTotalAmount(packageSelectionPrice * totalDaysSelected);
     setToggleCollection(packageSelectionData);
+  };
+
+  const updateAmountFromCalendarSelection = (numberOfDays) => {
+    if (toggleCollection.selectedPackageIndex == -1) return;
+    let packageSelectionPrice =
+      hotelDetails.roomPackages[toggleCollection.selectedPackageIndex].price;
+    setTotalAmount(packageSelectionPrice * numberOfDays);
+  };
+
+  const getDateSelectionCount = () => {
+    let selecteDateCount = 0;
+    for (let month in userMonthDateSelection) {
+      selecteDateCount += userMonthDateSelection[month].size;
+    }
+    return selecteDateCount;
   };
 
   return (
@@ -342,10 +460,12 @@ export const ConfirmBooking = () => {
                         <Calendar
                           year={dates.year}
                           month={calanderDetails.month}
+                          currentMonth={dates.month}
                           day={dates.day}
                           selectedDates={hotelDetails.selectedDates}
                           userMonthDateSelection={userMonthDateSelection}
                           setUserMonthDateSelection={setUserMonthDateSelection}
+                          updateAmount={updateAmountFromCalendarSelection}
                         />
                       </div>
                     </div>
@@ -461,9 +581,21 @@ export const ConfirmBooking = () => {
                       </>
                     )}
                   </div>
+                  <div className="h-auto w-[90%] flex justify-between gap-3 mb-[10px] mt-[10px]">
+                    <div className="h-[60px] w-[150px] flex items-center pl-2 addFont">
+                      Total Amount
+                    </div>
+                    <div className="h-[60px] w-[70%] centerDiv gap-1">
+                      <span className="addFont text-[1.2rem]">
+                        {totalAmount}
+                      </span>
+                      <MdCurrencyRupee className="text-[1.2rem] font-bold" />
+                    </div>
+                  </div>
+
                   <div className="h-auto w-full flex flex-col gap-3 mb-[30px]">
                     <span className="h-[40px] w-full flex items-center ml-2 addFont">
-                      Confirm Booking With Payment
+                      Confirmed Your Booking
                     </span>
                     <div className="h-[80px] w-[90%] flex items-center gap-2">
                       <span

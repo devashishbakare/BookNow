@@ -1,88 +1,113 @@
-import React from "react";
-import BookingDetailsData from "../assets/data/BookingDetailsData";
-export const BookingSummery = () => {
+import propTypes from "prop-types";
+export const BookingSummery = ({ bookingDetails, roomType }) => {
+  const getMonthName = (monthNumber) => {
+    const date = new Date(2000, monthNumber - 1);
+    return date.toLocaleString("en-US", { month: "long" });
+  };
+
   return (
     <>
       <div className="min-h-[45px] h-auto w-full flex">
-        <div className="h-full w-[45%] flex flex-row-reverse items-center text-[#003b95]">
+        <div className="h-full w-[45%] flex centerDiv items-center text-[#003b95]">
           Booking ID :
         </div>
         <div className="h-full w-[60%] flex flex-row items-center pl-3">
-          {BookingDetailsData.bookingId}
+          {bookingDetails.bookingId}
         </div>
       </div>
       <div className="min-h-[45px] h-auto w-full flex">
-        <div className="h-full w-[45%] flex flex-row-reverse items-center text-[#003b95]">
+        <div className="h-full w-[45%] flex centerDiv items-center text-[#003b95]">
           Full Name :
         </div>
         <div className="h-full w-[60%] flex flex-row items-center pl-3">
-          {BookingDetailsData.fullName}
+          {bookingDetails.name}
         </div>
       </div>
       <div className="min-h-[45px] h-auto w-full flex">
-        <div className="h-full w-[45%] flex flex-row-reverse items-center text-[#003b95]">
+        <div className="h-full w-[45%] flex centerDiv items-center text-[#003b95]">
           Email :
         </div>
         <div className="h-full w-[60%] flex flex-row items-center pl-3">
-          {BookingDetailsData.email}
+          {bookingDetails.email}
         </div>
       </div>
       <div className="min-h-[45px] h-auto w-full flex">
-        <div className="h-full w-[45%] flex flex-row-reverse items-center text-[#003b95]">
+        <div className="h-full w-[45%] flex centerDiv items-center text-[#003b95]">
           Phone Number :
         </div>
         <div className="h-full w-[60%] flex flex-row items-center pl-3">
-          {BookingDetailsData.phoneNumber}
+          {bookingDetails.phoneNumber}
         </div>
       </div>
       <div className="min-h-[45px] h-auto w-full flex">
-        <div className="h-full w-[45%] flex flex-row-reverse items-center text-[#003b95]">
+        <div className="h-full w-[45%] flex centerDiv items-center text-[#003b95]">
           Additional Info :
         </div>
         <div className="h-full w-[60%] flex flex-row items-center pl-3">
-          {BookingDetailsData.additonContactInformation}
+          {bookingDetails.additionalContactInformation}
         </div>
       </div>
       <div className="min-h-[45px] h-auto w-full flex">
-        <div className="h-full w-[45%] flex flex-row-reverse items-center text-[#003b95]">
-          Check In Date :
+        <div className="h-full w-[45%] flex centerDiv items-center text-[#003b95]">
+          Hotel Name
         </div>
         <div className="h-full w-[60%] flex flex-row items-center pl-3">
-          {BookingDetailsData.checkInDate}
+          {bookingDetails.hotelName}
         </div>
       </div>
       <div className="min-h-[45px] h-auto w-full flex">
-        <div className="h-full w-[45%] flex flex-row-reverse items-center text-[#003b95]">
-          Check Out Date :
+        <div className="h-full w-[45%] flex centerDiv items-center text-[#003b95]">
+          Date
         </div>
         <div className="h-full w-[60%] flex flex-row items-center pl-3">
-          {BookingDetailsData.checkOutDate}
+          {bookingDetails.selectedDates.map((month) => (
+            <>
+              {month.dates.map((date) => (
+                <>
+                  <span className="">{date}</span>
+                </>
+              ))}
+              &nbsp;
+              <span className="">{getMonthName(month.month)}</span>
+              {", "}
+              &nbsp;
+            </>
+          ))}
         </div>
       </div>
       <div className="min-h-[45px] h-auto w-full flex">
-        <div className="h-full w-[45%] flex flex-row-reverse items-center text-[#003b95]">
-          No Of Adult :
+        <div className="h-full w-[45%] flex centerDiv items-center text-[#003b95]">
+          Room Package
         </div>
         <div className="h-full w-[60%] flex flex-row items-center pl-3">
-          {BookingDetailsData.numberOfAdults}
+          {roomType}
         </div>
       </div>
       <div className="min-h-[45px] h-auto w-full flex">
-        <div className="h-full w-[45%] flex flex-row-reverse items-center text-[#003b95]">
-          No Of Childern :
+        <div className="h-full w-[45%] flex centerDiv items-center text-[#003b95]">
+          Payment Method
         </div>
         <div className="h-full w-[60%] flex flex-row items-center pl-3">
-          {BookingDetailsData.numberOfChildren}
+          {bookingDetails.paymentMethod}
         </div>
       </div>
       <div className="min-h-[45px] h-auto w-full flex">
-        <div className="h-full w-[45%] flex flex-row-reverse items-center text-[#003b95]">
-          Total Price :
+        <div className="h-full w-[45%] flex centerDiv items-center text-[#003b95]">
+          Amount :
         </div>
         <div className="h-full w-[60%] flex flex-row items-center pl-3">
-          {BookingDetailsData.totalPrice}
+          {bookingDetails.totalAmount}
         </div>
+      </div>
+      <div className="min-h-[45px] h-auto w-full flex centerDiv">
+        <button className=" w-[80%] h-[60px] rounded-lg  text-black border-[1px] border-[#003b95] shadow-md">
+          Explore More
+        </button>
       </div>
     </>
   );
+};
+BookingSummery.propTypes = {
+  bookingDetails: propTypes.object,
+  roomType: propTypes.string,
 };

@@ -6,8 +6,8 @@ const dotenv = require("dotenv");
 dotenv.config();
 const cors = require("cors");
 const db = require("./config/mongoose");
-
 db();
+const emailWorker = require("./queue/emailQueue");
 app.use(cors());
 app.use(express.json());
 

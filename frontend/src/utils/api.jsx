@@ -67,3 +67,30 @@ export const confirmBooking = async (token, bookingInformation) => {
     return { success: false, error: error.response.data.error };
   }
 };
+
+export const razorpayCreateOrder = async (token, bookingInfo) => {
+  try {
+    const headers = createHeader(token);
+    const response = await axios.post(
+      `${baseUrl}/payment/createBooking`,
+      bookingInfo,
+      { headers }
+    );
+
+    const { data } = response.data;
+    console.log(data + " this is from API");
+    return { success: true, data };
+  } catch (error) {
+    return { success: false, error: error.response.data.error };
+  }
+};
+
+export const varifyBooking = async (bookingInfo) => {
+  try {
+    const response = await axios.post(`${baseUrl}/payment/verify`, bookingInfo);
+    const { message } = response.data;
+    return { success: true, message };
+  } catch (error) {
+    return { success: false, error: error.response.data.error };
+  }
+};

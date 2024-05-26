@@ -1,9 +1,9 @@
 const BookingDetails = require("../model/bookingDetails");
-const roomPackage = require("../model/roomPackage");
 const RoomPackage = require("../model/roomPackage");
 const Review = require("../model/review");
 const Hotel = require("../model/hotel");
-
+const User = require("../model/user");
+const { emailQueue } = require("../config/queue");
 const confirmBooking = async (req, res) => {
   console.log(req.body);
   try {
@@ -202,13 +202,103 @@ const fetchSearchResult = async (req, res) => {
 
 const bookHotel = async (req, res) => {
   try {
-    // console.log(req.userId);
-    // console.log(req.body);
-    return res.status(200).json({ message: "request processed" });
+    const {
+      name,
+      email,
+      phone_number,
+      additional_contact_information,
+      hotelName,
+      hotelId,
+      dataforDateSelection,
+      userPackageSelection_id,
+      paymentSelectionType,
+    } = req.body;
+
+    const dbFetchPackageAmount = await RoomPackage.findById(
+      userPackageSelection_id
+    );
+    console.log("data for date selection " + dataforDateSelection);
+    let totalSelectedDate = dataforDateSelection.reduce(
+      (count, monthObject) => {
+        return (count += monthObject.dates.length);
+      },
+      (count = 0)
+    );
+    console.log("total days count " + totalSelectedDate);
+    const updatedAmount = dbFetchPackageAmount.price * totalSelectedDate;
+    console.log("updated amount " + updatedAmount);
+    const bookingDetailsData = new BookingDetails({
+      name,
+      email,
+      phoneNumber: phone_number,
+      additionalContactInformation: additional_contact_information,
+      hotelName,
+      hotelId,
+      selectedDates: dataforDateSelection,
+      totalAmount: updatedAmount,
+      paymentMethod:
+        paymentSelectionType == 0 ? "Pay On Arrival" : "Online Payment",
+      roomPackage: userPackageSelection_id,
+    });
+
+    const bookingDetails = await bookingDetailsData.save();
+    console.log(bookingDetails);
+
+    const hotelDetails = await Hotel.findById(hotelId);
+    let updateSelectedDates = hotelDetails.selectedDates;
+
+    if (updateSelectedDates.length == 0) {
+      updateSelectedDates = dataforDateSelection;
+    } else {
+      for (
+        let receivedDataCounter = 0;
+        receivedDataCounter < dataforDateSelection.length;
+        receivedDataCounter++
+      ) {
+        const dateObject = dataforDateSelection[receivedDataCounter];
+        for (
+          let hotelDateCounter = 0;
+          hotelDateCounter < updateSelectedDates.length;
+          hotelDateCounter++
+        ) {
+          const hotelDateObject = updateSelectedDates[hotelDateCounter];
+          if (dateObject.month == hotelDateObject.month) {
+            const updatedDates = dateObject.dates.concat(hotelDateObject.dates);
+            updateSelectedDates[hotelDateCounter].dates = updatedDates;
+          }
+        }
+      }
+    }
+
+    await Hotel.findOneAndUpdate(
+      { _id: hotelId },
+      { selectedDates: updateSelectedDates },
+      { new: true }
+    );
+
+    await User.findOneAndUpdate(
+      { _id: req.userId },
+      { $push: { bookingHistory: bookingDetails._id } },
+      { new: true }
+    );
+
+    await emailQueue.add("confirm booking", {
+      from: "booknow@gmail.com",
+      to: email,
+      reason: 0,
+      subject: "Hotel Booking Confirmation Response",
+      data: bookingDetails,
+    });
+
+    return res.status(200).json({
+      data: bookingDetails,
+      message: "request processed",
+    });
   } catch (error) {
-    return res
-      .status(500)
-      .json({ message: "something went wrong while booking hotel" });
+    return res.status(500).json({
+      error_message: error.message,
+      message: "something went wrong while booking hotel",
+    });
   }
 };
 

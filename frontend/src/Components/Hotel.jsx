@@ -79,6 +79,7 @@ export const Hotel = () => {
     const fetchHotelData = async (id) => {
       const response = await getHotelDetails(id);
       if (response.success === true) {
+        console.log("hotel data " + response.data);
         const data = {
           id: response.data._id,
           selectedDates: response.data.selectedDates,
@@ -343,6 +344,7 @@ export const Hotel = () => {
                       <Calendar
                         year={dates.year}
                         month={calanderDetails.month}
+                        currentMonth={dates.month}
                         day={dates.day}
                         selectedDates={hotelDetails.selectedDates}
                         userMonthDateSelection={userMonthDateSelection}

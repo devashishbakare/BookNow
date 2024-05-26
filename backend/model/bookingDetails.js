@@ -25,14 +25,34 @@ const boookingDetailsSchema = mongoose.Schema(
 
 const mongoose = require("mongoose");
 const AutoIncrement = require("mongoose-sequence")(mongoose);
-//todo : in formData you need to add which payment system he used to book a hotel
+const RoomPackage = require("./roomPackage");
+
 const boookingDetailsSchema = mongoose.Schema(
   {
     bookingId: {
       type: Number,
       default: 0,
     },
+    name: {
+      type: String,
+      required: true,
+    },
     email: {
+      type: String,
+      required: true,
+    },
+    phoneNumber: {
+      type: String,
+      required: true,
+    },
+    additionalContactInformation: {
+      type: String,
+    },
+    hotelName: {
+      type: String,
+      required: true,
+    },
+    hotelId: {
       type: String,
       required: true,
     },
@@ -45,9 +65,17 @@ const boookingDetailsSchema = mongoose.Schema(
       ],
       default: [],
     },
-    formData: {
-      type: mongoose.Schema.Types.Mixed,
-      default: {},
+    totalAmount: {
+      type: String,
+      required: true,
+    },
+    paymentMethod: {
+      type: String,
+      required: true,
+    },
+    roomPackage: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "RoomPackage",
     },
   },
   { timestamps: true }
