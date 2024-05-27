@@ -30,9 +30,9 @@ export const BookingConfirmation = () => {
             </div>
           </div>
           <div className="hidden md:flex h-full w-[50%] flex-col gap-3">
-            <div className="h-auto w-[85%] min-h-[64px] mb-[20px] flex centerDiv addFont text-[1.2rem]">
+            {/* <div className="h-auto w-[85%] min-h-[64px] mb-[20px] flex centerDiv addFont text-[1.2rem]">
               Booking Summery
-            </div>
+            </div> */}
             <div className="min-h-[500px] h-auto w-full flex flex-col gap-3">
               <BookingSummery
                 bookingDetails={bookingDetails}

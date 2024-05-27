@@ -4,7 +4,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Hotel } from "./Components/Hotel";
 import { SignInHomePage } from "./Components/SignInHomePage";
 import { UpdateImages } from "./Components/updateImages";
-import { BookingDetails } from "./Components/BookingDetails";
 import { BookingConfirmation } from "./Components/BookingConfirmation";
 import { ProfilePage } from "./Components/ProfilePage";
 import { ConfirmBooking } from "./Components/ConfirmBooking";
@@ -18,7 +17,6 @@ function App() {
           <Route path="/hotel/:hotelId" element={<Hotel />} />
           <Route path="/signIn" element={<SignInHomePage />} />
           <Route path="/uploadImages" element={<UpdateImages />} />
-          <Route path="/bookingDetails" element={<BookingDetails />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/bookHotel/:hotelId" element={<ConfirmBooking />} />
           <Route
