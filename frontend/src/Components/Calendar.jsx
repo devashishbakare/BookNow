@@ -37,7 +37,7 @@ export const Calendar = ({
   if (week.length > 0) weekInMonth.push(week);
 
   const updateDateSelection = (month, selectedDay, dateAlreadyAdded) => {
-    if (selectedDay < day) return;
+    if (month == currentMonth && selectedDay < day) return;
     let newMap = { ...userMonthDateSelection };
     if (dateAlreadyAdded == true) {
       // we have to remove it

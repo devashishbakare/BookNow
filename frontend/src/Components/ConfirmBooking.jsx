@@ -434,7 +434,7 @@ export const ConfirmBooking = () => {
                     </span>
                     <div className="h-auto w-[330px] border-2 border-gray-400">
                       <div className="h-auto w-full flex flex-col border-b-2 border-gray-400 sm:w-[320px]">
-                        <div className="h-[70px] w-full flex ml-3 centerDiv">
+                        <div className="h-[70px] w-full flex centerDiv">
                           {dates.month != calanderDetails.month && (
                             <span
                               onClick={() => updateMonth("prev")}

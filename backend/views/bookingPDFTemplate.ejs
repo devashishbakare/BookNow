@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+      h1 {
+        text-align: center;
+      }
+      .tableCss {
+        border: 2px solid black;
+        height: auto;
+      }
+      .key {
+        color: #003b95;
+        text-align: left;
+        height: 50px;
+        width: 250px;
+        border-bottom: 1px solid black;
+        padding-left: 15px;
+      }
+      .value {
+        display: flex;
+        align-items: center;
+        border-left: 1px solid black;
+        border-bottom: 1px solid black;
+        padding-left: 15px;
+        min-height: 50px;
+        width: 300px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Booking Details</h1>
+      <table class="tableCss">
+        <% for(let key in bookingDetails) { %>
+        <tr>
+          <td class="key"><%= key %></td>
+          <td class="value"><%= bookingDetails[key] %></td>
+        </tr>
+        <% } %>
+      </table>
+    </div>
+  </body>
+</html>

@@ -639,4 +639,9 @@ router.get("/search", hotelController.fetchSearchResult);
 
 router.post("/confirmBooking", authenticate, hotelController.bookHotel);
 
+router.get(
+  "/getBookingDetails/:bookingId",
+  hotelController.fetchBookingDetails
+);
+
 module.exports = router;

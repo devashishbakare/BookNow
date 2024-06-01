@@ -4,7 +4,7 @@ const homeController = require("../controller/homeController");
 const loginController = require("../controller/loginController");
 const hotelController = require("../controller/hotelController");
 
-router.get("/", homeController.testAPI);
+router.get("/", homeController.renderTemplate);
 router.post("/addToQueue", homeController.addToEmailQueue);
 router.use("/payment", require("./payments"));
 router.use("/host", require("./host"));

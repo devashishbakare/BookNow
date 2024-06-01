@@ -4,6 +4,7 @@ const Review = require("../model/review");
 const Hotel = require("../model/hotel");
 const User = require("../model/user");
 const { emailQueue } = require("../config/queue");
+const { tryCatch } = require("bullmq");
 const confirmBooking = async (req, res) => {
   console.log(req.body);
   try {
@@ -214,19 +215,14 @@ const bookHotel = async (req, res) => {
       paymentSelectionType,
     } = req.body;
 
-    const dbFetchPackageAmount = await RoomPackage.findById(
-      userPackageSelection_id
-    );
-    console.log("data for date selection " + dataforDateSelection);
+    const packageDetails = await RoomPackage.findById(userPackageSelection_id);
     let totalSelectedDate = dataforDateSelection.reduce(
       (count, monthObject) => {
         return (count += monthObject.dates.length);
       },
       (count = 0)
     );
-    console.log("total days count " + totalSelectedDate);
-    const updatedAmount = dbFetchPackageAmount.price * totalSelectedDate;
-    console.log("updated amount " + updatedAmount);
+    const updatedAmount = packageDetails.price * totalSelectedDate;
     const bookingDetailsData = new BookingDetails({
       name,
       email,
@@ -242,7 +238,6 @@ const bookHotel = async (req, res) => {
     });
 
     const bookingDetails = await bookingDetailsData.save();
-    console.log(bookingDetails);
 
     const hotelDetails = await Hotel.findById(hotelId);
     let updateSelectedDates = hotelDetails.selectedDates;
@@ -250,22 +245,16 @@ const bookHotel = async (req, res) => {
     if (updateSelectedDates.length == 0) {
       updateSelectedDates = dataforDateSelection;
     } else {
-      for (
-        let receivedDataCounter = 0;
-        receivedDataCounter < dataforDateSelection.length;
-        receivedDataCounter++
-      ) {
-        const dateObject = dataforDateSelection[receivedDataCounter];
-        for (
-          let hotelDateCounter = 0;
-          hotelDateCounter < updateSelectedDates.length;
-          hotelDateCounter++
-        ) {
-          const hotelDateObject = updateSelectedDates[hotelDateCounter];
-          if (dateObject.month == hotelDateObject.month) {
-            const updatedDates = dateObject.dates.concat(hotelDateObject.dates);
-            updateSelectedDates[hotelDateCounter].dates = updatedDates;
+      for (let userDates of dataforDateSelection) {
+        let foundMonth = false;
+        for (let hotelDates of updateSelectedDates) {
+          if (hotelDates.month == userDates.month) {
+            foundMonth = true;
+            hotelDates.dates = hotelDates.dates.concate(userDates.dates);
           }
+        }
+        if (foundMonth == false) {
+          updateSelectedDates.push(userDates);
         }
       }
     }
@@ -281,12 +270,29 @@ const bookHotel = async (req, res) => {
       { $push: { bookingHistory: bookingDetails._id } },
       { new: true }
     );
+    const hotelBookingDate = await getBookingDates(
+      bookingDetails.selectedDates
+    );
+    const pdfBookingDetails = {
+      BookingId: bookingDetails.bookingId,
+      Name: bookingDetails.name,
+      Email: bookingDetails.email,
+      "Phone Number": bookingDetails.phoneNumber,
+      "Additional Contact Information":
+        bookingDetails.additionalContactInformation,
+      "Hotel Name": bookingDetails.hotelName,
+      Date: hotelBookingDate,
+      "Room Package": packageDetails.roomType,
+      "Total Amount": bookingDetails.totalAmount,
+      "Payment Method": bookingDetails.paymentMethod,
+    };
 
     await emailQueue.add("confirm booking", {
       from: "booknow@gmail.com",
       to: email,
       reason: 0,
       subject: "Hotel Booking Confirmation Response",
+      pdfData: pdfBookingDetails,
       data: bookingDetails,
     });
 
@@ -302,6 +308,29 @@ const bookHotel = async (req, res) => {
   }
 };
 
+const fetchBookingDetails = async (req, res) => {
+  try {
+    const bookingId = req.params.bookingId;
+    const bookingDetails = await BookingDetails.find({ bookingId });
+    return res
+      .status(200)
+      .json({ data: bookingDetails, message: "fetch successfull" });
+  } catch (error) {
+    return res.status(500).json({ message: "fetch failed" });
+  }
+};
+
+const getBookingDates = (selectedDates) => {
+  const formattedDates = selectedDates.map(({ month, dates }) => {
+    const date = new Date(2000, month - 1);
+    const currentMonth = date.toLocaleString("en-US", { month: "long" });
+    const formattedDates = dates.join(", ");
+    return `${formattedDates} ${currentMonth}`;
+  });
+  const finalDate = formattedDates.join(", ");
+  return finalDate;
+};
+
 module.exports = {
   confirmBooking,
   deleteAllDocuments,
@@ -313,4 +342,5 @@ module.exports = {
   getHotelData,
   fetchSearchResult,
   bookHotel,
+  fetchBookingDetails,
 };
