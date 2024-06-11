@@ -4,7 +4,6 @@ const Review = require("../model/review");
 const Hotel = require("../model/hotel");
 const User = require("../model/user");
 const { emailQueue } = require("../config/queue");
-const { tryCatch } = require("bullmq");
 const confirmBooking = async (req, res) => {
   console.log(req.body);
   try {

@@ -1,23 +1,19 @@
-/*
-string : reviewer name
-string : details review
-integer : stars 
-string : hotelName 
-date : review date
-*/
-
 const mongoose = require("mongoose");
 
 const reviewSchema = mongoose.Schema(
   {
-    name: {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+    hotelId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Hotel",
+    },
+    userName: {
       type: String,
       required: true,
       min: 4,
-    },
-    hotelName: {
-      type: String,
-      required: true,
     },
     rating: {
       type: Number,

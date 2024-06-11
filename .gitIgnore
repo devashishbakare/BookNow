@@ -3,3 +3,5 @@ backend/node_modules
 backend/.env
 backend/temp
 frontend/.env
+backend/controller/updateController
+backend/routes/update

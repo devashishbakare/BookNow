@@ -1,12 +1,3 @@
-/*
-user schema
-string : name
-string : phone number
-string : email : userName
-string : password 
-object[review] = reviews
-object[bookingDetails] : bookingHistory
-*/
 const mongoose = require("mongoose");
 const Review = require("./review");
 const BookingDetails = require("./bookingDetails");

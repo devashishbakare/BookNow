@@ -1,4 +1,5 @@
 const { emailQueue } = require("../config/queue");
+const User = require("../model/user");
 // todo : you can keep this in saparate file and just import it and use it
 // const { Queue } = require("bullmq");
 // const emailQueue = new Queue("bookNow-email-queue", {
@@ -48,8 +49,22 @@ const addToEmailQueue = async (req, res) => {
 const renderTemplate = async (req, res) => {
   return res.render("bookingPDFTemplate", { bookingDetails });
 };
+
+const fetchUserDetails = async (req, res) => {
+  try {
+    const userId = req.userId;
+    const userDetails = await User.findById(userId);
+    return res.status(200).json({ data: userDetails, message: "user details" });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "something went wrong while fetching data" });
+  }
+};
+
 module.exports = {
   testAPI,
   addToEmailQueue,
   renderTemplate,
+  fetchUserDetails,
 };
