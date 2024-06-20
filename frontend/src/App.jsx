@@ -5,8 +5,10 @@ import { Hotel } from "./Components/Hotel";
 import { SignInHomePage } from "./Components/SignInHomePage";
 import { UpdateImages } from "./Components/updateImages";
 import { BookingConfirmation } from "./Components/BookingConfirmation";
-import { ProfilePage } from "./Components/ProfilePage";
+// import { ProfilePage } from "./Components/ProfilePage";
 import { ConfirmBooking } from "./Components/ConfirmBooking";
+import { Profile } from "./Components/Profile";
+
 function App() {
   return (
     <>
@@ -17,7 +19,8 @@ function App() {
           <Route path="/hotel/:hotelId" element={<Hotel />} />
           <Route path="/signIn" element={<SignInHomePage />} />
           <Route path="/uploadImages" element={<UpdateImages />} />
-          <Route path="/profile" element={<ProfilePage />} />
+          {/* <Route path="/profile" element={<ProfilePage />} /> */}
+          <Route path="/profile" element={<Profile />} />
           <Route path="/bookHotel/:hotelId" element={<ConfirmBooking />} />
           <Route
             path="/bookingConfirmation"

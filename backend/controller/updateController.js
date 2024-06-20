@@ -159,6 +159,40 @@ const addRatingScore = async (req, res) => {
     });
   }
 };
+
+const updateHotelName = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    console.log("comming " + userId);
+    const user = await User.findById(userId);
+    const reviewData = await Review.find({ _id: { $in: user.reviews } });
+    const updatedReviews = await Promise.all(
+      reviewData.map(async (review) => {
+        const hotel = await Hotel.findById(review.hotelId);
+        const fieldToAdd = {
+          $set: {
+            hotelName: hotel.name,
+          },
+        };
+        const updatedReview = await Review.updateOne(
+          { _id: review._id },
+          fieldToAdd,
+          { new: true }
+        );
+        return updatedReview;
+      })
+    );
+
+    return res
+      .status(200)
+      .json({ data: updatedReviews, message: "user review has been updated" });
+  } catch (error) {
+    return res.status(500).json({
+      error: error.message,
+      message: "something went wrong while adding reviews",
+    });
+  }
+};
 module.exports = {
   updateUser,
   deleteBookingDetails,
@@ -167,4 +201,5 @@ module.exports = {
   updateAddReview,
   testAPI,
   addRatingScore,
+  updateHotelName,
 };

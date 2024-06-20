@@ -94,3 +94,95 @@ export const varifyBooking = async (bookingInfo) => {
     return { success: false, error: error.response.data.error };
   }
 };
+
+export const fetchUserDetails = async (token) => {
+  try {
+    const headers = createHeader(token);
+    const response = await axios.get(`${baseUrl}/user/userDetails`, {
+      headers,
+    });
+    const { data } = response.data;
+    return { success: true, data: data };
+  } catch (error) {
+    return { success: false, error: error.response.data.error };
+  }
+};
+
+export const fetchCurrentBooking = async (token) => {
+  try {
+    const headers = createHeader(token);
+    const response = await axios.get(`${baseUrl}/user/currentBooking`, {
+      headers,
+    });
+    const { data } = response.data;
+    return { success: true, data: data };
+  } catch (error) {
+    return { success: false, error: error.response.data.error };
+  }
+};
+
+export const fetchHistory = async (token) => {
+  try {
+    const headers = createHeader(token);
+    const response = await axios.get(`${baseUrl}/user/history`, {
+      headers,
+    });
+    const { data } = response.data;
+    return { success: true, data: data };
+  } catch (error) {
+    return { success: false, error: error.response.data.error };
+  }
+};
+
+export const createReview = async (token, reviewInfo) => {
+  try {
+    const headers = createHeader(token);
+    const response = await axios.post(`${baseUrl}/review/add`, reviewInfo, {
+      headers,
+    });
+    const { data } = response.data;
+    return { success: true, data: data };
+  } catch (error) {
+    return { success: false, error: error.response.data.error };
+  }
+};
+
+export const editReview = async (token, reviewInfo) => {
+  try {
+    const headers = createHeader(token);
+    const response = await axios.put(`${baseUrl}/review/edit`, reviewInfo, {
+      headers,
+    });
+    const { data } = response.data;
+    return { success: true, data: data };
+  } catch (error) {
+    return { success: false, error: error.response.data.error };
+  }
+};
+
+export const fetchUserReviews = async (token) => {
+  try {
+    const headers = createHeader(token);
+    const response = await axios.get(`${baseUrl}/review/fetch`, {
+      headers,
+    });
+    const { data } = response.data;
+    return { success: true, data: data };
+  } catch (error) {
+    return { success: false, error: error.response.data.error };
+  }
+};
+
+export const deleteUserReview = async (token, reviewId) => {
+  try {
+    const headers = createHeader(token);
+    const response = await axios.delete(
+      `${baseUrl}/review/delete/${reviewId}`,
+      { headers }
+    );
+    const { data } = response.data;
+    return { success: true, data: data };
+  } catch (error) {
+    return { success: false, error: error.response.data.error };
+  }
+};

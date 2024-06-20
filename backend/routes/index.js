@@ -102,6 +102,7 @@ router.use("/host", require("./host"));
 router.use("/review", require("./review"));
 router.use("/hotel", require("./hotel"));
 router.use("/update", require("./update"));
+router.use("/user", require("./user"));
 /**
  * @swagger
  * /signUp:

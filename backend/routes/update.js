@@ -10,4 +10,5 @@ router.put("/hotel", updateController.updateHotel);
 router.post("/updateReview", updateController.updateAddReview);
 router.get("/test", updateController.testAPI);
 router.put("/ratingScore", updateController.addRatingScore);
+router.put("/updateHotelName/:userId", updateController.updateHotelName);
 module.exports = router;

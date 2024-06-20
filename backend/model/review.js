@@ -10,6 +10,10 @@ const reviewSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Hotel",
     },
+    hotelName: {
+      type: String,
+      required: true,
+    },
     userName: {
       type: String,
       required: true,

@@ -24,11 +24,20 @@ const addReview = async (req, res) => {
     const { hotelId, rating, reviewText } = req.body;
     const user = await User.findById(userId).session(session);
     if (!user) {
+      await session.abortTransaction();
+      session.endSession();
       return res.status(400).json({ message: "User not found" });
+    }
+    const hotel = await Hotel.findById(hotelId);
+    if (!hotel) {
+      await session.abortTransaction();
+      session.endSession();
+      return res.status(400).json({ message: "Hotel Not Found" });
     }
     const reviewInfo = {
       userId,
       hotelId,
+      hotelName: hotel.name,
       userName: user.name,
       rating,
       reviewText,
@@ -36,12 +45,6 @@ const addReview = async (req, res) => {
     };
     const review = await Review.create([reviewInfo], { session });
 
-    const hotel = await Hotel.findById(hotelId);
-    if (!hotel) {
-      await session.abortTransaction();
-      session.endSession();
-      return res.status(400).json({ message: "Hotel Not Found" });
-    }
     const updateRatingScore = hotel.ratingScore + rating;
     let newRating = updateRatingScore / (hotel.reviews.length + 1);
     const updateFeildInHotel = {
@@ -187,9 +190,29 @@ const deleteReview = async (req, res) => {
   }
 };
 
+const fetchReviews = async (req, res) => {
+  const userId = req.userId;
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(400).json({ message: "User not found" });
+    }
+    const reviewData = await Review.find({ _id: { $in: user.reviews } });
+    return res
+      .status(200)
+      .json({ data: reviewData, message: "User Review fetched successfully" });
+  } catch (error) {
+    return res.status(500).json({
+      error: error.message,
+      message: "something went wrong while fetching user reviews",
+    });
+  }
+};
+
 module.exports = {
   addAllReview,
   addReview,
   editReview,
   deleteReview,
+  fetchReviews,
 };

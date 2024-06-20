@@ -1,4 +1,3 @@
-import React from "react";
 import { Navbar } from "./Navbar";
 import { TbBrandBooking } from "react-icons/tb";
 import { FaHistory } from "react-icons/fa";
@@ -32,15 +31,15 @@ export const ProfilePage = () => {
                 </div>
               </div>
               <div className="h-full w-[60%] flex flex-col justify-center text-[#F5FEFD]">
-                <div className="h-auto w-full ml-2 text-[1.2rem] font-bold m-2">
+                <div className="h-auto w-full  text-[1.2rem] font-bold m-2">
                   {userName}
                 </div>
-                <div className="h-[20%] w-full ml-2 md:text-[0.9rem] truncate">
+                <div className="h-[20%] w-full ml-1 md:text-[0.9rem] truncate">
                   {email}
                 </div>
-                <div className="h-[20%] w-full ml-2 underline text-blue-500 cursor-pointer">
+                {/* <div className="h-[20%] w-full ml-2 underline text-blue-500 cursor-pointer">
                   edit profile
-                </div>
+                </div> */}
               </div>
             </div>
 

@@ -401,42 +401,46 @@ export const Hotel = () => {
                     </div>
                   </div>
                   <hr className="border-1 border-gray-400 w-[95%] mt-5" />
-                  <div className="h-[35vh] w-full">
-                    <Slider {...reviewSettings}>
-                      {hotelDetails &&
-                        hotelDetails.reviews.map((reviewObject, index) => (
-                          <div
-                            className="h-[300px] w-full shadow-lg flex flex-col"
-                            key={reviewObject.name + "review" + index}
-                          >
-                            <div className="h-[20%] w-full centerDiv">
-                              <span className="h-full w-[60%] flex items-center pl-3 text-[1.1rem] font-bold addFont">
-                                {reviewObject.name}
-                              </span>
-                              <span className="h-full w-[40%] centerDiv font-semibold addFont">
-                                {reviewObject.date.slice(0, 10)}
-                              </span>
-                            </div>
-                            <div className="h-[80%] w-full flex flex-col">
-                              <span className="h-auto w-full mt-1 mb-2 text-[15px] addFont font-thin p-3">
-                                {reviewObject.reviewText}
-                              </span>
-                              <span className="h-[20%] w-full flex gap-1 pl-3">
-                                {Array.from(
-                                  { length: reviewObject.rating },
-                                  (_, index) => (
-                                    <span key={index} className="centerDiv">
-                                      <MdOutlineStarPurple500 className="text-[1.4rem]" />
-                                    </span>
-                                  )
-                                )}
-                              </span>
-                            </div>
-                          </div>
-                        ))}
-                    </Slider>
-                  </div>
-                  <hr className="border-1 border-gray-400 w-[95%] mt-5" />
+                  {hotelDetails.reviews.length > 0 && (
+                    <>
+                      <div className="h-[35vh] w-full">
+                        <Slider {...reviewSettings}>
+                          {hotelDetails &&
+                            hotelDetails.reviews.map((reviewObject, index) => (
+                              <div
+                                className="h-[300px] w-full shadow-lg flex flex-col"
+                                key={reviewObject.name + "review" + index}
+                              >
+                                <div className="h-[20%] w-full centerDiv">
+                                  <span className="h-full w-[60%] flex items-center pl-3 text-[1.1rem] font-bold addFont">
+                                    {reviewObject.userName}
+                                  </span>
+                                  <span className="h-full w-[40%] centerDiv font-semibold addFont">
+                                    {reviewObject.date.slice(0, 10)}
+                                  </span>
+                                </div>
+                                <div className="h-[80%] w-full flex flex-col">
+                                  <span className="h-auto w-full mt-1 mb-2 text-[15px] addFont font-thin p-3">
+                                    {reviewObject.reviewText}
+                                  </span>
+                                  <span className="h-[20%] w-full flex gap-1 pl-3">
+                                    {Array.from(
+                                      { length: reviewObject.rating },
+                                      (_, index) => (
+                                        <span key={index} className="centerDiv">
+                                          <MdOutlineStarPurple500 className="text-[1.4rem]" />
+                                        </span>
+                                      )
+                                    )}
+                                  </span>
+                                </div>
+                              </div>
+                            ))}
+                        </Slider>
+                      </div>
+                      <hr className="border-1 border-gray-400 w-[95%] mt-5" />
+                    </>
+                  )}
                   {hotelDetails && (
                     <div className="h-[40vh] w-full flex flex-col gap-3 pl-2 mt-2">
                       <span className="h-auto w-full text-[1.2rem] addFont flex items-center p-2">

@@ -249,7 +249,7 @@ const bookHotel = async (req, res) => {
         for (let hotelDates of updateSelectedDates) {
           if (hotelDates.month == userDates.month) {
             foundMonth = true;
-            hotelDates.dates = hotelDates.dates.concate(userDates.dates);
+            hotelDates.dates = hotelDates.dates.concat(userDates.dates);
           }
         }
         if (foundMonth == false) {
@@ -286,14 +286,14 @@ const bookHotel = async (req, res) => {
       "Payment Method": bookingDetails.paymentMethod,
     };
 
-    await emailQueue.add("confirm booking", {
-      from: "booknow@gmail.com",
-      to: email,
-      reason: 0,
-      subject: "Hotel Booking Confirmation Response",
-      pdfData: pdfBookingDetails,
-      data: bookingDetails,
-    });
+    // await emailQueue.add("confirm booking", {
+    //   from: "booknow@gmail.com",
+    //   to: email,
+    //   reason: 0,
+    //   subject: "Hotel Booking Confirmation Response",
+    //   pdfData: pdfBookingDetails,
+    //   data: bookingDetails,
+    // });
 
     return res.status(200).json({
       data: bookingDetails,

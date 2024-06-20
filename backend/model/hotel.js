@@ -1,17 +1,3 @@
-/*
-string : cityName
-string : cityBackgroudImage;
-string[] : hotelImages
-string : hotelName
-string : address
-string : hotel distription
-string : map
-boolean[feature1 : true, feature2 : false] : hotelServiceAvailability 
-objects[roomPackage]
-object[{month, int[]}] : selected dates
-object[review] : reviews[];
-object[host] : host{hostName, hostJoinedDate, hostContactNumber} 
-*/
 const mongoose = require("mongoose");
 const RoomPackage = require("./roomPackage");
 const Review = require("./review");

@@ -11,4 +11,5 @@ router.delete(
   authenticate,
   reviewCountroller.deleteReview
 );
+router.get("/fetch", authenticate, reviewCountroller.fetchReviews);
 module.exports = router;
