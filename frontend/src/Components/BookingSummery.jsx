@@ -3,11 +3,13 @@ import { useRef, useState } from "react";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import CirculareSpinner from "../utils/CirculareSpinner";
+import { useNavigate } from "react-router-dom";
 export const BookingSummery = ({ bookingDetails, roomType }) => {
   const getMonthName = (monthNumber) => {
     const date = new Date(2000, monthNumber - 1);
     return date.toLocaleString("en-US", { month: "long" });
   };
+  const navigate = useNavigate();
   const [pdfClicked, setPdfClicked] = useState(false);
   const printDocument = useRef();
   const hideThisPart = useRef();
@@ -39,63 +41,89 @@ export const BookingSummery = ({ bookingDetails, roomType }) => {
   };
   return (
     <>
-      <div ref={printDocument} className="h-auto w-auto flex flex-col gap-4">
+      <div
+        ref={printDocument}
+        className="h-auto w-auto flex flex-col gap-1 centerDiv"
+      >
         <div className="h-auto w-[85%] min-h-[64px] mb-[1px] flex centerDiv addFont text-[1.2rem]">
           Booking Details
         </div>
-        <div className="min-h-[45px] h-auto w-full flex">
-          <div className="h-full w-[45%] flex centerDiv items-center text-[#003b95]">
-            Booking ID :
+        <div className="h-[50px] w-full flex centerDiv">
+          <div className="h-full w-[50%] text-[#003b95] flex flex-row-reverse">
+            <span className="h-full w-[150px] flex items-center">
+              {" "}
+              Booking ID :
+            </span>
           </div>
-          <div className="h-full w-[60%] flex flex-row items-center pl-3">
+          <div className="h-full w-[50%] flex flex-row items-center">
             {bookingDetails.bookingId}
           </div>
         </div>
-        <div className="min-h-[45px] h-auto w-full flex">
-          <div className="h-full w-[45%] flex centerDiv items-center text-[#003b95]">
-            Full Name :
+        {/*  */}
+        <div className="h-[50px] w-full flex centerDiv">
+          <div className="h-full w-[50%] text-[#003b95] flex flex-row-reverse">
+            <span className="h-full w-[150px] flex items-center"> Name :</span>
           </div>
-          <div className="h-full w-[60%] flex flex-row items-center pl-3">
+          <div className="h-full w-[50%] flex flex-row items-center">
             {bookingDetails.name}
           </div>
         </div>
-        <div className="min-h-[45px] h-auto w-full flex">
-          <div className="h-full w-[45%] flex centerDiv items-center text-[#003b95]">
-            Email :
+        {/*  */}
+        {/*  */}
+        <div className="h-[50px] w-full flex centerDiv">
+          <div className="h-full w-[50%] text-[#003b95] flex flex-row-reverse">
+            <span className="h-full w-[150px] flex items-center"> Email :</span>
           </div>
-          <div className="h-full w-[60%] flex flex-row items-center pl-3">
+          <div className="h-full w-[50%] flex flex-row items-center">
             {bookingDetails.email}
           </div>
         </div>
-        <div className="min-h-[45px] h-auto w-full flex">
-          <div className="h-full w-[45%] flex centerDiv items-center text-[#003b95]">
-            Phone Number :
+        {/*  */}
+        {/*  */}
+        <div className="h-[50px] w-full flex centerDiv">
+          <div className="h-full w-[50%] text-[#003b95] flex flex-row-reverse">
+            <span className="h-full w-[150px] flex items-center">
+              {" "}
+              Phone Number :
+            </span>
           </div>
-          <div className="h-full w-[60%] flex flex-row items-center pl-3">
+          <div className="h-full w-[50%] flex flex-row items-center">
             {bookingDetails.phoneNumber}
           </div>
         </div>
-        <div className="min-h-[45px] h-auto w-full flex">
-          <div className="h-full w-[45%] flex centerDiv items-center text-[#003b95]">
-            Additional Info :
+        {/*  */}
+        {/*  */}
+        <div className="h-[50px] w-full flex centerDiv">
+          <div className="h-full w-[50%] text-[#003b95] flex flex-row-reverse">
+            <span className="h-full w-[150px] flex items-center">
+              {" "}
+              Additional Info :
+            </span>
           </div>
-          <div className="h-full w-[60%] flex flex-row items-center pl-3">
+          <div className="h-full w-[50%] flex flex-row items-center">
             {bookingDetails.additionalContactInformation}
           </div>
         </div>
-        <div className="min-h-[45px] h-auto w-full flex">
-          <div className="h-full w-[45%] flex centerDiv items-center text-[#003b95]">
-            Hotel Name
+        {/*  */}
+        {/*  */}
+        <div className="h-[50px] w-full flex centerDiv">
+          <div className="h-full w-[50%] text-[#003b95] flex flex-row-reverse">
+            <span className="h-full w-[150px] flex items-center">
+              {" "}
+              Hotel Name :
+            </span>
           </div>
-          <div className="h-full w-[60%] flex flex-row items-center pl-3">
+          <div className="h-full w-[50%] flex flex-row items-center">
             {bookingDetails.hotelName}
           </div>
         </div>
-        <div className="min-h-[45px] h-auto w-full flex">
-          <div className="h-full w-[45%] flex centerDiv items-center text-[#003b95]">
-            Date
+        {/*  */}
+        {/*  */}
+        <div className="h-[50px] w-full flex centerDiv">
+          <div className="h-full w-[50%] text-[#003b95] flex flex-row-reverse">
+            <span className="h-full w-[150px] flex items-center"> Date :</span>
           </div>
-          <div className="h-full w-[60%] flex flex-row items-center pl-3">
+          <div className="h-full w-[50%] flex flex-row items-center">
             {bookingDetails.selectedDates.map((month) => (
               <>
                 {month.dates.map((date) => (
@@ -111,40 +139,70 @@ export const BookingSummery = ({ bookingDetails, roomType }) => {
             ))}
           </div>
         </div>
-        <div className="min-h-[45px] h-auto w-full flex">
-          <div className="h-full w-[45%] flex centerDiv items-center text-[#003b95]">
-            Room Package
+        {/*  */}
+        {/*  */}
+        <div className="h-[50px] w-full flex centerDiv">
+          <div className="h-full w-[50%] text-[#003b95] flex flex-row-reverse">
+            <span className="h-full w-[150px] flex items-center">
+              {" "}
+              Room Package :
+            </span>
           </div>
-          <div className="h-full w-[60%] flex flex-row items-center pl-3">
+          <div className="h-full w-[50%] flex flex-row items-center">
             {roomType}
           </div>
         </div>
-        <div className="min-h-[45px] h-auto w-full flex">
-          <div className="h-full w-[45%] flex centerDiv items-center text-[#003b95]">
-            Payment Method
+        {/*  */}
+        <div className="h-[50px] w-full flex centerDiv">
+          <div className="h-full w-[50%] text-[#003b95] flex flex-row-reverse">
+            <span className="h-full w-[150px] flex items-center">
+              {" "}
+              Payment Method :
+            </span>
           </div>
-          <div className="h-full w-[60%] flex flex-row items-center pl-3">
+          <div className="h-full w-[50%] flex flex-row items-center">
             {bookingDetails.paymentMethod}
           </div>
         </div>
-        <div className="min-h-[45px] h-auto w-full flex">
-          <div className="h-full w-[45%] flex centerDiv items-center text-[#003b95]">
-            Amount :
+        {/*  */}
+        <div className="h-[50px] w-full flex centerDiv">
+          <div className="h-full w-[50%] text-[#003b95] flex flex-row-reverse">
+            <span className="h-full w-[150px] flex items-center">
+              {" "}
+              Amount :
+            </span>
           </div>
-          <div className="h-full w-[60%] flex flex-row items-center pl-3">
+          <div className="h-full w-[50%] flex flex-row items-center">
             {bookingDetails.totalAmount}
           </div>
         </div>
+        {/*  */}
+        <div className="h-[50px] w-full flex centerDiv">
+          <div className="h-full w-[50%] text-[#003b95] flex flex-row-reverse">
+            <span className="h-full w-[150px] flex items-center">
+              {" "}
+              Room Package :
+            </span>
+          </div>
+          <div className="h-full w-[50%] flex flex-row items-center">
+            {roomType}
+          </div>
+        </div>
+        {/*  */}
+
         <div
           ref={hideThisPart}
-          className="min-h-[45px] h-auto w-full flex flex-row gap-3"
+          className="min-h-[45px] h-auto w-full flex flex-row centerDiv gap-3 md:w-[70%] mt-3"
         >
-          <button className=" w-[45%] h-[60px] rounded-lg  text-black border-[1px] border-[#003b95] shadow-md">
+          <button
+            onClick={() => navigate("/")}
+            className=" w-[180px] h-[50px] rounded-lg  text-black border-[1px] border-[#003b95] shadow-md"
+          >
             Explore More
           </button>
           <button
             onClick={handleDownloadPdf}
-            className=" w-[45%] h-[60px] rounded-lg  text-black border-[1px] border-[#003b95] shadow-md"
+            className=" w-[180px] h-[50px] rounded-lg  text-black border-[1px] border-[#003b95] shadow-md"
           >
             {pdfClicked == false ? <>Generate PDF</> : <CirculareSpinner />}
           </button>

@@ -8,6 +8,7 @@ import { BookingConfirmation } from "./Components/BookingConfirmation";
 // import { ProfilePage } from "./Components/ProfilePage";
 import { ConfirmBooking } from "./Components/ConfirmBooking";
 import { Profile } from "./Components/Profile";
+import { BookingDetails } from "./Components/BookingDetails";
 
 function App() {
   return (
@@ -22,6 +23,10 @@ function App() {
           {/* <Route path="/profile" element={<ProfilePage />} /> */}
           <Route path="/profile" element={<Profile />} />
           <Route path="/bookHotel/:hotelId" element={<ConfirmBooking />} />
+          <Route
+            path="/bookingDetails/:bookingId"
+            element={<BookingDetails />}
+          />
           <Route
             path="/bookingConfirmation"
             element={<BookingConfirmation />}

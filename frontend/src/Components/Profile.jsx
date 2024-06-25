@@ -6,6 +6,7 @@ import { FaHistory } from "react-icons/fa";
 import { MdOutlineRateReview, MdOutlineLogin } from "react-icons/md";
 import { Review } from "./Review";
 import { useEffect, useState } from "react";
+import { ShowProfileInfo } from "./ShowProfileInfo";
 import {
   fetchUserDetails,
   fetchCurrentBooking,
@@ -17,17 +18,22 @@ import { ToastContainer } from "react-toastify";
 import Spinners from "../utils/Spinners";
 import CirculareSpinner from "../utils/CirculareSpinner";
 import { BookingCart } from "./BookingCart";
+import { useWindowSize } from "./useWindowSize";
 export const Profile = () => {
   const [userDetails, setUserDetails] = useState();
-  const [currentBooking, setCurrentBooking] = useState();
+  const [currentBooking, setCurrentBooking] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [localLoader, setLocalLoader] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState();
-  const [pastBookings, setPastBookings] = useState();
-  const [userReviews, setUserReviews] = useState();
+  const [pastBookings, setPastBookings] = useState([]);
+  const [userReviews, setUserReviews] = useState([]);
+  const [profileInfoModalStatus, setProfileInfoModalStatus] = useState(false);
+  const [modalSelectedOptions, setModalSelectedOptions] = useState();
+  const [storeFetchInfo, setStoreFetchInfo] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
   const token = localStorage.getItem("token");
+  const windowSize = useWindowSize();
   useEffect(() => {
     const fetchDetails = async () => {
       setIsLoading(true);
@@ -40,8 +46,8 @@ export const Profile = () => {
       if (userDetailsResponse.success && currentBookingResponse.success) {
         setUserDetails(userDetailsResponse.data);
         setCurrentBooking(currentBookingResponse.data);
+        //console.log(currentBookingResponse.data);
         setSelectedOptions(0);
-        setPastBookings([]);
       } else {
         showErrorNotification("Something went wrong, try again later");
       }
@@ -55,34 +61,81 @@ export const Profile = () => {
     navigate(`/`);
   };
 
-  const fetchPastBookings = async () => {
-    setLocalLoader(true);
-    const token = localStorage.getItem("token");
-    const response = await fetchHistory(token);
-    if (response.success) {
-      setPastBookings(response.data);
+  const handleCurrentBooking = () => {
+    if (windowSize.width < 768) {
+      setStoreFetchInfo(currentBooking);
+      setModalSelectedOptions(0);
+      setProfileInfoModalStatus(true);
     } else {
-      showErrorNotification(
-        "Something went wrong while fetching details, try again later"
-      );
+      setSelectedOptions(0);
     }
-    setSelectedOptions(1);
-    setLocalLoader(false);
+  };
+
+  const fetchPastBookings = async () => {
+    if (windowSize.width < 768) {
+      setIsLoading(true);
+      const token = localStorage.getItem("token");
+      const response = await fetchHistory(token);
+      if (response.success) {
+        //console.log(response.data);
+        setStoreFetchInfo(response.data);
+        setModalSelectedOptions(1);
+        setProfileInfoModalStatus(true);
+      } else {
+        showErrorNotification(
+          "Something went wrong while fetching details, try again later"
+        );
+      }
+      setIsLoading(false);
+    } else {
+      setLocalLoader(true);
+      const token = localStorage.getItem("token");
+      const response = await fetchHistory(token);
+      if (response.success) {
+        setPastBookings(response.data);
+      } else {
+        showErrorNotification(
+          "Something went wrong while fetching details, try again later"
+        );
+      }
+      setSelectedOptions(1);
+      setLocalLoader(false);
+    }
   };
 
   const fetchReviews = async () => {
     const token = localStorage.getItem("token");
-    setLocalLoader(true);
-    const response = await fetchUserReviews(token);
-    if (response.success) {
-      setUserReviews(response.data);
+    if (windowSize.width < 768) {
+      setLocalLoader(true);
+      const response = await fetchUserReviews(token);
+      if (response.success) {
+        setStoreFetchInfo(response.data);
+      } else {
+        showErrorNotification(
+          "Something went wrong while fetch reviews, try again later"
+        );
+      }
+      setLocalLoader(false);
+      setStoreFetchInfo(response.data);
+      setModalSelectedOptions(2);
+      setProfileInfoModalStatus(true);
     } else {
-      showErrorNotification(
-        "Something went wrong while fetch reviews, try again later"
-      );
+      setLocalLoader(true);
+      const response = await fetchUserReviews(token);
+      if (response.success) {
+        setUserReviews(response.data);
+      } else {
+        showErrorNotification(
+          "Something went wrong while fetch reviews, try again later"
+        );
+      }
+      setLocalLoader(false);
+      setSelectedOptions(2);
     }
-    setLocalLoader(false);
-    setSelectedOptions(2);
+  };
+
+  const updateProfileInfoModalStatus = () => {
+    setProfileInfoModalStatus(false);
   };
 
   return (
@@ -124,7 +177,7 @@ export const Profile = () => {
                 )}
                 <div className="h-auto w-full flex flex-col gap-3">
                   <div
-                    onClick={() => setSelectedOptions(0)}
+                    onClick={() => handleCurrentBooking()}
                     className="h-[70px] w-[90%] flex items-center justify-between mt-3"
                   >
                     <span className="pl-6 flex gap-2 items-center addFont text-[1.1rem]">
@@ -178,19 +231,21 @@ export const Profile = () => {
                   </div>
                 ) : (
                   <>
+                    {/* <div className="h-full w-full flex flex-col"></div> */}
                     {selectedOptions === 0 && (
                       <div className="h-full w-full flex flex-col">
-                        {currentBooking.length === 0 ? (
+                        {currentBooking && currentBooking.length === 0 ? (
                           <>
                             <div className="h-full w-full addFont opacity-30 text-[1.5rem] centerDiv">
-                              No current Bookings Found
+                              No currunt bookings found
                             </div>
                           </>
                         ) : (
+                          currentBooking.length > 0 &&
                           currentBooking.map((bookingDetails) => (
                             <BookingCart
-                              key={bookingDetails.id + "curr"}
-                              bookingStatus={0}
+                              key={`${bookingDetails.bookingDetails._id}-curr`}
+                              bookingStatus={1}
                               details={bookingDetails}
                             />
                           ))
@@ -206,9 +261,10 @@ export const Profile = () => {
                             </div>
                           </>
                         ) : (
+                          pastBookings.length > 0 &&
                           pastBookings.map((bookingDetails) => (
                             <BookingCart
-                              key={bookingDetails.id + "past"}
+                              key={`${bookingDetails.bookingDetails._id}-past`}
                               bookingStatus={1}
                               details={bookingDetails}
                             />
@@ -219,18 +275,18 @@ export const Profile = () => {
                   </>
                 )}
 
-                {selectedOptions == 2 && (
-                  <Review
-                    userReviews={userReviews}
-                    setUserReviews={setUserReviews}
-                  />
-                )}
+                {selectedOptions == 2 && <Review reviews={userReviews} />}
               </div>
             </div>
           </>
         )}
-
         <ToastContainer />
+        <ShowProfileInfo
+          modalStatus={profileInfoModalStatus}
+          closeModal={updateProfileInfoModalStatus}
+          selectedOptions={modalSelectedOptions}
+          fetchedData={storeFetchInfo}
+        />
       </div>
     </>
   );

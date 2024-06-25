@@ -5,4 +5,9 @@ const authenticate = require("../config/authMiddleware");
 router.get("/history", authenticate, userController.fetchBookingHistory);
 router.get("/userDetails", authenticate, userController.fetchUserDetails);
 router.get("/currentBooking", authenticate, userController.fetchCurrentBooking);
+router.get(
+  "/bookingDetails/:bookingId",
+  authenticate,
+  userController.fetchBookingDetails
+);
 module.exports = router;

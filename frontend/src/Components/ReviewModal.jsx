@@ -20,8 +20,6 @@ export const ReviewModal = ({
   const [rating, setRating] = useState();
   const [reviewText, setReviewText] = useState();
   const [localLoader, setLocalLoader] = useState(false);
-  console.log("this is parentObject");
-  console.log(parentObject);
 
   useEffect(() => {
     if (modalStatus) {
@@ -89,7 +87,6 @@ export const ReviewModal = ({
     closeModal();
   };
   const handleCloseModal = () => {
-    console.log("request comming here");
     setRating(0);
     setReviewText("");
     setStarLength(new Array(5).fill(false));

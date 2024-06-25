@@ -186,3 +186,17 @@ export const deleteUserReview = async (token, reviewId) => {
     return { success: false, error: error.response.data.error };
   }
 };
+
+export const fetchBookingDetails = async (token, bookingId) => {
+  try {
+    const headers = createHeader(token);
+    const response = await axios.get(
+      `${baseUrl}/user/bookingDetails/${bookingId}`,
+      { headers }
+    );
+    const { data } = response.data;
+    return { success: true, data: data };
+  } catch (error) {
+    return { success: false, error: error.response.data.error };
+  }
+};

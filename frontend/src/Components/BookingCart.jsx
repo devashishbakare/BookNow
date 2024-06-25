@@ -1,10 +1,12 @@
 import propTypes from "prop-types";
 import { ReviewModal } from "./ReviewModal";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 export const BookingCart = ({ bookingStatus, details }) => {
   const { hotelImage, bookingDetails } = details;
   const { selectedDates, hotelName, createdAt } = bookingDetails;
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+  const navigate = useNavigate();
   const closeReviewModal = () => {
     setIsReviewModalOpen(false);
   };
@@ -13,11 +15,16 @@ export const BookingCart = ({ bookingStatus, details }) => {
     return date.toLocaleString("en-US", { month: "long" });
   };
 
+  const showBookingDetails = (bookingId) => {
+    console.log(bookingId);
+    navigate(`/bookingDetails/${bookingId}`);
+  };
+
   const updateReviews = () => {};
   return (
     <>
       <div className="h-auto w-full flex flex-col pl-3">
-        <div className="h-auto w-[90%] border-[1px] border-gray-400 shadow-lg flex mt-3 rounded-md">
+        <div className="h-auto w-[95%] border-[1px] border-gray-400 shadow-lg flex mt-3 rounded-md">
           <div className="h-auto w-[35%] centerDiv">
             <img
               src={hotelImage}
@@ -51,7 +58,12 @@ export const BookingCart = ({ bookingStatus, details }) => {
               {createdAt.substring(0, 10)}
             </div>
             <div className="h-auto pt-2 pb-2 w-full pl-3 underline text-[#003b95]">
-              View Details{" "}
+              <span
+                onClick={() => showBookingDetails(bookingDetails._id)}
+                className=""
+              >
+                View Details
+              </span>{" "}
               {bookingStatus == 1 && (
                 <span
                   onClick={() => setIsReviewModalOpen(true)}

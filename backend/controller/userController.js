@@ -1,6 +1,7 @@
 const BookingDetails = require("../model/bookingDetails");
 const User = require("../model/user");
 const Hotel = require("../model/hotel");
+const RoomPackage = require("../model/roomPackage");
 const fetchBookingHistory = async (req, res) => {
   try {
     const userId = req.userId;
@@ -115,8 +116,31 @@ const fetchCurrentBooking = async (req, res) => {
   }
 };
 
+const fetchBookingDetails = async (req, res) => {
+  try {
+    const userId = req.userId;
+    console.log("in fetch bookingDetails");
+    const bookingId = req.params.bookingId;
+
+    const bookingDetails = await BookingDetails.findById(bookingId);
+    const roomPackageId = bookingDetails.roomPackage;
+    const roomDetails = await RoomPackage.findById(roomPackageId);
+    const roomType = roomDetails.roomType;
+    return res.status(200).json({
+      data: { bookingDetails, roomType },
+      message: "Booking Details fetch successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error: error.message,
+      message: "Something went wrong, while fetching booking details",
+    });
+  }
+};
+
 module.exports = {
   fetchBookingHistory,
   fetchUserDetails,
   fetchCurrentBooking,
+  fetchBookingDetails,
 };

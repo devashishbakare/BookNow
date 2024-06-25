@@ -29,7 +29,6 @@ export const City = () => {
   }, [cityName]);
 
   const handleHotelNavigation = (hotelId) => {
-    console.log(hotelId + " this is id ");
     navigate(`/hotel/${hotelId}`);
   };
   return (
