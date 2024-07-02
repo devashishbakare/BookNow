@@ -5,23 +5,23 @@ const RoomPackage = require("../model/roomPackage");
 const fetchBookingHistory = async (req, res) => {
   try {
     const userId = req.userId;
-    console.log(userId);
     const user = await User.findById(userId);
     if (!user) {
       return res.status(400).json({ message: "User not found" });
     }
-
     const date = new Date();
     const currentMonth = date.getMonth() + 1;
     const currentDate = date.getDate();
-
+    //console.log("currentDate", currentDate, "currentMonth", currentMonth);
     const storeResult = await Promise.all(
       user.bookingHistory.map(async (bookingId) => {
         const bookingDetails = await BookingDetails.findById(bookingId);
         let flag = false;
         bookingDetails.selectedDates.forEach((selectedDate) => {
           const { month, dates } = selectedDate;
-          if (month >= currentMonth) {
+          if (currentMonth > month) {
+            flag = true;
+          } else if (currentMonth == month) {
             dates.forEach((date) => {
               if (date < currentDate) {
                 flag = true;

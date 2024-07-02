@@ -4,6 +4,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { TbBrandBooking } from "react-icons/tb";
 import { FaHistory } from "react-icons/fa";
 import { MdOutlineRateReview, MdOutlineLogin } from "react-icons/md";
+import { IoIosArrowDown } from "react-icons/io";
+import { RiSortDesc } from "react-icons/ri";
 import { Review } from "./Review";
 import { useEffect, useState } from "react";
 import { ShowProfileInfo } from "./ShowProfileInfo";
@@ -30,6 +32,7 @@ export const Profile = () => {
   const [profileInfoModalStatus, setProfileInfoModalStatus] = useState(false);
   const [modalSelectedOptions, setModalSelectedOptions] = useState();
   const [storeFetchInfo, setStoreFetchInfo] = useState([]);
+  const [showSortDropdown, setShowSortDropdown] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const token = localStorage.getItem("token");
@@ -77,7 +80,7 @@ export const Profile = () => {
       const token = localStorage.getItem("token");
       const response = await fetchHistory(token);
       if (response.success) {
-        //console.log(response.data);
+        //console.log("past result", response.data);
         setStoreFetchInfo(response.data);
         setModalSelectedOptions(1);
         setProfileInfoModalStatus(true);
@@ -92,13 +95,15 @@ export const Profile = () => {
       const token = localStorage.getItem("token");
       const response = await fetchHistory(token);
       if (response.success) {
+        console.log("past bookings", response.data);
         setPastBookings(response.data);
+        setSelectedOptions(1);
       } else {
         showErrorNotification(
           "Something went wrong while fetching details, try again later"
         );
       }
-      setSelectedOptions(1);
+
       setLocalLoader(false);
     }
   };
@@ -106,19 +111,19 @@ export const Profile = () => {
   const fetchReviews = async () => {
     const token = localStorage.getItem("token");
     if (windowSize.width < 768) {
-      setLocalLoader(true);
+      setIsLoading(true);
       const response = await fetchUserReviews(token);
       if (response.success) {
         setStoreFetchInfo(response.data);
+        setModalSelectedOptions(2);
+        setProfileInfoModalStatus(true);
       } else {
         showErrorNotification(
           "Something went wrong while fetch reviews, try again later"
         );
       }
-      setLocalLoader(false);
-      setStoreFetchInfo(response.data);
-      setModalSelectedOptions(2);
-      setProfileInfoModalStatus(true);
+
+      setIsLoading(false);
     } else {
       setLocalLoader(true);
       const response = await fetchUserReviews(token);
@@ -138,6 +143,123 @@ export const Profile = () => {
     setProfileInfoModalStatus(false);
   };
 
+  const sortFetchData = (index) => {
+    // 1 ) bookingDate -> newest to oldest
+    // 2 ) bookingDate -> oldest to newest
+    // 3 ) check in date -> newest to oldest
+    // 4 ) check in date -> oldest to oldest
+    // 5 ) reviewDate -> newest to oldest
+    // 6 ) reviewDate -> oldest to newest
+    let fetchedData = null;
+    if (selectedOptions == 0) {
+      fetchedData = [...currentBooking];
+    } else if (selectedOptions == 1) {
+      fetchedData = [...pastBookings];
+    } else {
+      fetchedData = [...userReviews];
+    }
+
+    if (index == 1) {
+      console.log(index);
+      setShowSortDropdown(false);
+      setLocalLoader(true);
+      fetchedData.sort((a, b) => {
+        return (
+          new Date(b.bookingDetails.updatedAt) -
+          new Date(a.bookingDetails.updatedAt)
+        );
+      });
+      if (selectedOptions == 0) {
+        setCurrentBooking(fetchedData);
+      } else {
+        setPastBookings(fetchedData);
+      }
+      setLocalLoader(false);
+    } else if (index == 2) {
+      console.log(index);
+      setLocalLoader(true);
+      setShowSortDropdown(false);
+      fetchedData.sort((a, b) => {
+        return (
+          new Date(a.bookingDetails.updatedAt) -
+          new Date(b.bookingDetails.updatedAt)
+        );
+      });
+      if (selectedOptions == 0) {
+        setCurrentBooking(fetchedData);
+      } else {
+        setPastBookings(fetchedData);
+      }
+      setLocalLoader(false);
+    } else if (index == 3) {
+      console.log(index);
+      setLocalLoader(true);
+      setShowSortDropdown(false);
+      fetchedData.sort((a, b) => {
+        if (
+          a.bookingDetails.selectedDates[0].month ==
+          b.bookingDetails.selectedDates[0].month
+        ) {
+          const aMaxDate = Math.max(...a.bookingDetails.selectedDates[0].dates);
+          const bMaxDate = Math.max(...b.bookingDetails.selectedDates[0].dates);
+          return bMaxDate - aMaxDate;
+        }
+        return (
+          b.bookingDetails.selectedDates[0].month -
+          a.bookingDetails.selectedDates[0].month
+        );
+      });
+      if (selectedOptions == 0) {
+        setCurrentBooking(fetchedData);
+      } else {
+        setPastBookings(fetchedData);
+      }
+      setLocalLoader(false);
+    } else if (index == 4) {
+      //
+      console.log(index);
+      setLocalLoader(true);
+      setShowSortDropdown(false);
+      fetchedData.sort((a, b) => {
+        if (
+          a.bookingDetails.selectedDates[0].month ==
+          b.bookingDetails.selectedDates[0].month
+        ) {
+          const aMaxDate = Math.max(...a.bookingDetails.selectedDates[0].dates);
+          const bMaxDate = Math.max(...b.bookingDetails.selectedDates[0].dates);
+          return aMaxDate - bMaxDate;
+        }
+        return (
+          a.bookingDetails.selectedDates[0].month -
+          b.bookingDetails.selectedDates[0].month
+        );
+      });
+      if (selectedOptions == 0) {
+        setCurrentBooking(fetchedData);
+      } else {
+        setPastBookings(fetchedData);
+      }
+      setLocalLoader(false);
+    } else if (index == 5) {
+      setLocalLoader(true);
+      setShowSortDropdown(false);
+      console.log("before, index 5", fetchedData);
+      fetchedData.sort((a, b) => {
+        return new Date(b.updatedAt) - new Date(a.updatedAt);
+      });
+      setUserReviews(fetchedData);
+      setLocalLoader(false);
+    } else if (index == 6) {
+      setLocalLoader(true);
+      setShowSortDropdown(false);
+      fetchedData.sort((a, b) => {
+        return new Date(a.updatedAt) - new Date(b.updatedAt);
+      });
+      setUserReviews(fetchedData);
+      setLocalLoader(false);
+    }
+  };
+
   return (
     <>
       <div className="h-[100vh] w-[100vw] flex flex-col centerDiv bg-[#f4f4f4]">
@@ -153,7 +275,7 @@ export const Profile = () => {
               <Navbar />
             </div>
             <div className="h-[92vh] w-full shadow-xl max-w-[1150px] flex">
-              <div className="addBorder h-full w-full flex flex-col items-center md:w-[35%]">
+              <div className=" border-[1px] border-[#d7d7d7] h-full w-full flex flex-col items-center md:w-[35%]">
                 {userDetails && (
                   <div className="h-[150px] w-[95%] flex flex-row centerDiv bg-[#003b95] mt-2 rounded-lg shadow-sm md:w-[98%]">
                     {" "}
@@ -231,51 +353,123 @@ export const Profile = () => {
                   </div>
                 ) : (
                   <>
-                    {/* <div className="h-full w-full flex flex-col"></div> */}
-                    {selectedOptions === 0 && (
-                      <div className="h-full w-full flex flex-col">
-                        {currentBooking && currentBooking.length === 0 ? (
-                          <>
-                            <div className="h-full w-full addFont opacity-30 text-[1.5rem] centerDiv">
-                              No currunt bookings found
-                            </div>
-                          </>
-                        ) : (
-                          currentBooking.length > 0 &&
-                          currentBooking.map((bookingDetails) => (
-                            <BookingCart
-                              key={`${bookingDetails.bookingDetails._id}-curr`}
-                              bookingStatus={1}
-                              details={bookingDetails}
-                            />
-                          ))
+                    <div className="h-full w-full flex flex-col relative">
+                      <div className="absolute top-2 right-1 h-[50px] w-full flex items-center flex-row-reverse pr-[20px]">
+                        <button
+                          onClick={() => setShowSortDropdown(true)}
+                          className="flex h-[90%] w-[100px] centerDiv gap-2 bg-[#fbfbfb] text-black  border-[1px] border-[#cacaca] rounded-md"
+                        >
+                          Sort <RiSortDesc />
+                        </button>
+                        {showSortDropdown && (
+                          <div className="absolute h-auto w-auto top-[110%] right-5 z-50 flex flex-col bg-[#fbfbfb] text-black shadow-md rounded-md">
+                            {selectedOptions !== 2 && (
+                              <span
+                                onClick={() => sortFetchData(1)}
+                                className="h-[50px] w-auto mr-4 ml-2 flex items-center pl-2 font-light border-b-[1px] border-[#cacaca]"
+                              >
+                                newest to oldest by booking date
+                              </span>
+                            )}
+                            {selectedOptions !== 2 && (
+                              <span
+                                onClick={() => sortFetchData(2)}
+                                className="h-[50px] w-auto mr-4 ml-2 flex items-center pl-2 font-light border-b-[1px] border-[#cacaca]"
+                              >
+                                oldest to newest by booking date
+                              </span>
+                            )}
+
+                            {selectedOptions !== 2 && (
+                              <span
+                                onClick={() => sortFetchData(3)}
+                                className="h-[50px] w-auto mr-4 ml-2 flex items-center pl-2 font-light border-b-[1px] border-[#cacaca]"
+                              >
+                                newest to oldest by check in date
+                              </span>
+                            )}
+                            {selectedOptions !== 2 && (
+                              <span
+                                onClick={() => sortFetchData(4)}
+                                className="h-[50px] w-auto mr-4 ml-2 flex items-center pl-2 font-light border-b-[1px] border-[#cacaca]"
+                              >
+                                oldest to newest by check in date
+                              </span>
+                            )}
+                            {selectedOptions == 2 && (
+                              <span
+                                onClick={() => sortFetchData(5)}
+                                className="h-[50px] w-auto mr-4 ml-2 flex items-center pl-2 font-light border-b-[1px] border-[#cacaca]"
+                              >
+                                newest to oldest
+                              </span>
+                            )}
+                            {selectedOptions == 2 && (
+                              <span
+                                onClick={() => sortFetchData(6)}
+                                className="h-[50px] w-auto mr-4 ml-2 flex items-center pl-2 font-light border-b-[1px] border-[#cacaca]"
+                              >
+                                oldest to newest
+                              </span>
+                            )}
+                            <span
+                              onClick={() => setShowSortDropdown(false)}
+                              className="h-[50px] w-auto mr-4 ml-2 flex items-center pl-2 font-light"
+                            >
+                              close
+                            </span>
+                          </div>
                         )}
                       </div>
-                    )}
-                    {selectedOptions === 1 && (
-                      <div className="h-full w-full flex flex-col">
-                        {pastBookings && pastBookings.length === 0 ? (
-                          <>
-                            <div className="h-full w-full addFont opacity-30 text-[1.5rem] centerDiv">
-                              No past bookings found
-                            </div>
-                          </>
-                        ) : (
-                          pastBookings.length > 0 &&
-                          pastBookings.map((bookingDetails) => (
-                            <BookingCart
-                              key={`${bookingDetails.bookingDetails._id}-past`}
-                              bookingStatus={1}
-                              details={bookingDetails}
-                            />
-                          ))
+                      <div className="h-full w-full overflow-x-scroll">
+                        {/* <div className="h-full w-full flex flex-col"></div> */}
+                        {selectedOptions === 0 && (
+                          <div className="h-full w-full flex flex-col">
+                            {currentBooking && currentBooking.length === 0 ? (
+                              <>
+                                <div className="h-full w-full addFont opacity-30 text-[1.5rem]  centerDiv">
+                                  No currunt bookings found
+                                </div>
+                              </>
+                            ) : (
+                              currentBooking.length > 0 &&
+                              currentBooking.map((bookingDetails) => (
+                                <BookingCart
+                                  key={`${bookingDetails.bookingDetails._id}-curr`}
+                                  bookingStatus={1}
+                                  details={bookingDetails}
+                                />
+                              ))
+                            )}
+                          </div>
+                        )}
+                        {selectedOptions === 1 && (
+                          <div className="h-full w-full flex flex-col">
+                            {pastBookings && pastBookings.length === 0 ? (
+                              <>
+                                <div className="h-full w-full addFont opacity-30 text-[1.5rem] centerDiv">
+                                  No past bookings found
+                                </div>
+                              </>
+                            ) : (
+                              pastBookings.length > 0 &&
+                              pastBookings.map((bookingDetails) => (
+                                <BookingCart
+                                  key={`${bookingDetails.bookingDetails._id}-past`}
+                                  bookingStatus={1}
+                                  details={bookingDetails}
+                                />
+                              ))
+                            )}
+                          </div>
+                        )}
+                        {selectedOptions == 2 && (
+                          <Review reviews={userReviews} />
                         )}
                       </div>
-                    )}
+                    </div>
                   </>
                 )}
-
-                {selectedOptions == 2 && <Review reviews={userReviews} />}
               </div>
             </div>
           </>

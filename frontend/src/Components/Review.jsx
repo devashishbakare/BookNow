@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import propTypes from "prop-types";
 import { ReviewCart } from "./ReviewCart";
 import { deleteUserReview } from "../utils/api";
@@ -7,11 +7,18 @@ import {
   showSuccessNotification,
 } from "../utils/notification";
 export const Review = ({ reviews }) => {
-  const [userReviews, setUserReviews] = useState(reviews);
+  const [userReviews, setUserReviews] = useState();
   const [localLoader, setLocalLoader] = useState(false);
-  const [reviewOption, setReviewOption] = useState(
-    new Array(userReviews.length).fill(false)
-  );
+  const [reviewOption, setReviewOption] = useState();
+
+  useEffect(() => {
+    const assignData = () => {
+      console.log(reviews);
+      setUserReviews(reviews);
+      setReviewOption(new Array(reviews.length).fill(false));
+    };
+    assignData();
+  }, [reviews]);
   const updateReviewOption = async (index) => {
     let storeReviewOption = { ...reviewOption };
     storeReviewOption[index] = !storeReviewOption[index];
@@ -54,14 +61,15 @@ export const Review = ({ reviews }) => {
   return (
     <>
       <div className="h-full w-[90%] flex flex-col overflow-x-hidden mt-3 pl-3">
-        {userReviews.length == 0 && (
+        {userReviews && userReviews.length == 0 && (
           <>
             <div className="h-full w-full addFont opacity-30 text-[1.5rem] centerDiv">
               Reviews will appear here once added.
             </div>
           </>
         )}
-        {userReviews.length > 0 &&
+        {userReviews &&
+          userReviews.length > 0 &&
           userReviews.map((reviewObject, index) => (
             <ReviewCart
               key={reviewObject._id}

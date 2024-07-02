@@ -16,7 +16,6 @@ export const BookingCart = ({ bookingStatus, details }) => {
   };
 
   const showBookingDetails = (bookingId) => {
-    console.log(bookingId);
     navigate(`/bookingDetails/${bookingId}`);
   };
 

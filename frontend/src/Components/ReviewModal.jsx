@@ -97,7 +97,7 @@ export const ReviewModal = ({
       <div className="modal-overlay">
         <div
           ref={modalRef}
-          className="h-auto max-w-[400px] w-full shadow-md p-3 bg-[#fbfbfb] flex flex-col gap-1"
+          className="h-auto max-w-[400px] w-full shadow-md p-3 bg-[#fbfbfb] flex flex-col gap-1 rounded-md"
         >
           {localLoader ? (
             <div className="h-[500px] w-full centerDiv">

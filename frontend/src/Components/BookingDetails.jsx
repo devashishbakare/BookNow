@@ -43,7 +43,7 @@ export const BookingDetails = () => {
           ) : (
             <>
               {bookingDetails && (
-                <div className="h-full w-full shadow-xl">
+                <div className="h-full w-full">
                   <BookingSummery
                     bookingDetails={bookingDetails}
                     roomType={roomType}

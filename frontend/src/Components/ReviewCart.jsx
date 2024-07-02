@@ -29,7 +29,7 @@ export const ReviewCart = ({
   return (
     <>
       <div
-        className="relative z-10 h-auto mt-2 mb-2 w-full shadow-lg flex flex-col"
+        className="relative z-10 h-auto mt-2 mb-2 w-full shadow-lg flex flex-col pl-1"
         key={reviewObject._id}
       >
         <div className="h-auto mt-2 mb-2 w-full centerDiv">

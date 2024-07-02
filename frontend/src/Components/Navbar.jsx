@@ -12,6 +12,7 @@ export const Navbar = () => {
   const [searchBarClicked, setSearchBarClicked] = useState(false);
   const [searchResult, setSearchResult] = useState();
   const [searchKey, setSearchKey] = useState();
+  const [showDropdown, setShowDropDown] = useState(false);
 
   const handleInput = (event) => {
     let key = event.target.value;
@@ -182,7 +183,7 @@ export const Navbar = () => {
           <>
             <div
               onClick={() => navigatePage()}
-              className="h-full w-[80px] flex-shrink-0 centerDiv text-[1.1rem] text-[#ffffff] pr-3"
+              className="h-full w-[80px] flex-shrink-0 centerDiv text-[1.1rem] text-[#ffffff] pr-3 cursor-pointer"
             >
               Sign-In
             </div>
@@ -190,10 +191,41 @@ export const Navbar = () => {
         ) : (
           <>
             <div
-              onClick={() => signOutUser()}
-              className="h-full w-[80px] flex-shrink-0 centerDiv text-[1.1rem] text-[#ffffff] pr-3"
+              // onClick={() => signOutUser()}
+              className="h-full w-[70px] relative flex-shrink-0 centerDiv text-[1.1rem] text-[#ffffff] pr-3 md:w-[90px]"
             >
-              Sign-out
+              <div
+                onClick={() => setShowDropDown(true)}
+                className="h-[45px] w-[45px] rounded-[50%]"
+              >
+                <img
+                  src="https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
+                  alt="userImage"
+                  className="h-full w-full object-cover rounded-[50%]"
+                />
+              </div>
+              {showDropdown && (
+                <div className="absolute top-[110%] right-2 h-auto w-[130px] flex flex-col z-50 bg-[#fbfbfb] text-black shadow-md rounded-md">
+                  <span
+                    onClick={() => navigate(`/profile`)}
+                    className="h-[50px] w-full flex items-center pl-[20px] font-light border-b-[1px] border-[#eaeaea] cursor-pointer"
+                  >
+                    Profile
+                  </span>
+                  <span
+                    onClick={signOutUser}
+                    className="h-[50px] w-full flex items-center pl-[20px] font-light border-b-[1px] border-[#eaeaea] cursor-pointer"
+                  >
+                    Sign Out
+                  </span>
+                  <span
+                    onClick={() => setShowDropDown(false)}
+                    className="h-[50px] w-full flex items-center pl-[20px] font-light border-b-[1px] border-[#eaeaea] cursor-pointer"
+                  >
+                    Close
+                  </span>
+                </div>
+              )}
             </div>
           </>
         )}
