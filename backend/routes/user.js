@@ -10,4 +10,9 @@ router.get(
   authenticate,
   userController.fetchBookingDetails
 );
+router.delete(
+  "/cancelBooking/:bookingId",
+  authenticate,
+  userController.cancelBooking
+);
 module.exports = router;

@@ -11,4 +11,9 @@ router.post("/updateReview", updateController.updateAddReview);
 router.get("/test", updateController.testAPI);
 router.put("/ratingScore", updateController.addRatingScore);
 router.put("/updateHotelName/:userId", updateController.updateHotelName);
+router.delete(
+  "/cancelBookingRapair/:b1/:b2/:hotelId",
+  authenticate,
+  updateController.updateCancelBooking
+);
 module.exports = router;

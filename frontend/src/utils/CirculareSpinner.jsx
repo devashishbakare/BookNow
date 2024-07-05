@@ -8,7 +8,7 @@ const CirculareSpinner = () => {
   };
   return (
     <div style={spinnerStyle}>
-      <ClipLoader color="#003b95" size={20} />
+      <ClipLoader color="#003b95" size={25} />
     </div>
   );
 };

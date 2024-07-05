@@ -143,7 +143,7 @@ export const Hotel = () => {
               <Navbar />
             </div>
 
-            <div className="h-auto w-[100vw] flex flex-col max-w-[1150px]">
+            <div className="h-auto w-[100vw] flex flex-col max-w-[1150px] shadow-lg">
               <div className="h-[35vh] w-full">
                 <Slider {...settings}>
                   {hotelDetails.images.map((image, index) => (

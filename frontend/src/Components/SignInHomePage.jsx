@@ -10,13 +10,12 @@ export const SignInHomePage = () => {
               alt="hotelImage"
               className="h-full w-full object-cover"
             />
-            {/* <div className="h-full w-full addBorder bg-black">hellow</div> */}
           </div>
           <div className="h-[500px] w-full min-w-[370px] overflow-y-scroll">
             <SignInForm />
           </div>
         </div>
-        <div className="hidden md:flex h-auto w-[767px] border-2 border-gray-400 baseColor">
+        <div className="hidden md:flex h-auto w-[767px] border-2 border-gray-200 baseColor rounded-md">
           <div className="min-h-[500px] w-[50%]">
             <img
               src="http://res.cloudinary.com/djgouef8q/image/upload/v1707548707/jilrdxdgvnvtkobg0oew.jpg"

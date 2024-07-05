@@ -49,6 +49,7 @@ export const Profile = () => {
       if (userDetailsResponse.success && currentBookingResponse.success) {
         setUserDetails(userDetailsResponse.data);
         setCurrentBooking(currentBookingResponse.data);
+        console.log(currentBookingResponse.data);
         //console.log(currentBookingResponse.data);
         setSelectedOptions(0);
       } else {
@@ -139,7 +140,11 @@ export const Profile = () => {
     }
   };
 
-  const updateProfileInfoModalStatus = () => {
+  const updateProfileInfoModalStatus = async (indicator) => {
+    // if(indicator == 0){
+    //   const currentBookingResponse = await fetchCurrentBooking(token);
+    //   setCurrentBooking(currentBookingResponse.data);
+    // }
     setProfileInfoModalStatus(false);
   };
 
@@ -258,6 +263,11 @@ export const Profile = () => {
       setUserReviews(fetchedData);
       setLocalLoader(false);
     }
+  };
+  const updateBookingCart = (bookingId) => {
+    setCurrentBooking((prev) =>
+      prev.filter((booking) => booking.bookingDetails._id !== bookingId)
+    );
   };
 
   return (
@@ -436,8 +446,9 @@ export const Profile = () => {
                               currentBooking.map((bookingDetails) => (
                                 <BookingCart
                                   key={`${bookingDetails.bookingDetails._id}-curr`}
-                                  bookingStatus={1}
+                                  bookingStatus={0}
                                   details={bookingDetails}
+                                  updateParentCart={updateBookingCart}
                                 />
                               ))
                             )}
@@ -458,6 +469,7 @@ export const Profile = () => {
                                   key={`${bookingDetails.bookingDetails._id}-past`}
                                   bookingStatus={1}
                                   details={bookingDetails}
+                                  updateParentCart={updateBookingCart}
                                 />
                               ))
                             )}
@@ -480,6 +492,7 @@ export const Profile = () => {
           closeModal={updateProfileInfoModalStatus}
           selectedOptions={modalSelectedOptions}
           fetchedData={storeFetchInfo}
+          updateWideCurrentDetails={updateBookingCart}
         />
       </div>
     </>

@@ -16,26 +16,36 @@ const emailWorker = new Worker(
     //job.data -> we get your postman data
     try {
       const bookingDetails = job.data.data;
-      console.log(job.data);
-      console.log(job.data.data);
-      console.log(job.data.pdfData);
-      const pdfData = job.data.pdfData;
-      const htmlContent = await renderEjsToHtml("bookingPDFTemplate", pdfData);
-      //console.log("html content here " + htmlContent);
-      const filePath = await generatePdf(htmlContent, bookingDetails.bookingId);
-      console.log(`PDF created at ${filePath}`);
-      const emailRequestFor = job.data.reason;
-      const emailResponse = await sendEmailWithAttachment(
-        bookingDetails.email,
-        filePath,
-        emailRequestFor,
-        bookingDetails
-      );
-      console.log(`Email sent: ${emailResponse}`);
+      if (job.data.reason == 0) {
+        console.log(job.data);
+        console.log(job.data.data);
+        console.log(job.data.pdfData);
+        const pdfData = job.data.pdfData;
+        const htmlContent = await renderEjsToHtml(
+          "bookingPDFTemplate",
+          pdfData
+        );
+        //console.log("html content here " + htmlContent);
+        const filePath = await generatePdf(
+          htmlContent,
+          bookingDetails.bookingId
+        );
+        console.log(`PDF created at ${filePath}`);
+        const emailRequestFor = job.data.reason;
+        const emailResponse = await sendEmailWithAttachment(
+          bookingDetails.email,
+          filePath,
+          emailRequestFor,
+          bookingDetails
+        );
+        console.log(`Email sent: ${emailResponse}`);
 
-      // Delete the local PDF file
-      fs.unlinkSync(filePath);
-      console.log(`PDF deleted from ${filePath}`);
+        // Delete the local PDF file
+        fs.unlinkSync(filePath);
+        console.log(`PDF deleted from ${filePath}`);
+      } else {
+        await sendEmailWithAttachment(job.data.to, "", 1, bookingDetails);
+      }
       return true;
     } catch (error) {
       console.error("Error sending email from queue:", error);
@@ -72,7 +82,7 @@ const sendEmailWithAttachment = async (
   bookingDetails
 ) => {
   // emailRequest == 0 : sending email for booking hotel
-  if (emailRequestFor == 0) {
+  if (emailRequestFor === 0) {
     let htmlTemplate = renderTemplate(
       { bookingDetails: bookingDetails },
       "/bookingConfirm.ejs"
@@ -95,6 +105,28 @@ const sendEmailWithAttachment = async (
         if (error) {
           reject(error);
         } else {
+          resolve(info.response);
+        }
+      });
+    });
+  } else {
+    let htmlTemplate = renderTemplate(
+      { bookingDetails: bookingDetails },
+      "/bookingCancel.ejs"
+    );
+
+    const mailOptions = {
+      from: process.env.SMTP_AUTH_USER,
+      to: sendEmailTo,
+      subject: "Hotel Booking Cancelation Response",
+      html: htmlTemplate,
+    };
+    return new Promise((resolve, reject) => {
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          reject(error);
+        } else {
+          console.log(info.response);
           resolve(info.response);
         }
       });

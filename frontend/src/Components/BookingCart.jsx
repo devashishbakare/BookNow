@@ -2,10 +2,17 @@ import propTypes from "prop-types";
 import { ReviewModal } from "./ReviewModal";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-export const BookingCart = ({ bookingStatus, details }) => {
+import { cancleBooking } from "../utils/api";
+import {
+  showErrorNotification,
+  showSuccessNotification,
+} from "../utils/notification";
+import CirculareSpinner from "../utils/CirculareSpinner";
+export const BookingCart = ({ bookingStatus, details, updateParentCart }) => {
   const { hotelImage, bookingDetails } = details;
-  const { selectedDates, hotelName, createdAt } = bookingDetails;
+  const { _id, selectedDates, hotelName, createdAt } = bookingDetails;
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+  const [localLoader, setLocalLoader] = useState(false);
   const navigate = useNavigate();
   const closeReviewModal = () => {
     setIsReviewModalOpen(false);
@@ -20,6 +27,22 @@ export const BookingCart = ({ bookingStatus, details }) => {
   };
 
   const updateReviews = () => {};
+
+  const handleCancelBooking = async (bookingId) => {
+    console.log(bookingId);
+    setLocalLoader(true);
+    const token = localStorage.getItem("token");
+    const cancelBookingResponse = await cancleBooking(token, bookingId);
+    console.log(cancelBookingResponse);
+    if (cancelBookingResponse.success) {
+      updateParentCart(bookingId);
+      showSuccessNotification("Your Booking Has Been cancel");
+    } else {
+      showErrorNotification("something went wrong, try again later");
+    }
+    setLocalLoader(false);
+  };
+
   return (
     <>
       <div className="h-auto w-full flex flex-col pl-3">
@@ -68,7 +91,20 @@ export const BookingCart = ({ bookingStatus, details }) => {
                   onClick={() => setIsReviewModalOpen(true)}
                   className="ml-3"
                 >
-                  Add Review
+                  {localLoader ? (
+                    <>
+                      <CirculareSpinner />
+                    </>
+                  ) : (
+                    <>
+                      <span className="">Add Review</span>
+                    </>
+                  )}
+                </span>
+              )}
+              {bookingStatus == 0 && (
+                <span onClick={() => handleCancelBooking(_id)} className="ml-3">
+                  Cancel Booking
                 </span>
               )}
             </div>
@@ -88,4 +124,5 @@ export const BookingCart = ({ bookingStatus, details }) => {
 BookingCart.propTypes = {
   bookingStatus: propTypes.number,
   details: propTypes.object,
+  updateParentCart: propTypes.func,
 };

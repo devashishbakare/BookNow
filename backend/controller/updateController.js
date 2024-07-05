@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const User = require("../model/user");
 const BookingDetails = require("../model/bookingDetails");
 const Review = require("../model/review");
@@ -193,6 +194,54 @@ const updateHotelName = async (req, res) => {
     });
   }
 };
+
+const updateCancelBooking = async (req, res) => {
+  const session = await mongoose.startSession();
+  try {
+    session.startTransaction();
+
+    const userId = req.userId;
+    const bookingId1 = req.params.b1;
+    const bookingId2 = req.params.b2;
+    const hotelId = req.params.hotelId;
+
+    console.log(userId, bookingId1, bookingId2);
+
+    // Update user bookingHistory
+    const update = {
+      $pull: {
+        bookingHistory: { $in: [bookingId1, bookingId2] },
+      },
+    };
+
+    const userResponse = await User.findByIdAndUpdate(userId, update, {
+      session,
+      new: true,
+    });
+
+    // Update hotel selectedDates
+    const hotelResponse = await Hotel.findByIdAndUpdate(
+      hotelId,
+      { $set: { selectedDates: [] } },
+      { session, new: true }
+    );
+
+    await session.commitTransaction();
+    session.endSession();
+
+    return res.status(200).json({
+      data: { userResponse, hotelResponse },
+      message: "Update has been done",
+    });
+  } catch (error) {
+    await session.abortTransaction();
+    session.endSession();
+    return res
+      .status(500)
+      .json({ error: error.message, message: "Something went wrong" });
+  }
+};
+
 module.exports = {
   updateUser,
   deleteBookingDetails,
@@ -202,4 +251,5 @@ module.exports = {
   testAPI,
   addRatingScore,
   updateHotelName,
+  updateCancelBooking,
 };

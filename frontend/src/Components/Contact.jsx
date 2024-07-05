@@ -29,7 +29,7 @@ export const Contact = () => {
             </div>
             <div className="flex flex-col gap-1">
               <span className="font-gilroy-bold text-[20px] tracking-tighter font-semibold">
-                complete security. no asterisks.
+                complete surety with all comfort.
               </span>
               <span className="font-gilroy-bold text-[14px] leading-[25px] tracking-tighter opacity-[0.7]">
                 Inspiration for better and comfortable life

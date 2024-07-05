@@ -92,7 +92,7 @@ export const ConfirmBooking = () => {
         } else {
           let selectedPayment = paymentSelection == false ? 0 : 1;
           let dataforDateSelection = getDateSection(userMonthDateSelection);
-          console.log(dataforDateSelection);
+          //console.log(dataforDateSelection);
           const userCollecetedData = {
             name: values.name,
             email: values.email,
@@ -123,7 +123,7 @@ export const ConfirmBooking = () => {
               };
               navigate("/bookingConfirmation", { state: sharedDate });
             } else {
-              console.log("request faild " + response.error);
+              //console.log("request faild " + response.error);
               showErrorNotification(
                 "Un-Authorized request, please login and try again"
               );
@@ -141,7 +141,7 @@ export const ConfirmBooking = () => {
               selectedPackageData
             );
             if (response.success == true) {
-              console.log("booking has been created");
+              //console.log("booking has been created");
               handleOpenRazorpay(response.data, userCollecetedData);
             } else {
               showErrorNotification(response.error);
@@ -164,8 +164,8 @@ export const ConfirmBooking = () => {
     });
 
   const handleOpenRazorpay = (createdBookingDetails, userCollecetedData) => {
-    console.log("handle razer pay open");
-    console.log(createdBookingDetails);
+    // console.log("handle razer pay open");
+    // console.log(createdBookingDetails);
     var options = {
       key: import.meta.env.REZ_KEY,
       amount: Number(createdBookingDetails.amount),
@@ -305,7 +305,10 @@ export const ConfirmBooking = () => {
           <div className="h-[92vh] w-full shadow-xl max-w-[1150px] flex flex-col sm:flex-row">
             <div className="h-auto w-full flex flex-col sm:h-full sm:w-[45%] sm:justify-between md:w-[40%]">
               <div className="h-auto w-full flex flex-col">
-                <div className="h-auto mt-5 w-full flex items-center pl-2 mb-2 capitalize addFont">
+                <div
+                  onClick={() => navigate(`/hotel/${hotelId}`)}
+                  className="h-auto mt-5 w-full flex items-center pl-2 mb-2 capitalize addFont"
+                >
                   <IoArrowBack className="text-[1.3rem] mr-2" />
                   back to hotel details
                 </div>

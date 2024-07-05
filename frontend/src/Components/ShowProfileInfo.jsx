@@ -10,6 +10,7 @@ export const ShowProfileInfo = ({
   closeModal,
   selectedOptions,
   fetchedData,
+  updateWideCurrentDetails,
 }) => {
   const [showSortDropdown, setShowSortDropdown] = useState(false);
   const [details, setDetails] = useState([]);
@@ -122,6 +123,13 @@ export const ShowProfileInfo = ({
     }
   };
 
+  const updateBookingCart = (bookingId) => {
+    updateWideCurrentDetails(bookingId);
+    setDetails((prev) =>
+      prev.filter((booking) => booking.bookingDetails._id !== bookingId)
+    );
+  };
+
   return (
     <>
       <div className="modal-overlay">
@@ -228,6 +236,7 @@ export const ShowProfileInfo = ({
                           key={bookingDetails.bookingDetails._id + "curr"}
                           bookingStatus={0}
                           details={bookingDetails}
+                          updateParentCart={updateBookingCart}
                         />
                       ))
                     )}
@@ -247,6 +256,7 @@ export const ShowProfileInfo = ({
                           key={bookingDetails.bookingDetails._id + "past"}
                           bookingStatus={1}
                           details={bookingDetails}
+                          updateParentCart={updateBookingCart}
                         />
                       ))
                     )}
@@ -266,4 +276,5 @@ ShowProfileInfo.propTypes = {
   closeModal: propTypes.func.isRequired,
   selectedOptions: propTypes.number,
   fetchedData: propTypes.array,
+  updateWideCurrentDetails: propTypes.func,
 };

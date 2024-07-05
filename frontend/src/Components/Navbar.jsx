@@ -15,6 +15,9 @@ export const Navbar = () => {
   const [showDropdown, setShowDropDown] = useState(false);
 
   const handleInput = (event) => {
+    if (event.target.value.length == 0) {
+      setSearchResult("");
+    }
     let key = event.target.value;
     setSearchKey(key);
     clearTimeout(timeoutId.current);
@@ -57,7 +60,10 @@ export const Navbar = () => {
         {!searchBarClicked && (
           <>
             {" "}
-            <div className="h-full w-[150px] flex-shrink-0  centerDiv gap-2">
+            <div
+              onClick={() => navigate("/")}
+              className="h-full w-[150px] flex-shrink-0  centerDiv gap-2"
+            >
               <img
                 className="h-[40px] w-[40px] rounded-[50%] object-cover"
                 src="http://res.cloudinary.com/djgouef8q/image/upload/v1707109963/p8lfmwymj1fnxoddeaaa.png"
@@ -106,6 +112,13 @@ export const Navbar = () => {
                           Close
                         </span>
                       </div>
+                      {searchResult.length == 0 && (
+                        <>
+                          <div className="h-[80px] w-full centerDiv text-[1.2rem] opacity-60 addFont">
+                            No Result found
+                          </div>
+                        </>
+                      )}
                       {searchResult.map((result) => (
                         <>
                           <div
@@ -154,6 +167,13 @@ export const Navbar = () => {
                       Close
                     </span>
                   </div>
+                  {searchResult.length == 0 && (
+                    <>
+                      <div className="h-[80px] w-full centerDiv text-[1.4rem] opacity-60 addFont">
+                        No Result found
+                      </div>
+                    </>
+                  )}
                   {searchResult.map((result) => (
                     <>
                       <div

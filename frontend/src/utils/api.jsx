@@ -200,3 +200,17 @@ export const fetchBookingDetails = async (token, bookingId) => {
     return { success: false, error: error.response.data.error };
   }
 };
+
+export const cancleBooking = async (token, bookingId) => {
+  try {
+    const headers = createHeader(token);
+    const response = await axios.delete(
+      `${baseUrl}/user/cancelBooking/${bookingId}`,
+      { headers }
+    );
+    const { data } = response.data;
+    return { success: true, data: data };
+  } catch (error) {
+    return { success: false, error: error.response.data.error };
+  }
+};

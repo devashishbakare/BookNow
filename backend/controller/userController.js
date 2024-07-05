@@ -1,7 +1,9 @@
+const mongoose = require("mongoose");
 const BookingDetails = require("../model/bookingDetails");
 const User = require("../model/user");
 const Hotel = require("../model/hotel");
 const RoomPackage = require("../model/roomPackage");
+const { emailQueue } = require("../config/queue");
 const fetchBookingHistory = async (req, res) => {
   try {
     const userId = req.userId;
@@ -12,7 +14,6 @@ const fetchBookingHistory = async (req, res) => {
     const date = new Date();
     const currentMonth = date.getMonth() + 1;
     const currentDate = date.getDate();
-    //console.log("currentDate", currentDate, "currentMonth", currentMonth);
     const storeResult = await Promise.all(
       user.bookingHistory.map(async (bookingId) => {
         const bookingDetails = await BookingDetails.findById(bookingId);
@@ -138,9 +139,104 @@ const fetchBookingDetails = async (req, res) => {
   }
 };
 
+const cancelBooking = async (req, res) => {
+  const session = await mongoose.startSession();
+
+  try {
+    session.startTransaction();
+    const userId = req.userId;
+    const bookingId = req.params.bookingId;
+    console.log(userId, bookingId);
+    const bookingDetails = await BookingDetails.findById(bookingId).session(
+      session
+    );
+    if (!bookingDetails) {
+      await session.abortTransaction();
+      session.endSession();
+      return res.status(400).json({ message: "BookingDetails not found" });
+    }
+    const user = await User.findById(userId).session(session);
+    if (!user) {
+      await session.abortTransaction();
+      session.endSession();
+      return res.status(400).json({ message: "user not found" });
+    }
+    const hotel = await Hotel.findById(bookingDetails.hotelId).session(session);
+    if (!hotel) {
+      await session.abortTransaction();
+      session.endSession();
+      return res.status(400).json({ message: "hotel Not Found" });
+    }
+    const updateSelectedDates = updatedSelectedDates(
+      bookingDetails.selectedDates,
+      hotel.selectedDates
+    );
+    //console.log("selectedDates", updateSelectedDates);
+    const updateHotelField = {
+      $set: {
+        selectedDates: updateSelectedDates,
+      },
+    };
+    await Hotel.updateOne({ _id: hotel._id }, updateHotelField, { session });
+    const updateBookingHistory = {
+      $pull: {
+        bookingHistory: bookingId,
+      },
+    };
+    await User.updateOne({ _id: user._id }, updateBookingHistory, { session });
+
+    await BookingDetails.findByIdAndDelete(bookingId).session(session);
+
+    // await emailQueue.add("Cancel Booking", {
+    //   from: "booknow@gmail.com",
+    //   to: bookingDetails.email,
+    //   reason: 1,
+    //   subject: "Hotel Booking Cancelation Response",
+    //   data: bookingDetails,
+    // });
+
+    await session.commitTransaction();
+    session.endSession();
+    return res.status(200).json({
+      message: "hotel has been deleted",
+    });
+  } catch (error) {
+    await session.abortTransaction();
+    session.endSession();
+    return res
+      .status(500)
+      .json({ error: error.message, message: "something went wrong" });
+  }
+};
+
+const updatedSelectedDates = (removeDates, selectedDates) => {
+  let removeSet = new Set();
+
+  for (let remove of removeDates) {
+    for (let selectedDate of selectedDates) {
+      if (remove.month === selectedDate.month) {
+        let set = new Set(remove.dates);
+        let newDates = selectedDate.dates.filter((date) => !set.has(date));
+
+        if (newDates.length === 0) {
+          removeSet.add(remove.month);
+        } else {
+          selectedDate.dates = newDates;
+        }
+      }
+    }
+  }
+
+  const result = selectedDates.filter(
+    (selectedDate) => !removeSet.has(selectedDate.month)
+  );
+
+  return result;
+};
 module.exports = {
   fetchBookingHistory,
   fetchUserDetails,
   fetchCurrentBooking,
   fetchBookingDetails,
+  cancelBooking,
 };
