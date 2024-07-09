@@ -54,6 +54,11 @@ export const SignInForm = () => {
       action.resetForm();
     },
   });
+  // todo : here we need to add the production url when we deploy our backend
+  const handleSignInWithGoogle = () => {
+    localStorage.setItem("pathToNavigate", pathToNavigate);
+    window.location.href = "http://localhost:8000/auth/google";
+  };
 
   return (
     <>
@@ -127,8 +132,11 @@ export const SignInForm = () => {
                   <p className="">or</p>
                   <hr className="w-[40%] border-gray-400 mr-4" />
                 </div>
-                <div className="h-[15%] w-full centerDiv min-h-[50px]">
-                  <FcGoogle className="text-[35px] mr-4 cursor-pointer" />
+                <div className="h-[15%] w-[95%] centerDiv min-h-[50px] addBorder">
+                  <FcGoogle
+                    onClick={() => handleSignInWithGoogle()}
+                    className="text-[45px] cursor-pointer addBorder"
+                  />
                 </div>
               </div>
               <div className="h-[15%] w-full centerDiv gap-1 min-h-[50px]">
@@ -274,7 +282,10 @@ export const SignInForm = () => {
                   <hr className="w-[40%] border-gray-400 mr-4" />
                 </div>
                 <div className="h-[15%] w-full centerDiv min-h-[40px]">
-                  <FcGoogle className="text-[35px] mr-4 cursor-pointer" />
+                  <FcGoogle
+                    onClick={() => handleSignInWithGoogle()}
+                    className="text-[35px] mr-4 cursor-pointer"
+                  />
                 </div>
                 <div className="h-[10%] w-full centerDiv gap-1 min-h-[50px]">
                   <span className="addFont text-[15px]">

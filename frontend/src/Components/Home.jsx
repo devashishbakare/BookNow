@@ -1,6 +1,23 @@
+import { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Navbar } from "./Navbar";
 import { Homepage } from "./Homepage";
+import { showSuccessNotification } from "../utils/notification";
 export const Home = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const token = searchParams.get("token");
+    if (token) {
+      console.log("token", token);
+      localStorage.setItem("token", token);
+      showSuccessNotification("login successfull");
+      window.history.replaceState({}, document.title, "/");
+      navigate(localStorage.getItem("pathToNavigate"));
+    }
+  }, [location.search]);
+
   return (
     <>
       <div className="h-[100vh] w-[100vw] flex flex-col centerDiv">

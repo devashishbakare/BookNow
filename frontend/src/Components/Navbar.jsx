@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { IoSearchOutline, IoArrowBack } from "react-icons/io5";
 import { getSearchResult } from "../utils/api";
 import { showErrorNotification } from "../utils/notification";
@@ -8,11 +8,18 @@ export const Navbar = () => {
   const timeoutId = useRef(null);
   const location = useLocation();
   const currentPath = location.pathname;
-  const token = localStorage.getItem("token");
   const [searchBarClicked, setSearchBarClicked] = useState(false);
   const [searchResult, setSearchResult] = useState();
   const [searchKey, setSearchKey] = useState();
   const [showDropdown, setShowDropDown] = useState(false);
+  const [saveToken, setSaveToken] = useState(null);
+
+  useEffect(() => {
+    const checkLogin = () => {
+      setSaveToken(localStorage.getItem("token"));
+    };
+    checkLogin();
+  }, []);
 
   const handleInput = (event) => {
     if (event.target.value.length == 0) {
@@ -51,6 +58,8 @@ export const Navbar = () => {
 
   const signOutUser = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("pathToNavigate");
+    setSaveToken(null);
     navigate("/");
   };
 
@@ -199,7 +208,7 @@ export const Navbar = () => {
             </div>
           </div>
         </div>
-        {!searchBarClicked && token == null ? (
+        {!searchBarClicked && saveToken == null ? (
           <>
             <div
               onClick={() => navigatePage()}
@@ -212,7 +221,7 @@ export const Navbar = () => {
           <>
             <div
               // onClick={() => signOutUser()}
-              className="h-full w-[70px] relative flex-shrink-0 centerDiv text-[1.1rem] text-[#ffffff] pr-3 md:w-[90px]"
+              className="h-full w-[70px] relative flex-shrink-0 centerDiv text-[1.1rem] text-[#ffffff] pr-3 md:w-[90px] cursor-pointer"
             >
               <div
                 onClick={() => setShowDropDown(true)}
