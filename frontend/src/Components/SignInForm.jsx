@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
+import { FaGithub } from "react-icons/fa";
 import { useFormik } from "formik";
 import { SignInSchema } from "../ValidationSchemas/SignInSchema";
 import { SignUpSchema } from "../ValidationSchemas/signUpSchema";
@@ -58,6 +59,11 @@ export const SignInForm = () => {
   const handleSignInWithGoogle = () => {
     localStorage.setItem("pathToNavigate", pathToNavigate);
     window.location.href = "http://localhost:8000/auth/google";
+  };
+
+  const handleSignUpWithGitHub = () => {
+    localStorage.setItem("pathToNavigate", pathToNavigate);
+    window.location.href = "http://localhost:8000/auth/github";
   };
 
   return (
@@ -132,16 +138,20 @@ export const SignInForm = () => {
                   <p className="">or</p>
                   <hr className="w-[40%] border-gray-400 mr-4" />
                 </div>
-                <div className="h-[15%] w-[95%] centerDiv min-h-[50px] addBorder">
+                <div className="h-[15%] w-[95%] flex gap-[20px] centerDiv min-h-[50px]">
                   <FcGoogle
                     onClick={() => handleSignInWithGoogle()}
-                    className="text-[45px] cursor-pointer addBorder"
+                    className="text-[45px] cursor-pointer"
+                  />
+                  <FaGithub
+                    onClick={() => handleSignUpWithGitHub()}
+                    className="text-[45px] cursor-pointer"
                   />
                 </div>
               </div>
               <div className="h-[15%] w-full centerDiv gap-1 min-h-[50px]">
                 <span className="addFont text-[15px]">
-                  Don&apost;t have an account?{" "}
+                  Do not have an account?{" "}
                 </span>
                 <span
                   className="addFont text-[15px] theamColor underline cursor-pointer"
@@ -281,9 +291,13 @@ export const SignInForm = () => {
                   <p className="">or</p>
                   <hr className="w-[40%] border-gray-400 mr-4" />
                 </div>
-                <div className="h-[15%] w-full centerDiv min-h-[40px]">
+                <div className="h-[15%] w-full flex gap-[20px] centerDiv min-h-[40px]">
                   <FcGoogle
                     onClick={() => handleSignInWithGoogle()}
+                    className="text-[35px] mr-4 cursor-pointer"
+                  />
+                  <FaGithub
+                    onClick={() => handleSignUpWithGitHub()}
                     className="text-[35px] mr-4 cursor-pointer"
                   />
                 </div>
