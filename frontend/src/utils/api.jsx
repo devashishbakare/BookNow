@@ -214,3 +214,20 @@ export const cancleBooking = async (token, bookingId) => {
     return { success: false, error: error.response.data.error };
   }
 };
+
+export const editProfile = async (token, userInfo) => {
+  try {
+    const headers = createHeader(token);
+    const response = await axios.patch(
+      `${baseUrl}/user/editProfile/`,
+      userInfo,
+      {
+        headers,
+      }
+    );
+    const { data } = response.data;
+    return { success: true, data: data };
+  } catch (error) {
+    return { success: false, error: error.response.data.error };
+  }
+};

@@ -5,12 +5,14 @@ import { Review } from "./Review";
 import { useEffect, useState } from "react";
 import { RiSortDesc } from "react-icons/ri";
 import Spinners from "../utils/Spinners";
+import { EditProfileForm } from "./EditProfileForm";
 export const ShowProfileInfo = ({
   modalStatus,
   closeModal,
   selectedOptions,
   fetchedData,
   updateWideCurrentDetails,
+  handleUpdateUser,
 }) => {
   const [showSortDropdown, setShowSortDropdown] = useState(false);
   const [details, setDetails] = useState([]);
@@ -146,74 +148,78 @@ export const ShowProfileInfo = ({
                 {selectedOptions == 0 && <span>Current Bookings</span>}
                 {selectedOptions == 1 && <span>Past Bookings</span>}
                 {selectedOptions == 2 && <span>Reviews</span>}
+                {selectedOptions == 3 && <span>Edit Profile</span>}
               </span>
             </div>
-            <div className="absolute top-0 right-0 h-full w-[30%] centerDiv">
-              <button
-                onClick={() => setShowSortDropdown(true)}
-                className="flex h-[70%] w-[100px] centerDiv gap-2 bg-[#fbfbfb] text-black  border-[1px] border-[#cacaca] rounded-md"
-              >
-                Sort <RiSortDesc />
-              </button>
-              {showSortDropdown && (
-                <div className="absolute h-auto w-auto top-[110%] right-5 z-50 flex flex-col bg-[#fbfbfb] text-black shadow-md rounded-md">
-                  {selectedOptions !== 2 && (
-                    <span
-                      onClick={() => sortFetchData(1)}
-                      className="h-[50px] w-[250px] mr-4 ml-2 flex items-center pl-2 font-light border-b-[1px] border-[#cacaca]"
-                    >
-                      newest to oldest by booking date
-                    </span>
-                  )}
-                  {selectedOptions !== 2 && (
-                    <span
-                      onClick={() => sortFetchData(2)}
-                      className="h-[50px] w-[250px] mr-4 ml-2 flex items-center pl-2 font-light border-b-[1px] border-[#cacaca]"
-                    >
-                      oldest to newest by booking date
-                    </span>
-                  )}
-                  {selectedOptions !== 2 && (
-                    <span
-                      onClick={() => sortFetchData(3)}
-                      className="h-[50px] w-[250px] mr-4 ml-2 flex items-center pl-2 font-light border-b-[1px] border-[#cacaca]"
-                    >
-                      newest to oldest by check in date
-                    </span>
-                  )}
-                  {selectedOptions !== 2 && (
-                    <span
-                      onClick={() => sortFetchData(4)}
-                      className="h-[50px] w-[250px] mr-4 ml-2 flex items-center pl-2 font-light border-b-[1px] border-[#cacaca]"
-                    >
-                      oldest to newest by check in date
-                    </span>
-                  )}
-                  {selectedOptions == 2 && (
-                    <span
-                      onClick={() => sortFetchData(5)}
-                      className="h-[50px] w-[180px] mr-4 ml-2 flex items-center pl-2 font-light border-b-[1px] border-[#cacaca]"
-                    >
-                      newest to oldest
-                    </span>
-                  )}
-                  {selectedOptions == 2 && (
-                    <span
-                      onClick={() => sortFetchData(6)}
-                      className="h-[50px] w-[180px] mr-4 ml-2 flex items-center pl-2 font-light border-b-[1px] border-[#cacaca]"
-                    >
-                      oldest to newest
-                    </span>
-                  )}
-                  <span
-                    onClick={() => setShowSortDropdown(false)}
-                    className="h-[50px] w-auto mr-4 ml-2 flex items-center pl-2 font-light"
+            {details.length > 1 ||
+              (reviewData.length > 1 && (
+                <div className="absolute top-0 right-0 h-full w-[30%] centerDiv">
+                  <button
+                    onClick={() => setShowSortDropdown(true)}
+                    className="flex h-[70%] w-[100px] centerDiv gap-2 bg-[#fbfbfb] text-black  border-[1px] border-[#cacaca] rounded-md"
                   >
-                    close
-                  </span>
+                    Sort <RiSortDesc />
+                  </button>
+                  {showSortDropdown && (
+                    <div className="absolute h-auto w-auto top-[110%] right-5 z-50 flex flex-col bg-[#fbfbfb] text-black shadow-md rounded-md">
+                      {selectedOptions !== 2 && (
+                        <span
+                          onClick={() => sortFetchData(1)}
+                          className="h-[50px] w-[250px] mr-4 ml-2 flex items-center pl-2 font-light border-b-[1px] border-[#cacaca]"
+                        >
+                          newest to oldest by booking date
+                        </span>
+                      )}
+                      {selectedOptions !== 2 && (
+                        <span
+                          onClick={() => sortFetchData(2)}
+                          className="h-[50px] w-[250px] mr-4 ml-2 flex items-center pl-2 font-light border-b-[1px] border-[#cacaca]"
+                        >
+                          oldest to newest by booking date
+                        </span>
+                      )}
+                      {selectedOptions !== 2 && (
+                        <span
+                          onClick={() => sortFetchData(3)}
+                          className="h-[50px] w-[250px] mr-4 ml-2 flex items-center pl-2 font-light border-b-[1px] border-[#cacaca]"
+                        >
+                          newest to oldest by check in date
+                        </span>
+                      )}
+                      {selectedOptions !== 2 && (
+                        <span
+                          onClick={() => sortFetchData(4)}
+                          className="h-[50px] w-[250px] mr-4 ml-2 flex items-center pl-2 font-light border-b-[1px] border-[#cacaca]"
+                        >
+                          oldest to newest by check in date
+                        </span>
+                      )}
+                      {selectedOptions == 2 && (
+                        <span
+                          onClick={() => sortFetchData(5)}
+                          className="h-[50px] w-[180px] mr-4 ml-2 flex items-center pl-2 font-light border-b-[1px] border-[#cacaca]"
+                        >
+                          newest to oldest
+                        </span>
+                      )}
+                      {selectedOptions == 2 && (
+                        <span
+                          onClick={() => sortFetchData(6)}
+                          className="h-[50px] w-[180px] mr-4 ml-2 flex items-center pl-2 font-light border-b-[1px] border-[#cacaca]"
+                        >
+                          oldest to newest
+                        </span>
+                      )}
+                      <span
+                        onClick={() => setShowSortDropdown(false)}
+                        className="h-[50px] w-auto mr-4 ml-2 flex items-center pl-2 font-light"
+                      >
+                        close
+                      </span>
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
+              ))}
           </div>
           <div className="h-[92vh] w-full overflow-x-scroll">
             {isLoading ? (
@@ -263,6 +269,9 @@ export const ShowProfileInfo = ({
                   </div>
                 )}
                 {selectedOptions == 2 && <Review reviews={reviewData} />}
+                {selectedOptions == 3 && (
+                  <EditProfileForm handleUpdateUser={handleUpdateUser} />
+                )}
               </>
             )}
           </div>
@@ -277,4 +286,5 @@ ShowProfileInfo.propTypes = {
   selectedOptions: propTypes.number,
   fetchedData: propTypes.array,
   updateWideCurrentDetails: propTypes.func,
+  handleUpdateUser: propTypes.func,
 };

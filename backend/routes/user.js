@@ -15,4 +15,5 @@ router.delete(
   authenticate,
   userController.cancelBooking
 );
+router.patch("/editProfile", authenticate, userController.updateProfileInfo);
 module.exports = router;

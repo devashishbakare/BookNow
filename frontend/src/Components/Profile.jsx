@@ -5,6 +5,8 @@ import { TbBrandBooking } from "react-icons/tb";
 import { FaHistory } from "react-icons/fa";
 import { MdOutlineRateReview, MdOutlineLogin } from "react-icons/md";
 import { IoIosArrowDown } from "react-icons/io";
+import { CiEdit } from "react-icons/ci";
+import { EditProfileForm } from "./EditProfileForm";
 import { RiSortDesc } from "react-icons/ri";
 import { Review } from "./Review";
 import { useEffect, useState } from "react";
@@ -269,6 +271,18 @@ export const Profile = () => {
       prev.filter((booking) => booking.bookingDetails._id !== bookingId)
     );
   };
+  const handleEditProfile = () => {
+    if (windowSize.width < 768) {
+      setModalSelectedOptions(3);
+      setProfileInfoModalStatus(true);
+    } else {
+      setSelectedOptions(3);
+    }
+  };
+
+  const updateUserInformation = (updatedUserInfo) => {
+    setUserDetails(updatedUserInfo);
+  };
 
   return (
     <>
@@ -343,6 +357,17 @@ export const Profile = () => {
                   </div>
                   <hr className="border-[1px] border-gray-300 w-[90%] ml-3" />
                   <div
+                    onClick={() => handleEditProfile()}
+                    className="h-[70px] w-[90%] flex items-center justify-between"
+                  >
+                    <span className="pl-6 flex gap-2 items-center addFont text-[1.1rem]">
+                      <CiEdit className="text-[1.4rem] mr-1" />
+                      Edit Profile
+                    </span>
+                    <SlArrowRight className="text-[1.2rem]" />
+                  </div>
+                  <hr className="border-[1px] border-gray-300 w-[90%] ml-3" />
+                  <div
                     onClick={() => logout()}
                     className="h-[70px] w-[90%] flex items-center justify-between"
                   >
@@ -364,73 +389,77 @@ export const Profile = () => {
                 ) : (
                   <>
                     <div className="h-full w-full flex flex-col relative">
-                      <div className="absolute top-2 right-1 h-[50px] w-full flex items-center flex-row-reverse pr-[20px]">
-                        <button
-                          onClick={() => setShowSortDropdown(true)}
-                          className="flex h-[90%] w-[100px] centerDiv gap-2 bg-[#fbfbfb] text-black  border-[1px] border-[#cacaca] rounded-md"
-                        >
-                          Sort <RiSortDesc />
-                        </button>
-                        {showSortDropdown && (
-                          <div className="absolute h-auto w-auto top-[110%] right-5 z-50 flex flex-col bg-[#fbfbfb] text-black shadow-md rounded-md">
-                            {selectedOptions !== 2 && (
-                              <span
-                                onClick={() => sortFetchData(1)}
-                                className="h-[50px] w-auto mr-4 ml-2 flex items-center pl-2 font-light border-b-[1px] border-[#cacaca]"
-                              >
-                                newest to oldest by booking date
-                              </span>
-                            )}
-                            {selectedOptions !== 2 && (
-                              <span
-                                onClick={() => sortFetchData(2)}
-                                className="h-[50px] w-auto mr-4 ml-2 flex items-center pl-2 font-light border-b-[1px] border-[#cacaca]"
-                              >
-                                oldest to newest by booking date
-                              </span>
-                            )}
-
-                            {selectedOptions !== 2 && (
-                              <span
-                                onClick={() => sortFetchData(3)}
-                                className="h-[50px] w-auto mr-4 ml-2 flex items-center pl-2 font-light border-b-[1px] border-[#cacaca]"
-                              >
-                                newest to oldest by check in date
-                              </span>
-                            )}
-                            {selectedOptions !== 2 && (
-                              <span
-                                onClick={() => sortFetchData(4)}
-                                className="h-[50px] w-auto mr-4 ml-2 flex items-center pl-2 font-light border-b-[1px] border-[#cacaca]"
-                              >
-                                oldest to newest by check in date
-                              </span>
-                            )}
-                            {selectedOptions == 2 && (
-                              <span
-                                onClick={() => sortFetchData(5)}
-                                className="h-[50px] w-auto mr-4 ml-2 flex items-center pl-2 font-light border-b-[1px] border-[#cacaca]"
-                              >
-                                newest to oldest
-                              </span>
-                            )}
-                            {selectedOptions == 2 && (
-                              <span
-                                onClick={() => sortFetchData(6)}
-                                className="h-[50px] w-auto mr-4 ml-2 flex items-center pl-2 font-light border-b-[1px] border-[#cacaca]"
-                              >
-                                oldest to newest
-                              </span>
-                            )}
-                            <span
-                              onClick={() => setShowSortDropdown(false)}
-                              className="h-[50px] w-auto mr-4 ml-2 flex items-center pl-2 font-light"
+                      {pastBookings.length > 1 ||
+                        currentBooking.length > 1 ||
+                        (userReviews.length > 1 && (
+                          <div className="absolute top-2 right-1 h-[50px] w-full flex items-center flex-row-reverse pr-[20px]">
+                            <button
+                              onClick={() => setShowSortDropdown(true)}
+                              className="flex h-[90%] w-[100px] centerDiv gap-2 bg-[#fbfbfb] text-black  border-[1px] border-[#cacaca] rounded-md"
                             >
-                              close
-                            </span>
+                              Sort <RiSortDesc />
+                            </button>
+                            {showSortDropdown && (
+                              <div className="absolute h-auto w-auto top-[110%] right-5 z-50 flex flex-col bg-[#fbfbfb] text-black shadow-md rounded-md">
+                                {selectedOptions !== 2 && (
+                                  <span
+                                    onClick={() => sortFetchData(1)}
+                                    className="h-[50px] w-auto mr-4 ml-2 flex items-center pl-2 font-light border-b-[1px] border-[#cacaca]"
+                                  >
+                                    newest to oldest by booking date
+                                  </span>
+                                )}
+                                {selectedOptions !== 2 && (
+                                  <span
+                                    onClick={() => sortFetchData(2)}
+                                    className="h-[50px] w-auto mr-4 ml-2 flex items-center pl-2 font-light border-b-[1px] border-[#cacaca]"
+                                  >
+                                    oldest to newest by booking date
+                                  </span>
+                                )}
+
+                                {selectedOptions !== 2 && (
+                                  <span
+                                    onClick={() => sortFetchData(3)}
+                                    className="h-[50px] w-auto mr-4 ml-2 flex items-center pl-2 font-light border-b-[1px] border-[#cacaca]"
+                                  >
+                                    newest to oldest by check in date
+                                  </span>
+                                )}
+                                {selectedOptions !== 2 && (
+                                  <span
+                                    onClick={() => sortFetchData(4)}
+                                    className="h-[50px] w-auto mr-4 ml-2 flex items-center pl-2 font-light border-b-[1px] border-[#cacaca]"
+                                  >
+                                    oldest to newest by check in date
+                                  </span>
+                                )}
+                                {selectedOptions == 2 && (
+                                  <span
+                                    onClick={() => sortFetchData(5)}
+                                    className="h-[50px] w-auto mr-4 ml-2 flex items-center pl-2 font-light border-b-[1px] border-[#cacaca]"
+                                  >
+                                    newest to oldest
+                                  </span>
+                                )}
+                                {selectedOptions == 2 && (
+                                  <span
+                                    onClick={() => sortFetchData(6)}
+                                    className="h-[50px] w-auto mr-4 ml-2 flex items-center pl-2 font-light border-b-[1px] border-[#cacaca]"
+                                  >
+                                    oldest to newest
+                                  </span>
+                                )}
+                                <span
+                                  onClick={() => setShowSortDropdown(false)}
+                                  className="h-[50px] w-auto mr-4 ml-2 flex items-center pl-2 font-light"
+                                >
+                                  close
+                                </span>
+                              </div>
+                            )}
                           </div>
-                        )}
-                      </div>
+                        ))}
                       <div className="h-full w-full overflow-x-scroll">
                         {/* <div className="h-full w-full flex flex-col"></div> */}
                         {selectedOptions === 0 && (
@@ -478,6 +507,13 @@ export const Profile = () => {
                         {selectedOptions == 2 && (
                           <Review reviews={userReviews} />
                         )}
+                        {selectedOptions == 3 && (
+                          <>
+                            <EditProfileForm
+                              handleUpdateUser={updateUserInformation}
+                            />
+                          </>
+                        )}
                       </div>
                     </div>
                   </>
@@ -493,6 +529,7 @@ export const Profile = () => {
           selectedOptions={modalSelectedOptions}
           fetchedData={storeFetchInfo}
           updateWideCurrentDetails={updateBookingCart}
+          handleUpdateUser={updateUserInformation}
         />
       </div>
     </>

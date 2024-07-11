@@ -4,6 +4,9 @@ const User = require("../model/user");
 const Hotel = require("../model/hotel");
 const RoomPackage = require("../model/roomPackage");
 const { emailQueue } = require("../config/queue");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+
 const fetchBookingHistory = async (req, res) => {
   try {
     const userId = req.userId;
@@ -233,10 +236,56 @@ const updatedSelectedDates = (removeDates, selectedDates) => {
 
   return result;
 };
+
+const updateProfileInfo = async (req, res) => {
+  try {
+    const userId = req.userId;
+    const { name, email, phone_number, password } = req.body;
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    const saltRounds = 10;
+    const salt = bcrypt.genSaltSync(saltRounds);
+    const hash = bcrypt.hashSync(password, salt);
+
+    const updateFields = {
+      $set: {
+        name: name,
+        email: email,
+        phoneNumber: phone_number,
+        password: hash,
+      },
+    };
+    const updatedUser = await User.findByIdAndUpdate(userId, updateFields, {
+      new: true,
+    });
+
+    const payload = {
+      userId: updatedUser._id,
+      email: updatedUser.email,
+    };
+
+    const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, {
+      expiresIn: "3d",
+    });
+    return res.status(200).json({
+      data: { token, userDetails: updatedUser },
+      message: "user profile has been updated",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error: error.message,
+      message: "something wrong while updating user",
+    });
+  }
+};
+
 module.exports = {
   fetchBookingHistory,
   fetchUserDetails,
   fetchCurrentBooking,
   fetchBookingDetails,
   cancelBooking,
+  updateProfileInfo,
 };
