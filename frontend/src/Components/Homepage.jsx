@@ -1,4 +1,4 @@
-import {} from "react";
+import React from "react";
 import {
   tredingSmallImages,
   trendingBigImages,
@@ -6,7 +6,6 @@ import {
 import { useNavigate } from "react-router-dom";
 import { Contact } from "./Contact";
 export const Homepage = () => {
-  // navigate to city as user clicked
   const navigate = useNavigate();
   const navigateToCity = (cityName) => {
     navigate(`/city/${cityName}`);
