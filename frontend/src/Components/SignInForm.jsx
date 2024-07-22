@@ -1,3 +1,4 @@
+import React from "react";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
@@ -89,6 +90,7 @@ export const SignInForm = () => {
                       value={signInFormik.values.email}
                       onChange={signInFormik.handleChange}
                       onBlur={signInFormik.handleBlur}
+                      data-testid="signIn-email-input-testid"
                     />
                   </div>
                   {signInFormik.errors.email && signInFormik.touched.email ? (
@@ -109,6 +111,7 @@ export const SignInForm = () => {
                       value={signInFormik.values.password}
                       onChange={signInFormik.handleChange}
                       onBlur={signInFormik.handleBlur}
+                      data-testid="signIn-password-input-testid"
                     />
                   </div>
                   {signInFormik.errors.password &&
@@ -129,6 +132,7 @@ export const SignInForm = () => {
                   <button
                     type="submit"
                     className="h-[90%] w-[90%] rounded-full text-[white] bg-[#003b95] text-[1rem] cursor-pointer min-h-[50px]"
+                    data-testid="signIn-submit-button"
                   >
                     Sign-In
                   </button>
@@ -156,6 +160,7 @@ export const SignInForm = () => {
                 <span
                   className="addFont text-[15px] theamColor underline cursor-pointer"
                   onClick={() => setIsUserSignIn(false)}
+                  data-testid="show-user-signup-form"
                 >
                   Sign-Up
                 </span>
@@ -183,6 +188,7 @@ export const SignInForm = () => {
                       value={signUpFormik.values.name}
                       onChange={signUpFormik.handleChange}
                       onBlur={signUpFormik.handleBlur}
+                      data-testid="signUp-name-input-testid"
                     />
                   </div>
                   {signUpFormik.errors.name && signUpFormik.touched.name ? (
@@ -203,6 +209,7 @@ export const SignInForm = () => {
                       value={signUpFormik.values.email}
                       onChange={signUpFormik.handleChange}
                       onBlur={signUpFormik.handleBlur}
+                      data-testid="signUp-email-input-testid"
                     />
                   </div>
                   {signUpFormik.errors.email && signUpFormik.touched.email ? (
@@ -223,6 +230,7 @@ export const SignInForm = () => {
                       value={signUpFormik.values.password}
                       onChange={signUpFormik.handleChange}
                       onBlur={signUpFormik.handleBlur}
+                      data-testid="signUp-password-input-testid"
                     />
                   </div>
                   {signUpFormik.errors.password &&
@@ -244,6 +252,7 @@ export const SignInForm = () => {
                       value={signUpFormik.values.confirm_password}
                       onChange={signUpFormik.handleChange}
                       onBlur={signUpFormik.handleBlur}
+                      data-testid="signUp-confirm_password-input-testid"
                     />
                   </div>
                   {signUpFormik.errors.confirm_password &&
@@ -266,6 +275,7 @@ export const SignInForm = () => {
                       value={signUpFormik.values.phone_number}
                       onChange={signUpFormik.handleChange}
                       onBlur={signUpFormik.handleBlur}
+                      data-testid="signUp-phone_number-input-testid"
                     />
                   </div>
                   {signUpFormik.errors.phone_number &&

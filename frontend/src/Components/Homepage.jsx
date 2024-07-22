@@ -33,17 +33,6 @@ export const Homepage = () => {
           </span>
         </div>
       </div>
-      {/* <div className="h-[9vh] w-[100vw] min-h-[81px] centerDiv gap-4 sm:gap-10">
-        <span className=" centerDiv font-semibold">Country :</span>
-        <span className=" centerDiv opacity-70">India</span>
-        <span className=" centerDiv font-semibold">City</span>
-        <input
-          type="text"
-          name=""
-          className="h-[60%] min-w-[100px] bg-gray-200 pl-2 outline-none rounded-[15px] sm:w-[30%]"
-          placeholder="search city here.."
-        />
-      </div> */}
       <div className="h-auto w-full flex flex-col centerDiv overflow-y-scroll">
         <div className="h-[9vh] min-h-[81px] w-full flex flex-col justify-center gap-1">
           <span className="ml-3 font-bold text-[20px] font-gilroy-bold leading-[22.5px] sm:text-[25px]">
@@ -60,7 +49,7 @@ export const Homepage = () => {
           >
             <img
               src={tredingSmallImages[0]}
-              alt="newDelhi"
+              alt="newDelhi_small"
               className="h-full w-full object-cover rounded-[10px]"
             />
             <span className="absolute top-[12%] left-[5%] text-[40px] font-gilroy-bold font-semibold tracking-tighter leading-[22.5px] text-[#FFBF00]">
@@ -73,7 +62,7 @@ export const Homepage = () => {
           >
             <img
               src={tredingSmallImages[1]}
-              alt="Banglore"
+              alt="Banglore_small"
               className="h-full w-full object-cover rounded-[10px]"
             />
             <span className="absolute top-[12%] left-[5%] text-[40px] font-gilroy-bold font-semibold tracking-tighter leading-[22.5px] text-[#FFBF00]">
@@ -88,7 +77,7 @@ export const Homepage = () => {
           >
             <img
               src={trendingBigImages[0]}
-              alt="newDelhi"
+              alt="newDelhi_big"
               className="h-full w-full object-cover rounded-[10px]"
             />
             <span className="absolute top-[12%] left-[5%] text-[40px] font-gilroy-bold font-semibold tracking-tighter leading-[22.5px] text-[#FFBF00]">
@@ -101,7 +90,7 @@ export const Homepage = () => {
           >
             <img
               src={trendingBigImages[1]}
-              alt="Banglore"
+              alt="Banglore_big"
               className="h-full w-full object-cover rounded-[10px]"
             />
             <span className="absolute top-[12%] left-[5%] text-[40px] font-gilroy-bold font-semibold tracking-tighter leading-[22.5px] text-[#FFBF00]">
@@ -116,7 +105,7 @@ export const Homepage = () => {
           >
             <img
               src={tredingSmallImages[2]}
-              alt="Mumbai"
+              alt="Mumbai_small"
               className="h-full w-full object-cover rounded-[10px]"
             />
             <span className="absolute top-[12%] left-[5%] text-[40px] font-gilroy-bold font-semibold tracking-tighter leading-[22.5px] text-[#FFBF00] sm:text-[30px]">
@@ -129,7 +118,7 @@ export const Homepage = () => {
           >
             <img
               src={tredingSmallImages[3]}
-              alt="Chennai"
+              alt="Chennai_small"
               className="h-full w-full object-cover rounded-[10px]"
             />
             <span className="absolute top-[12%] left-[5%] text-[40px] font-gilroy-bold font-semibold tracking-tighter leading-[22.5px] text-[#FFBF00] sm:text-[30px]">
@@ -142,7 +131,7 @@ export const Homepage = () => {
           >
             <img
               src={tredingSmallImages[4]}
-              alt="Pune"
+              alt="Pune_small"
               className="h-full w-full object-cover rounded-[10px]"
             />
             <span className="absolute top-[12%] left-[5%] text-[40px] font-gilroy-bold font-semibold tracking-tighter leading-[22.5px] text-[#FFBF00] sm:text-[30px]">

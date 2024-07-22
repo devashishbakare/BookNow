@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">33.33% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>4/12</span>
+                <span class='fraction'>0/12</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>9/18</span>
+                <span class='fraction'>0/18</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">16.66% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/6</span>
+                <span class='fraction'>0/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">33.33% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>4/12</span>
+                <span class='fraction'>0/12</span>
             </div>
         
             
@@ -293,15 +293,15 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -516,15 +516,15 @@ import {
   AiOutlineClose,
 } from "react-icons/ai";
 &nbsp;
-export const Contact = () =&gt; {
-  const [showMenu, setShowMenu] = useState(Array(4).fill(false));
-  const updateStatus = <span class="fstat-no" title="function not covered" >(i</span>ndex) =&gt; {
+export const Contact = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+  const [showMenu, setShowMenu] = <span class="cstat-no" title="statement not covered" >useState(Array(4).fill(false));</span>
+  const updateStatus = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(i</span>ndex) =&gt; {</span>
     const prevValue = <span class="cstat-no" title="statement not covered" >showMenu[index];</span>
     const status = <span class="cstat-no" title="statement not covered" >new Array(4).fill(false);</span>
 <span class="cstat-no" title="statement not covered" >    status[index] = !prevValue;</span>
 <span class="cstat-no" title="statement not covered" >    setShowMenu(status);</span>
   };
-  return (
+<span class="cstat-no" title="statement not covered" >  return (</span>
     &lt;&gt;
       &lt;div className="h-auto w-full p-3 flex flex-col items-center justify-center gap-4"&gt;
         {/* Top section wrapper */}
@@ -556,7 +556,7 @@ export const Contact = () =&gt; {
                 Support
               &lt;/span&gt;
               {showMenu[0] ? (
-<span class="branch-0 cbranch-no" title="branch not covered" >                &lt;&gt;</span>
+                &lt;&gt;
                   &lt;AiOutlineClose /&gt;
                 &lt;/&gt;
               ) : (
@@ -566,7 +566,7 @@ export const Contact = () =&gt; {
               )}
             &lt;/div&gt;
             {showMenu[0] &amp;&amp; (
-<span class="branch-1 cbranch-no" title="branch not covered" >              &lt;&gt;</span>
+              &lt;&gt;
                 &lt;div className="h-auto w-full flex flex-col opacity-[0.7] gap-2 mb-5"&gt;
                   &lt;span className="w-full pl-2 text-[0.9rem]"&gt;Help Center&lt;/span&gt;
                   &lt;span className="w-full pl-2 text-[0.9rem]"&gt;AirCover&lt;/span&gt;
@@ -587,7 +587,7 @@ export const Contact = () =&gt; {
                 Hosting
               &lt;/span&gt;
               {showMenu[1] ? (
-<span class="branch-0 cbranch-no" title="branch not covered" >                &lt;&gt;</span>
+                &lt;&gt;
                   &lt;AiOutlineClose /&gt;
                 &lt;/&gt;
               ) : (
@@ -597,7 +597,7 @@ export const Contact = () =&gt; {
               )}
             &lt;/div&gt;
             {showMenu[1] &amp;&amp; (
-<span class="branch-1 cbranch-no" title="branch not covered" >              &lt;&gt;</span>
+              &lt;&gt;
                 &lt;div className="h-auto w-full flex flex-col opacity-[0.7] gap-2 mb-5"&gt;
                   &lt;span className="w-full pl-2 text-[0.9rem]"&gt;
                     Community forum
@@ -623,7 +623,7 @@ export const Contact = () =&gt; {
                 BookNow
               &lt;/span&gt;
               {showMenu[2] ? (
-<span class="branch-0 cbranch-no" title="branch not covered" >                &lt;&gt;</span>
+                &lt;&gt;
                   &lt;AiOutlineClose /&gt;
                 &lt;/&gt;
               ) : (
@@ -633,7 +633,7 @@ export const Contact = () =&gt; {
               )}
             &lt;/div&gt;
             {showMenu[2] &amp;&amp; (
-<span class="branch-1 cbranch-no" title="branch not covered" >              &lt;&gt;</span>
+              &lt;&gt;
                 &lt;div className="h-auto w-full flex flex-col opacity-[0.7] gap-2 mb-5"&gt;
                   &lt;span className="w-full pl-2 text-[0.9rem]"&gt;
                     BookNow your home
@@ -650,7 +650,7 @@ export const Contact = () =&gt; {
 &nbsp;
             &lt;div
               className={`h-[8vh] min-h-[72px] w-full border-t-2 flex items-center justify-between pl-1 pr-1 cursor-pointer ${
-                showMenu[3] ? <span class="branch-0 cbranch-no" title="branch not covered" >"" </span>: "border-b-2"
+                showMenu[3] ? "" : "border-b-2"
               }`}
               onClick={<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >updateStatus(3)}</span>
             &gt;
@@ -658,7 +658,7 @@ export const Contact = () =&gt; {
                 More
               &lt;/span&gt;
               {showMenu[3] ? (
-<span class="branch-0 cbranch-no" title="branch not covered" >                &lt;&gt;</span>
+                &lt;&gt;
                   &lt;AiOutlineClose /&gt;
                 &lt;/&gt;
               ) : (
@@ -668,7 +668,7 @@ export const Contact = () =&gt; {
               )}
             &lt;/div&gt;
             {showMenu[3] &amp;&amp; (
-<span class="branch-1 cbranch-no" title="branch not covered" >              &lt;&gt;</span>
+              &lt;&gt;
                 &lt;div className="h-auto w-full flex flex-col opacity-[0.7] gap-2 mb-5"&gt;
                   &lt;span className="w-full pl-2 text-[0.9rem]"&gt;Newsroom&lt;/span&gt;
                   &lt;span className="w-full pl-2 text-[0.9rem]"&gt;Careers&lt;/span&gt;
@@ -739,7 +739,7 @@ export const Contact = () =&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-07-12T13:06:30.420Z
+                at 2024-07-22T09:09:12.461Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

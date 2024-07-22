@@ -1,3 +1,4 @@
+import React from "react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Navbar } from "./Navbar";
@@ -21,6 +22,7 @@ export const City = () => {
     const fetchCityData = async (fetchForCity) => {
       const response = await getHotelsFromCity(fetchForCity);
       if (response.success === true) {
+        console.log(response);
         setHotels(response.data);
       } else {
         showErrorNotification("something wrong with data fetching");
@@ -65,7 +67,10 @@ export const City = () => {
         </div>
         {isLoading ? (
           <>
-            <div className="h-[92vh] w-[100vw] flex centerDiv">
+            <div
+              data-testid="loader-testid"
+              className="h-[92vh] w-[100vw] flex centerDiv"
+            >
               <Spinners />
             </div>
           </>
@@ -108,6 +113,7 @@ export const City = () => {
                     value="1"
                     checked={filterSelectedOption == 1}
                     onChange={sortData}
+                    data-testid={"highest-to-lowest"}
                   />
                   highest rating to lowest
                 </label>
@@ -117,6 +123,7 @@ export const City = () => {
                     value="2"
                     checked={filterSelectedOption == 2}
                     onChange={sortData}
+                    data-testid={"lowest-to-highest"}
                   />
                   lowest rating to highest
                 </label>
@@ -182,53 +189,46 @@ export const City = () => {
                   <>
                     {hotels &&
                       hotels.map((hotel) => (
-                        <>
-                          <div
-                            key={hotel._id}
-                            onClick={() => handleHotelNavigation(hotel._id)}
-                            className="h-auto w-[80%] max-w-[350px] shadow-lg rounded-[20px] p-3 flex flex-col mt-3 md:flex-row md:max-w-[750px]"
-                          >
-                            <img
-                              src={hotel.images[0]}
-                              alt="RoomImage"
-                              className="h-[180px] w-full object-cover md:w-[35%] md:h-[220px]"
-                            />
-                            <div className="h-auto w-full flex flex-col gap-2 md:w-[65%]">
-                              <div className="h-auto p-2 min-h-[40px] w-full flex justify-between mt-2">
-                                <span className="flex items-center pl-2 addFont text-[18px] font-bold">
-                                  {hotel.name}
+                        <div
+                          key={hotel._id}
+                          data-testid={hotel._id}
+                          onClick={() => handleHotelNavigation(hotel._id)}
+                          className="h-auto w-[80%] max-w-[350px] shadow-lg rounded-[20px] p-3 flex flex-col mt-3 md:flex-row md:max-w-[750px]"
+                        >
+                          <img
+                            src={hotel.images[0]}
+                            alt="RoomImage"
+                            className="h-[180px] w-full object-cover md:w-[35%] md:h-[220px]"
+                          />
+                          <div className="h-auto w-full flex flex-col gap-2 md:w-[65%]">
+                            <div className="h-auto p-2 min-h-[40px] w-full flex justify-between mt-2">
+                              <span className="flex items-center pl-2 addFont text-[18px] font-bold">
+                                {hotel.name}
+                              </span>
+                              <span className="flex pr-2 addFont">
+                                <span className="font-semibold addFont">
+                                  Rating
                                 </span>
-                                <span className="flex pr-2 addFont">
-                                  <span className="font-semibold addFont">
-                                    Rating
-                                  </span>
-                                  &nbsp;&nbsp;
-                                  {hotel.rating}
-                                </span>
+                                &nbsp;&nbsp;
+                                {hotel.rating}
+                              </span>
+                            </div>
+                            <div className="h-[40px] w-full flex pl-2 gap-3 items-center md:pl-5">
+                              <span className="addFont font-bold">
+                                Available Dates
+                              </span>
+                              <MdDateRange className="text-[20px]" />
+                            </div>
+                            <div className="h-auto w-full flex gap-[2px] md:ml-2">
+                              <div className="h-auto w-[40px]">
+                                <MdLocationOn className="text-[35px]" />
                               </div>
-                              <div className="h-[40px] w-full flex pl-2 gap-3 items-center md:pl-5">
-                                <span className="addFont font-bold">
-                                  Available Dates
-                                </span>
-                                <MdDateRange className="text-[20px]" />
+                              <div className="h-auto w-auto">
+                                <span className=""> {hotel.address}</span>
                               </div>
-                              <div className="h-auto w-full flex gap-[2px] md:ml-2">
-                                <div className="h-auto w-[40px]">
-                                  <MdLocationOn className="text-[35px]" />
-                                </div>
-                                <div className="h-auto w-auto">
-                                  <span className=""> {hotel.address}</span>
-                                </div>
-                              </div>
-                              {/* <div className="h-auto w-full flex gap-2">
-                      <span className="addFont pl-3 font-bold md:pl-5">
-                        Price :
-                      </span>
-                      {room.price}
-                    </div> */}
                             </div>
                           </div>
-                        </>
+                        </div>
                       ))}
                   </>
                 )}

@@ -1,3 +1,4 @@
+import React from "react";
 import { useRef, useState, useEffect } from "react";
 import { IoSearchOutline, IoArrowBack } from "react-icons/io5";
 import { getSearchResult } from "../utils/api";
