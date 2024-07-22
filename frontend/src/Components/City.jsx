@@ -113,7 +113,7 @@ export const City = () => {
                     value="1"
                     checked={filterSelectedOption == 1}
                     onChange={sortData}
-                    data-testid={"highest-to-lowest"}
+                    data-testid={"mobile-high-to-low"}
                   />
                   highest rating to lowest
                 </label>
@@ -123,7 +123,7 @@ export const City = () => {
                     value="2"
                     checked={filterSelectedOption == 2}
                     onChange={sortData}
-                    data-testid={"lowest-to-highest"}
+                    data-testid={"mobile-low-to-high"}
                   />
                   lowest rating to highest
                 </label>
@@ -165,6 +165,7 @@ export const City = () => {
                       type="radio"
                       value="1"
                       checked={filterSelectedOption == 1}
+                      data-testid={"desktop-high-to-low"}
                       onChange={sortData}
                     />
                     highest rating to lowest
@@ -173,6 +174,7 @@ export const City = () => {
                     <input
                       type="radio"
                       value="2"
+                      data-testid={"desktop-low-to-high"}
                       checked={filterSelectedOption == 2}
                       onChange={sortData}
                     />

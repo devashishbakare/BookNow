@@ -1,3 +1,4 @@
+import React from "react";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Navbar } from "./Navbar";
@@ -79,7 +80,7 @@ export const Hotel = () => {
     const fetchHotelData = async (id) => {
       const response = await getHotelDetails(id);
       if (response.success === true) {
-        console.log("hotel data " + response.data);
+        console.log(response);
         const data = {
           id: response.data._id,
           selectedDates: response.data.selectedDates,
@@ -135,7 +136,11 @@ export const Hotel = () => {
   return (
     <>
       {isLoading ? (
-        <Spinners />
+        <>
+          <div data-testid="loader-testid" className="h-full w-full centerDiv">
+            <Spinners />
+          </div>
+        </>
       ) : (
         hotelDetails && (
           <div className="h-auto w-auto centerDiv flex flex-col">
@@ -570,6 +575,7 @@ export const Hotel = () => {
                         </div>
                         <button
                           onClick={() => handleBookNow()}
+                          data-testid="mobile-bookNow-button"
                           className="h-[50px] w-[150px] addFont ml-[3%] rounded-md bg-[#274195] text-white"
                         >
                           Book Now
@@ -667,6 +673,7 @@ export const Hotel = () => {
                       </div>
                       <button
                         onClick={() => handleBookNow()}
+                        data-testid="desktop-bookNow-button"
                         className="h-[50px] w-[80%] addFont ml-[3%] rounded-md bg-[#274195] text-white"
                       >
                         Book Now

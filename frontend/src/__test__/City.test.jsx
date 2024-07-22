@@ -1,5 +1,11 @@
 import React from "react";
-import { render, screen, waitFor, act } from "@testing-library/react";
+import {
+  render,
+  screen,
+  waitFor,
+  act,
+  fireEvent,
+} from "@testing-library/react";
 import { City } from "../Components/City";
 import { getHotelsFromCity } from "../utils/api";
 import {
@@ -22,7 +28,6 @@ describe("List of holtes by city", () => {
   test("fetching list of hotels and rendering on screen", async () => {
     const user = userEvent.setup();
     const navigate = jest.fn();
-    const sortData = jest.fn();
     useNavigate.mockReturnValue(navigate);
     useParams.mockReturnValue({ cityName: "Test City" });
     getHotelsFromCity.mockResolvedValue({
