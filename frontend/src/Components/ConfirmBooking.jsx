@@ -1,3 +1,4 @@
+import React from "react";
 import { useState, useEffect } from "react";
 import { Navbar } from "./Navbar";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
@@ -167,7 +168,7 @@ export const ConfirmBooking = () => {
     // console.log("handle razer pay open");
     // console.log(createdBookingDetails);
     var options = {
-      key: import.meta.env.REZ_KEY,
+      key: "rzp_test_uYsyA6UZFPgGxV",
       amount: Number(createdBookingDetails.amount),
       currency: createdBookingDetails.currency,
       name: "BookNow",
@@ -296,7 +297,11 @@ export const ConfirmBooking = () => {
   return (
     <>
       {isLoading ? (
-        <Spinners />
+        <>
+          <div data-testid="loader-testid" className="h-full w-full centerDiv">
+            <Spinners />
+          </div>
+        </>
       ) : (
         <div className="h-[100vh] w-[100vw] flex flex-col centerDiv bg-[#f4f4f4]">
           <div className="h-[8vh] w-full max-w-[1150px]">
@@ -361,6 +366,7 @@ export const ConfirmBooking = () => {
                         value={values.name}
                         onChange={handleChange}
                         onBlur={handleBlur}
+                        data-testid="name"
                       />
                     </div>
                     {touched.name && errors.name && (
@@ -379,6 +385,7 @@ export const ConfirmBooking = () => {
                       <input
                         type="email"
                         name="email"
+                        data-testid="email"
                         className="h-[90%] w-[95%] outline-none bg-[#fffdfd]"
                         value={values.email}
                         onChange={handleChange}
@@ -401,6 +408,7 @@ export const ConfirmBooking = () => {
                       <input
                         type="number"
                         name="phone_number"
+                        data-testid="phone_number"
                         className="h-[90%] w-[95%] outline-none bg-[#fffdfd]"
                         value={values.phone_number}
                         onChange={handleChange}
@@ -424,6 +432,7 @@ export const ConfirmBooking = () => {
                         name="additional_contact_information"
                         rows="4"
                         cols="45"
+                        data-testid="additional_contact_information"
                         className=" w-full rounded-lg pl-2 pt-3 pr-2 border-[1px] border-gray-500 outline-none overflow-x-hidden bg-[#fffdfd]"
                         value={values.additional_contact_information}
                         onChange={handleChange}

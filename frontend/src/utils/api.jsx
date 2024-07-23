@@ -78,7 +78,6 @@ export const razorpayCreateOrder = async (token, bookingInfo) => {
     );
 
     const { data } = response.data;
-    console.log(data + " this is from API");
     return { success: true, data };
   } catch (error) {
     return { success: false, error: error.response.data.error };
