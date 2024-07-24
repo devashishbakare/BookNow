@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  render,
-  screen,
-  waitFor,
-  act,
-  fireEvent,
-} from "@testing-library/react";
+import { render, screen, waitFor, act } from "@testing-library/react";
 import { City } from "../Components/City";
 import { getHotelsFromCity } from "../utils/api";
 import {

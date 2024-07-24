@@ -1,3 +1,4 @@
+import React from "react";
 import propTypes from "prop-types";
 import { ReviewModal } from "./ReviewModal";
 import { useState } from "react";

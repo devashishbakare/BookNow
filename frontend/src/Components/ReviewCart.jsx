@@ -1,3 +1,4 @@
+import React from "react";
 import { useState } from "react";
 import propTypes from "prop-types";
 import { MdOutlineStarPurple500, MdMoreHoriz } from "react-icons/md";

@@ -1,3 +1,4 @@
+import React from "react";
 import propTypes from "prop-types";
 import { IoArrowBack } from "react-icons/io5";
 import { BookingCart } from "./BookingCart";

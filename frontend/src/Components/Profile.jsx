@@ -1,3 +1,4 @@
+import React from "react";
 import { Navbar } from "./Navbar";
 import { SlArrowRight } from "react-icons/sl";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -289,7 +290,10 @@ export const Profile = () => {
       <div className="h-[100vh] w-[100vw] flex flex-col centerDiv bg-[#f4f4f4]">
         {isLoading ? (
           <>
-            <div className="h-full w-full centerDiv">
+            <div
+              data-testid="loader-testid"
+              className="h-full w-full centerDiv"
+            >
               <Spinners />
             </div>
           </>
@@ -325,6 +329,7 @@ export const Profile = () => {
                   <div
                     onClick={() => handleCurrentBooking()}
                     className="h-[70px] w-[90%] flex items-center justify-between mt-3"
+                    data-testid="currentBookingButton-testid"
                   >
                     <span className="pl-6 flex gap-2 items-center addFont text-[1.1rem]">
                       <TbBrandBooking className="text-[1.6rem]" />
@@ -336,6 +341,7 @@ export const Profile = () => {
                   <div
                     onClick={() => fetchPastBookings()}
                     className="h-[70px] w-[90%] flex items-center justify-between"
+                    data-testid="pastBookingButton-testid"
                   >
                     <span className="pl-6 flex gap-2 items-center addFont text-[1.1rem]">
                       <FaHistory className="text-[1.4rem] mr-1" />
@@ -347,6 +353,7 @@ export const Profile = () => {
                   <div
                     onClick={() => fetchReviews()}
                     className="h-[70px] w-[90%] flex items-center justify-between"
+                    data-testid="reviewButton-testid"
                   >
                     <span className="pl-6 flex gap-2 items-center addFont text-[1.1rem]">
                       {" "}
@@ -359,6 +366,7 @@ export const Profile = () => {
                   <div
                     onClick={() => handleEditProfile()}
                     className="h-[70px] w-[90%] flex items-center justify-between"
+                    data-testid="editProfile-testid"
                   >
                     <span className="pl-6 flex gap-2 items-center addFont text-[1.1rem]">
                       <CiEdit className="text-[1.4rem] mr-1" />
@@ -370,6 +378,7 @@ export const Profile = () => {
                   <div
                     onClick={() => logout()}
                     className="h-[70px] w-[90%] flex items-center justify-between"
+                    data-testid="logoutButton-testid"
                   >
                     <span className="pl-6 flex gap-2 items-center addFont text-[1.1rem]">
                       <MdOutlineLogin className="text-[1.6rem]" />
@@ -467,7 +476,7 @@ export const Profile = () => {
                             {currentBooking && currentBooking.length === 0 ? (
                               <>
                                 <div className="h-full w-full addFont opacity-30 text-[1.5rem]  centerDiv">
-                                  No currunt bookings found
+                                  No current bookings found
                                 </div>
                               </>
                             ) : (
