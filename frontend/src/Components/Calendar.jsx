@@ -9,6 +9,7 @@ export const Calendar = ({
   userMonthDateSelection,
   setUserMonthDateSelection,
   updateAmount,
+  calanderRequestFor,
 }) => {
   let totalDayInMonth = new Date(year, month, 0).getDate();
   let selectedDateMapper = new Array(totalDayInMonth + 1).fill(0);
@@ -78,29 +79,29 @@ export const Calendar = ({
       <div className="flex flex-col h-full w-[300px] gap-2">
         {weekInMonth &&
           weekInMonth.map((dayInWeek, weekIndex) => (
-            <>
-              <div
-                key={`week-${weekIndex}-${dayInWeek[0]}-`}
-                className="flex gap-2"
-              >
-                {dayInWeek.map((weekDay) => (
-                  <>
-                    <span
-                      key={`week-${weekIndex}-${dayInWeek[0]}-${weekDay}`}
-                      onClick={() =>
-                        updateDateSelection(
-                          month,
-                          weekDay,
-                          userMonthDateSelection[month] &&
-                            userMonthDateSelection[month].has(weekDay)
-                        )
-                      }
-                      className={`h-[35px] w-[35px] rounded-[50%] addBorder centerDiv ${
-                        selectedDateMapper[weekDay] == 1 ||
-                        (currentMonth == month && weekDay < day)
-                          ? `text-[red] cursor-none opacity-40`
-                          : `text-[green] cursor-pointer`
-                      }
+            <div
+              key={`week-${weekIndex}-${dayInWeek[0]}`}
+              className="flex gap-2"
+            >
+              {dayInWeek.map((weekDay) => (
+                <span
+                  key={`week-${weekIndex}-${dayInWeek[0]}-${weekDay}`}
+                  onClick={() => {
+                    if (calanderRequestFor === "confirm_booking") {
+                      updateDateSelection(
+                        month,
+                        weekDay,
+                        userMonthDateSelection[month] &&
+                          userMonthDateSelection[month].has(weekDay)
+                      );
+                    }
+                  }}
+                  className={`h-[35px] w-[35px] rounded-[50%] addBorder centerDiv ${
+                    selectedDateMapper[weekDay] == 1 ||
+                    (currentMonth == month && weekDay < day)
+                      ? `text-[red] cursor-none opacity-40`
+                      : `text-[green] cursor-pointer`
+                  }
                        ${
                          userMonthDateSelection[month] &&
                          userMonthDateSelection[month].has(weekDay)
@@ -108,13 +109,11 @@ export const Calendar = ({
                            : ""
                        }
                       `}
-                    >
-                      {weekDay}
-                    </span>
-                  </>
-                ))}
-              </div>
-            </>
+                >
+                  {weekDay}
+                </span>
+              ))}
+            </div>
           ))}
       </div>
     </>
@@ -130,4 +129,5 @@ Calendar.propTypes = {
   userMonthDateSelection: propTypes.object,
   setUserMonthDateSelection: propTypes.func,
   updateAmount: propTypes.func,
+  calanderRequestFor: propTypes.string.isRequired,
 };

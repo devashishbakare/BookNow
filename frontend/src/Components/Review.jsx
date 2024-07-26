@@ -14,14 +14,14 @@ export const Review = ({ reviews }) => {
 
   useEffect(() => {
     const assignData = () => {
-      console.log(reviews);
+      //console.log(reviews);
       setUserReviews(reviews);
       setReviewOption(new Array(reviews.length).fill(false));
     };
     assignData();
   }, [reviews]);
   const updateReviewOption = async (index) => {
-    let storeReviewOption = { ...reviewOption };
+    let storeReviewOption = [...reviewOption];
     storeReviewOption[index] = !storeReviewOption[index];
     setReviewOption(storeReviewOption);
   };

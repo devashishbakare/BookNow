@@ -18,7 +18,7 @@ export const Contact = () => {
       <div className="h-auto w-full p-3 flex flex-col items-center justify-center gap-4">
         {/* Top section wrapper */}
 
-        <div className="h-full w-full flex flex-col md:flex-row gap-5 md:items-center md:justify-center">
+        <div className="h-full w-full flex flex-col max-w-[1150px] shadow-lg md:flex-row gap-5 md:items-center md:justify-center">
           <div className="h-[20vh] min-h-[180px] max-w-[400px] w-full flex flex-col gap-4 justify-center sm:ml-[7%] md:w-[50%] md:min-h-[450px] md:max-w-[330px] md:justify-normal">
             <div className="h-[20%] w-full flex items-center gap-5">
               <img

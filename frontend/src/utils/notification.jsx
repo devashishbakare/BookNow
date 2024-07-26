@@ -29,7 +29,6 @@ export const showWarningNotification = (message) => {
 };
 
 export const showSuccessNotification = (message) => {
-  console.log("push notification", message);
   toast.success(message, {
     position: "top-right",
     autoClose: 3000,

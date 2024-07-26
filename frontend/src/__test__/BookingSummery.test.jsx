@@ -11,6 +11,10 @@ jest.mock("react-router-dom", () => ({
 }));
 
 describe("testing on booking summary page", () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   test("check render jsx", async () => {
     const bookingDetails = {
       bookingId: "12345",

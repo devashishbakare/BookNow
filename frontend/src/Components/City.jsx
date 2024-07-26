@@ -62,7 +62,7 @@ export const City = () => {
   return (
     <>
       <div className="h-auto w-[100vw] centerDiv flex-col">
-        <div className="h-[8vh] w-[100vw] min-h-[72px] ">
+        <div className="h-[8vh] w-[100vw] min-h-[72px] max-w-[1150px]">
           <Navbar />
         </div>
         {isLoading ? (
@@ -96,34 +96,26 @@ export const City = () => {
               <span className="h-[30px] w-full ml-3 addFont font-semibold text-[19px]">
                 Sort
               </span>
-              {/* <div className="flex flex-col gap-6">
-                <label className="flex gap-2 ml-5 text-[17px]">
-                  <input type="checkbox" name="filterOption1" value="option1" />
-                  highest rating to lowest
-                </label>
-                <label className="flex gap-2 ml-5 text-[17px]">
-                  <input type="checkbox" name="filterOption2" value="option2" />
-                  highest review to lowest
-                </label>
-              </div> */}
               <div className="flex flex-col gap-6">
-                <label className="flex gap-2 ml-5 text-[17px] items-center">
+                <label className="flex gap-2 ml-5 text-[17px] items-center cursor-pointer">
                   <input
                     type="radio"
                     value="1"
                     checked={filterSelectedOption == 1}
                     onChange={sortData}
                     data-testid={"mobile-high-to-low"}
+                    className="cursor-pointer"
                   />
                   highest rating to lowest
                 </label>
-                <label className="flex gap-2 ml-5 text-[17px] items-center">
+                <label className="flex gap-2 ml-5 text-[17px] items-center cursor-pointer">
                   <input
                     type="radio"
                     value="2"
                     checked={filterSelectedOption == 2}
                     onChange={sortData}
                     data-testid={"mobile-low-to-high"}
+                    className="cursor-pointer"
                   />
                   lowest rating to highest
                 </label>
@@ -160,23 +152,25 @@ export const City = () => {
                 </div>
 
                 <div className="flex flex-col gap-6">
-                  <label className="flex gap-2 ml-5 text-[17px] items-center">
+                  <label className="flex gap-2 ml-5 text-[17px] items-center cursor-pointer">
                     <input
                       type="radio"
                       value="1"
                       checked={filterSelectedOption == 1}
                       data-testid={"desktop-high-to-low"}
                       onChange={sortData}
+                      className="cursor-pointer"
                     />
                     highest rating to lowest
                   </label>
-                  <label className="flex gap-2 ml-5 text-[17px] items-center">
+                  <label className="flex gap-2 ml-5 text-[17px] items-center cursor-pointer">
                     <input
                       type="radio"
                       value="2"
                       data-testid={"desktop-low-to-high"}
                       checked={filterSelectedOption == 2}
                       onChange={sortData}
+                      className="cursor-pointer"
                     />
                     lowest rating to highest
                   </label>
@@ -195,7 +189,7 @@ export const City = () => {
                           key={hotel._id}
                           data-testid={hotel._id}
                           onClick={() => handleHotelNavigation(hotel._id)}
-                          className="h-auto w-[80%] max-w-[350px] shadow-lg rounded-[20px] p-3 flex flex-col mt-3 md:flex-row md:max-w-[750px]"
+                          className="h-auto w-[80%] max-w-[350px] shadow-lg rounded-[20px] p-3 flex flex-col mt-3 md:flex-row md:max-w-[750px] cursor-pointer"
                         >
                           <img
                             src={hotel.images[0]}

@@ -16,6 +16,10 @@ jest.mock("react-router-dom", () => ({
 }));
 
 describe("Test for confirm Booking Page", () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   const user = userEvent.setup();
   const navigate = jest.fn();
   useNavigate.mockReturnValue(navigate);

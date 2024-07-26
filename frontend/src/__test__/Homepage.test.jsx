@@ -1,7 +1,8 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, act } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Homepage } from "../Components/Homepage";
 import React from "react";
+import { Navbar } from "../Components/Navbar";
 import { useNavigate } from "react-router-dom";
 
 jest.mock("react-router-dom", () => ({
@@ -12,13 +13,16 @@ jest.mock("react-router-dom", () => ({
 const mockNavigate = jest.fn();
 useNavigate.mockReturnValue(mockNavigate);
 
-beforeEach(() => {
-  mockNavigate.mockReset();
-});
-
 describe("Homepage navigation test", () => {
+  beforeEach(() => {
+    mockNavigate.mockReset();
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   test("city image click navigation test", () => {
-    ``;
     render(
       <Router>
         <Homepage />

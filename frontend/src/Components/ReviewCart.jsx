@@ -21,7 +21,7 @@ export const ReviewCart = ({
     setIsReviewModalOpen(false);
   };
   const showReviewModal = (currentReview, optionIndex) => {
-    console.log(currentReview);
+    //console.log(currentReview);
     setCurrReview(currentReview);
     updateReviewOption(optionIndex);
     setIsReviewModalOpen(true);

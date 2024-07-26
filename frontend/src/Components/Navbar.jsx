@@ -72,6 +72,7 @@ export const Navbar = () => {
             {" "}
             <div
               onClick={() => navigate("/")}
+              data-testid="navbarHeading-testid"
               className="h-full w-[150px] flex-shrink-0  centerDiv gap-2"
             >
               <img
@@ -117,7 +118,7 @@ export const Navbar = () => {
                         <span className="addFont ml-2">Search Results</span>
                         <span
                           onClick={() => closeSearchResult()}
-                          className="mr-4 text-[blue]"
+                          className="mr-4 text-[blue] cursor-pointer"
                         >
                           Close
                         </span>
@@ -134,7 +135,7 @@ export const Navbar = () => {
                           <div
                             onClick={() => navigateToHotel(result.id)}
                             key={result.id}
-                            className="h-[70px] w-[95%] flex border-2 border-gray-400 rounded-md mb-2"
+                            className="h-[70px] w-[95%] flex border-2 border-gray-400 rounded-md mb-2 cursor-pointer"
                           >
                             <span className="h-full w-[70px] flex-shink-0">
                               <img
@@ -164,6 +165,7 @@ export const Navbar = () => {
                 type="text"
                 value={searchKey}
                 onChange={handleInput}
+                data-testid="searchBar-testid"
                 placeholder="Search for city or hotels"
               />
               {searchResult && (
@@ -189,7 +191,7 @@ export const Navbar = () => {
                       <div
                         onClick={() => navigateToHotel(result.id)}
                         key={result.id}
-                        className="h-[70px] w-[95%] flex border-2 border-gray-400 rounded-md mb-2"
+                        className="h-[70px] w-[95%] flex border-2 border-gray-400 rounded-md mb-2 cursor-pointer"
                       >
                         <span className="h-full w-[70px] flex-shink-0">
                           <img

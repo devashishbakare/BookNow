@@ -52,7 +52,7 @@ export const Profile = () => {
       if (userDetailsResponse.success && currentBookingResponse.success) {
         setUserDetails(userDetailsResponse.data);
         setCurrentBooking(currentBookingResponse.data);
-        console.log(currentBookingResponse.data);
+        //console.log(currentBookingResponse.data);
         //console.log(currentBookingResponse.data);
         setSelectedOptions(0);
       } else {
@@ -99,7 +99,7 @@ export const Profile = () => {
       const token = localStorage.getItem("token");
       const response = await fetchHistory(token);
       if (response.success) {
-        console.log("past bookings", response.data);
+        //console.log("past bookings", response.data);
         setPastBookings(response.data);
         setSelectedOptions(1);
       } else {
@@ -168,7 +168,7 @@ export const Profile = () => {
     }
 
     if (index == 1) {
-      console.log(index);
+      //console.log(index);
       setShowSortDropdown(false);
       setLocalLoader(true);
       fetchedData.sort((a, b) => {
@@ -184,7 +184,7 @@ export const Profile = () => {
       }
       setLocalLoader(false);
     } else if (index == 2) {
-      console.log(index);
+      //console.log(index);
       setLocalLoader(true);
       setShowSortDropdown(false);
       fetchedData.sort((a, b) => {
@@ -200,7 +200,7 @@ export const Profile = () => {
       }
       setLocalLoader(false);
     } else if (index == 3) {
-      console.log(index);
+      //console.log(index);
       setLocalLoader(true);
       setShowSortDropdown(false);
       fetchedData.sort((a, b) => {
@@ -225,7 +225,7 @@ export const Profile = () => {
       setLocalLoader(false);
     } else if (index == 4) {
       //
-      console.log(index);
+      //console.log(index);
       setLocalLoader(true);
       setShowSortDropdown(false);
       fetchedData.sort((a, b) => {
@@ -251,7 +251,7 @@ export const Profile = () => {
     } else if (index == 5) {
       setLocalLoader(true);
       setShowSortDropdown(false);
-      console.log("before, index 5", fetchedData);
+      //console.log("before, index 5", fetchedData);
       fetchedData.sort((a, b) => {
         return new Date(b.updatedAt) - new Date(a.updatedAt);
       });
@@ -328,7 +328,7 @@ export const Profile = () => {
                 <div className="h-auto w-full flex flex-col gap-3">
                   <div
                     onClick={() => handleCurrentBooking()}
-                    className="h-[70px] w-[90%] flex items-center justify-between mt-3"
+                    className="h-[70px] w-[90%] flex items-center justify-between mt-3 cursor-pointer"
                     data-testid="currentBookingButton-testid"
                   >
                     <span className="pl-6 flex gap-2 items-center addFont text-[1.1rem]">
@@ -340,7 +340,7 @@ export const Profile = () => {
                   <hr className="border-[1px] border-gray-300 w-[90%] ml-3" />
                   <div
                     onClick={() => fetchPastBookings()}
-                    className="h-[70px] w-[90%] flex items-center justify-between"
+                    className="h-[70px] w-[90%] flex items-center justify-between cursor-pointer"
                     data-testid="pastBookingButton-testid"
                   >
                     <span className="pl-6 flex gap-2 items-center addFont text-[1.1rem]">
@@ -352,7 +352,7 @@ export const Profile = () => {
                   <hr className="border-[1px] border-gray-300 w-[90%] ml-3" />
                   <div
                     onClick={() => fetchReviews()}
-                    className="h-[70px] w-[90%] flex items-center justify-between"
+                    className="h-[70px] w-[90%] flex items-center justify-between cursor-pointer"
                     data-testid="reviewButton-testid"
                   >
                     <span className="pl-6 flex gap-2 items-center addFont text-[1.1rem]">
@@ -365,7 +365,7 @@ export const Profile = () => {
                   <hr className="border-[1px] border-gray-300 w-[90%] ml-3" />
                   <div
                     onClick={() => handleEditProfile()}
-                    className="h-[70px] w-[90%] flex items-center justify-between"
+                    className="h-[70px] w-[90%] flex items-center justify-between cursor-pointer"
                     data-testid="editProfile-testid"
                   >
                     <span className="pl-6 flex gap-2 items-center addFont text-[1.1rem]">
@@ -377,7 +377,7 @@ export const Profile = () => {
                   <hr className="border-[1px] border-gray-300 w-[90%] ml-3" />
                   <div
                     onClick={() => logout()}
-                    className="h-[70px] w-[90%] flex items-center justify-between"
+                    className="h-[70px] w-[90%] flex items-center justify-between cursor-pointer"
                     data-testid="logoutButton-testid"
                   >
                     <span className="pl-6 flex gap-2 items-center addFont text-[1.1rem]">

@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Navbar } from "./Navbar";
 import { Contact } from "./Contact";
@@ -57,6 +57,7 @@ export const Hotel = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [hotelDetails, setHotelDetails] = useState();
   const [roomPackageSelectionIndex, setRoomPackageSelectionIndex] = useState(0);
+  const reviewSectionRef = useRef(null);
 
   const date = new Date();
   const dates = {
@@ -80,7 +81,6 @@ export const Hotel = () => {
     const fetchHotelData = async (id) => {
       const response = await getHotelDetails(id);
       if (response.success === true) {
-        console.log(response);
         const data = {
           id: response.data._id,
           selectedDates: response.data.selectedDates,
@@ -130,8 +130,10 @@ export const Hotel = () => {
   };
 
   const handleBookNow = () => {
-    console.log(navigateData);
     navigate(`/bookHotel/${hotelId}`, { state: navigateData });
+  };
+  const scrollToReviewSection = () => {
+    reviewSectionRef.current.scrollIntoView({ behavior: "smooth" });
   };
   return (
     <>
@@ -179,7 +181,10 @@ export const Hotel = () => {
                         hotel
                       </span>
 
-                      <span className="underline">
+                      <span
+                        className="underline"
+                        onClick={scrollToReviewSection}
+                      >
                         Reviews&nbsp;{hotelDetails.reviews.length}
                       </span>
                     </div>
@@ -354,6 +359,7 @@ export const Hotel = () => {
                         selectedDates={hotelDetails.selectedDates}
                         userMonthDateSelection={userMonthDateSelection}
                         setUserMonthDateSelection={setUserMonthDateSelection}
+                        calanderRequestFor="hotel"
                       />
                     </div>
                   </div>
@@ -408,7 +414,7 @@ export const Hotel = () => {
                   <hr className="border-1 border-gray-400 w-[95%] mt-5" />
                   {hotelDetails.reviews.length > 0 && (
                     <>
-                      <div className="h-[35vh] w-full">
+                      <div className="h-[35vh] w-full" ref={reviewSectionRef}>
                         <Slider {...reviewSettings}>
                           {hotelDetails &&
                             hotelDetails.reviews.map((reviewObject, index) => (
@@ -473,21 +479,19 @@ export const Hotel = () => {
                         {hotelDetails &&
                           hotelDetails.roomPackages.map(
                             (roomPackage, index) => (
-                              <>
-                                <span
-                                  key={`${hotelDetails._id} + "-"+${roomPackage._id}`}
-                                  onClick={() =>
-                                    setRoomPackageSelectionIndex(index)
-                                  }
-                                  className={`h-[40px] w-[30%] mt-1 centerDiv pl-2 addFont rounded-md ${
-                                    roomPackageSelectionIndex == index
-                                      ? `bg-[#274195] text-white`
-                                      : ""
-                                  }`}
-                                >
-                                  {roomPackage.roomType}
-                                </span>
-                              </>
+                              <span
+                                key={`${hotelDetails._id} + "-"+${roomPackage._id}`}
+                                onClick={() =>
+                                  setRoomPackageSelectionIndex(index)
+                                }
+                                className={`h-[40px] w-[30%] mt-1 centerDiv pl-2 addFont rounded-md ${
+                                  roomPackageSelectionIndex == index
+                                    ? `bg-[#274195] text-white`
+                                    : ""
+                                }`}
+                              >
+                                {roomPackage.roomType}
+                              </span>
                             )
                           )}
                       </div>
@@ -590,11 +594,13 @@ export const Hotel = () => {
                     <div className="h-auto w-[90%] flex flex-col centerDiv">
                       {hotelDetails &&
                         hotelDetails.roomPackages.map((roomPackage, index) => (
-                          <>
+                          <div
+                            className="h-auto w-full flex flex-col centerDiv"
+                            key={roomPackage._id}
+                          >
                             <div
                               onClick={() => handleWidePackageSelection(index)}
-                              key={roomPackage._id}
-                              className={`h-[70px] w-full flex border-2 border-gray-400 rounded-lg mt-4 ${
+                              className={`h-[70px] w-full flex border-[1px] border-gray-400 rounded-lg mt-4 ${
                                 userWidePackageSelection[index]
                                   ? "bg-[#003b95] text-[white] border-none rounded-none"
                                   : ""
@@ -663,7 +669,7 @@ export const Hotel = () => {
                                 </div>
                               </div>
                             )}
-                          </>
+                          </div>
                         ))}
                     </div>
                     <hr className="border-1 border-gray-400 w-[95%] mt-5" />

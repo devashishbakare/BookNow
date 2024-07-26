@@ -10,7 +10,7 @@ export const Home = () => {
     const searchParams = new URLSearchParams(location.search);
     const token = searchParams.get("token");
     if (token) {
-      console.log("token", token);
+      //console.log("token", token);
       localStorage.setItem("token", token);
       showSuccessNotification("login successfull");
       window.history.replaceState({}, document.title, "/");

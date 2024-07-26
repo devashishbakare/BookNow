@@ -45,7 +45,7 @@ export const Homepage = () => {
         <div className="w-[100vw] centerDiv flex gap-3 flex-col sm:hidden">
           <div
             onClick={() => navigateToCity("Delhi")}
-            className="h-full w-full relative p-2"
+            className="h-full w-full relative p-2 cursor-pointer"
           >
             <img
               src={tredingSmallImages[0]}
@@ -58,7 +58,7 @@ export const Homepage = () => {
           </div>
           <div
             onClick={() => navigateToCity("Banglore")}
-            className="h-full w-full relative p-2"
+            className="h-full w-full relative p-2 cursor-pointer"
           >
             <img
               src={tredingSmallImages[1]}
@@ -73,7 +73,7 @@ export const Homepage = () => {
         <div className="hidden sm:flex sm:w-full sm:centerDiv sm:addBorder gap-3">
           <div
             onClick={() => navigateToCity("Delhi")}
-            className="h-full w-[50%] relative p-2"
+            className="h-full w-[50%] relative p-2 cursor-pointer"
           >
             <img
               src={trendingBigImages[0]}
@@ -86,7 +86,7 @@ export const Homepage = () => {
           </div>
           <div
             onClick={() => navigateToCity("Banglore")}
-            className="h-full w-[50%] relative p-2"
+            className="h-full w-[50%] relative p-2 cursor-pointer"
           >
             <img
               src={trendingBigImages[1]}
@@ -101,7 +101,7 @@ export const Homepage = () => {
         <div className="w-full centerDiv gap-2 flex flex-col sm:flex-row sm:h-[35vh] md:h-[40vh]">
           <div
             onClick={() => navigateToCity("Mumbai")}
-            className="h-full w-full relative p-2"
+            className="h-full w-full relative p-2 cursor-pointer"
           >
             <img
               src={tredingSmallImages[2]}
@@ -114,7 +114,7 @@ export const Homepage = () => {
           </div>
           <div
             onClick={() => navigateToCity("Chennai")}
-            className="h-full w-full relative p-2"
+            className="h-full w-full relative p-2 cursor-pointer"
           >
             <img
               src={tredingSmallImages[3]}
@@ -127,7 +127,7 @@ export const Homepage = () => {
           </div>
           <div
             onClick={() => navigateToCity("Pune")}
-            className="h-full w-full relative p-2"
+            className="h-full w-full relative p-2 cursor-pointer"
           >
             <img
               src={tredingSmallImages[4]}

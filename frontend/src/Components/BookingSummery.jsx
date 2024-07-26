@@ -125,18 +125,21 @@ export const BookingSummery = ({ bookingDetails, roomType }) => {
             <span className="h-full w-[150px] flex items-center"> Date :</span>
           </div>
           <div className="h-full w-[50%] flex flex-row items-center">
-            {bookingDetails.selectedDates.map((month) => (
-              <>
+            {bookingDetails.selectedDates.map((month, index) => (
+              <div
+                className="h-full w-full flex flex-row items-center"
+                key={`bs-${index}`}
+              >
                 {month.dates.map((date) => (
-                  <>
-                    <span className="">{date}</span>
-                  </>
+                  <span className="" key={`date-${index}`}>
+                    {date}
+                  </span>
                 ))}
                 &nbsp;
                 <span className="">{getMonthName(month.month)}</span>
                 {", "}
                 &nbsp;
-              </>
+              </div>
             ))}
           </div>
         </div>
@@ -197,13 +200,13 @@ export const BookingSummery = ({ bookingDetails, roomType }) => {
         >
           <button
             onClick={() => navigate("/")}
-            className=" w-[180px] h-[50px] rounded-lg  text-black border-[1px] border-[#003b95] shadow-md"
+            className=" w-[180px] h-[50px] rounded-lg  text-black border-[1px] border-[#003b95] shadow-md cursor-pointer"
           >
             Explore More
           </button>
           <button
             onClick={handleDownloadPdf}
-            className=" w-[180px] h-[50px] rounded-lg  text-black border-[1px] border-[#003b95] shadow-md"
+            className=" w-[180px] h-[50px] rounded-lg  text-black border-[1px] border-[#003b95] shadow-md cursor-pointer"
           >
             {pdfClicked == false ? <>Generate PDF</> : <CirculareSpinner />}
           </button>

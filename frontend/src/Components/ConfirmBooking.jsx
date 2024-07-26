@@ -478,6 +478,7 @@ export const ConfirmBooking = () => {
                           userMonthDateSelection={userMonthDateSelection}
                           setUserMonthDateSelection={setUserMonthDateSelection}
                           updateAmount={updateAmountFromCalendarSelection}
+                          calanderRequestFor="confirm_booking"
                         />
                       </div>
                     </div>
@@ -504,89 +505,87 @@ export const ConfirmBooking = () => {
                           {hotelDetails &&
                             hotelDetails.roomPackages.map(
                               (roomPackage, index) => (
-                                <>
-                                  <div
-                                    key={roomPackage._id}
-                                    className="h-auto w-full border-2 border-gray-300"
-                                  >
-                                    <div className="h-[60px] w-full flex bg-[#efeeee] shadow-sm">
-                                      <span className="h-full w-[70%] addFont flex items-center pl-4">
-                                        {roomPackage.roomType}
-                                      </span>
-                                      <span className="h-full w-[30%] mr-3 centerDiv">
-                                        <span className="h-[30px] w-[60px] border-2 border-gray-600 flex rounded-[30px] items-center">
-                                          <span
-                                            onClick={() =>
-                                              updateToggleSelection(index)
-                                            }
-                                            className="h-full w-[50%] flex items-center"
-                                          >
-                                            {toggleCollection.selectedPackageIndex !=
-                                              index && (
-                                              <span className="h-[25px] w-[25px] rounded-[50%] bg-[#f04a4a]"></span>
-                                            )}
-                                          </span>
-                                          <span
-                                            onClick={() =>
-                                              updateToggleSelection(index)
-                                            }
-                                            className="h-full w-[50%] flex flex-row-reverse items-center"
-                                          >
-                                            {toggleCollection.selectedPackageIndex ==
-                                              index && (
-                                              <span className="h-[25px] w-[25px] rounded-[50%] bg-[#3b973b]"></span>
-                                            )}
-                                          </span>
+                                <div
+                                  key={roomPackage._id}
+                                  className="h-auto w-full border-2 border-gray-300"
+                                >
+                                  <div className="h-[60px] w-full flex bg-[#efeeee] shadow-sm">
+                                    <span className="h-full w-[70%] addFont flex items-center pl-4">
+                                      {roomPackage.roomType}
+                                    </span>
+                                    <span className="h-full w-[30%] mr-3 centerDiv">
+                                      <span className="h-[30px] w-[60px] border-2 border-gray-600 flex rounded-[30px] items-center">
+                                        <span
+                                          onClick={() =>
+                                            updateToggleSelection(index)
+                                          }
+                                          className="h-full w-[50%] flex items-center"
+                                        >
+                                          {toggleCollection.selectedPackageIndex !=
+                                            index && (
+                                            <span className="h-[25px] w-[25px] rounded-[50%] bg-[#f04a4a]"></span>
+                                          )}
                                         </span>
+                                        <span
+                                          onClick={() =>
+                                            updateToggleSelection(index)
+                                          }
+                                          className="h-full w-[50%] flex flex-row-reverse items-center"
+                                        >
+                                          {toggleCollection.selectedPackageIndex ==
+                                            index && (
+                                            <span className="h-[25px] w-[25px] rounded-[50%] bg-[#3b973b]"></span>
+                                          )}
+                                        </span>
+                                      </span>
+                                    </span>
+                                  </div>
+
+                                  <div className="h-auto w-full flex flex-col items-center">
+                                    <div className="h-[40px] w-[95%] flex items-center pl-3 border-b-[1px] border-black">
+                                      <span className="h-full w-[60%] flex items-center">
+                                        No Of People Alllowed
+                                      </span>
+                                      <span className="h-full w-[40%] centerDiv">
+                                        {roomPackage.numberOfPeopleAllowed}
                                       </span>
                                     </div>
-
-                                    <div className="h-auto w-full flex flex-col items-center">
-                                      <div className="h-[40px] w-[95%] flex items-center pl-3 border-b-[1px] border-black">
-                                        <span className="h-full w-[60%] flex items-center">
-                                          No Of People Alllowed
-                                        </span>
-                                        <span className="h-full w-[40%] centerDiv">
-                                          {roomPackage.numberOfPeopleAllowed}
-                                        </span>
-                                      </div>
-                                      <div className="h-[40px] w-[95%] flex items-center pl-3 border-b-[1px] border-black">
-                                        <span className="h-full w-[60%] flex items-center">
-                                          Number Of Beds
-                                        </span>
-                                        <span className="h-full w-[40%] centerDiv">
-                                          {roomPackage.numberOfBeds}
-                                        </span>
-                                      </div>
-                                      <div className="h-[40px] w-[95%] flex items-center pl-3 border-b-[1px] border-black">
-                                        <span className="h-full w-[60%] flex items-center">
-                                          Number Of Bathrooms
-                                        </span>
-                                        <span className="h-full w-[40%] centerDiv">
-                                          {roomPackage.numberOfBathrooms}
-                                        </span>
-                                      </div>
-                                      <div className="h-[40px] w-[95%] flex items-center pl-3 border-b-[1px] border-black">
-                                        <span className="h-full w-[60%] flex items-center">
-                                          Meals Included
-                                        </span>
-                                        <span className="h-full w-[40%] centerDiv">
-                                          {roomPackage.mealsIncluded
-                                            ? "Yes"
-                                            : "No"}
-                                        </span>
-                                      </div>
-                                      <div className="h-[40px] w-[95%] flex items-center pl-3">
-                                        <span className="h-full w-[60%] flex items-center">
-                                          Price
-                                        </span>
-                                        <span className="h-full w-[40%] centerDiv">
-                                          {roomPackage.price}
-                                        </span>
-                                      </div>
+                                    <div className="h-[40px] w-[95%] flex items-center pl-3 border-b-[1px] border-black">
+                                      <span className="h-full w-[60%] flex items-center">
+                                        Number Of Beds
+                                      </span>
+                                      <span className="h-full w-[40%] centerDiv">
+                                        {roomPackage.numberOfBeds}
+                                      </span>
+                                    </div>
+                                    <div className="h-[40px] w-[95%] flex items-center pl-3 border-b-[1px] border-black">
+                                      <span className="h-full w-[60%] flex items-center">
+                                        Number Of Bathrooms
+                                      </span>
+                                      <span className="h-full w-[40%] centerDiv">
+                                        {roomPackage.numberOfBathrooms}
+                                      </span>
+                                    </div>
+                                    <div className="h-[40px] w-[95%] flex items-center pl-3 border-b-[1px] border-black">
+                                      <span className="h-full w-[60%] flex items-center">
+                                        Meals Included
+                                      </span>
+                                      <span className="h-full w-[40%] centerDiv">
+                                        {roomPackage.mealsIncluded
+                                          ? "Yes"
+                                          : "No"}
+                                      </span>
+                                    </div>
+                                    <div className="h-[40px] w-[95%] flex items-center pl-3">
+                                      <span className="h-full w-[60%] flex items-center">
+                                        Price
+                                      </span>
+                                      <span className="h-full w-[40%] centerDiv">
+                                        {roomPackage.price}
+                                      </span>
                                     </div>
                                   </div>
-                                </>
+                                </div>
                               )
                             )}
                         </div>

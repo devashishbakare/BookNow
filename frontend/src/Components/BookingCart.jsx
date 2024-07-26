@@ -62,18 +62,24 @@ export const BookingCart = ({ bookingStatus, details, updateParentCart }) => {
             <div className="auto pt-2 pb-2 w-full flex items-center pl-3 text-[1rem]">
               <span className="addFont">Check In Date : &nbsp;</span>
               {selectedDates.map((month, index) => (
-                <>
+                <div
+                  className="h-full w-auto flex"
+                  key={`bc-${month}-${index}`}
+                >
                   {month.dates.map((date, index) => (
-                    <>
+                    <div
+                      className="h-full w-auto flex "
+                      key={`bc-${date}-${index}`}
+                    >
                       <span className="">{date}</span>
                       {month.dates.length - 1 != index && <>{", "}&nbsp;</>}
-                    </>
+                    </div>
                   ))}
                   &nbsp;
                   <span className="">{getMonthName(month.month)}</span>
                   {selectedDates.length - 1 != index && <>{", "}&nbsp;</>}
                   &nbsp;
-                </>
+                </div>
               ))}
             </div>
             <div className="h-auto pt-2 pb-2 w-full pl-3">
@@ -83,7 +89,7 @@ export const BookingCart = ({ bookingStatus, details, updateParentCart }) => {
             <div className="h-auto pt-2 pb-2 w-full pl-3 underline text-[#003b95]">
               <span
                 onClick={() => showBookingDetails(bookingDetails._id)}
-                className=""
+                className="cursor-pointer"
               >
                 View Details
               </span>{" "}
@@ -104,7 +110,10 @@ export const BookingCart = ({ bookingStatus, details, updateParentCart }) => {
                 </span>
               )}
               {bookingStatus == 0 && (
-                <span onClick={() => handleCancelBooking(_id)} className="ml-3">
+                <span
+                  onClick={() => handleCancelBooking(_id)}
+                  className="ml-3 cursor-pointer"
+                >
                   Cancel Booking
                 </span>
               )}

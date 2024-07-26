@@ -21,7 +21,7 @@ export const ShowProfileInfo = ({
   const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     const updateData = () => {
-      console.log("review Data ", fetchedData);
+      //console.log("review Data ", fetchedData);
       if (selectedOptions !== 2) {
         setDetails(fetchedData);
       } else {
@@ -44,7 +44,7 @@ export const ShowProfileInfo = ({
     // 6 ) reviewDate -> oldest to newest
 
     if (index == 1) {
-      console.log(index);
+      //console.log(index);
       setIsLoading(true);
       setShowSortDropdown(false);
       fetchedData.sort((a, b) => {
@@ -56,7 +56,7 @@ export const ShowProfileInfo = ({
       setDetails(fetchedData);
       setIsLoading(false);
     } else if (index == 2) {
-      console.log(index);
+      //console.log(index);
       setIsLoading(true);
       setShowSortDropdown(false);
       fetchedData.sort((a, b) => {
@@ -68,7 +68,7 @@ export const ShowProfileInfo = ({
       setDetails(fetchedData);
       setIsLoading(false);
     } else if (index == 3) {
-      console.log(index);
+      //console.log(index);
       setIsLoading(true);
       setShowSortDropdown(false);
       fetchedData.sort((a, b) => {
@@ -88,7 +88,7 @@ export const ShowProfileInfo = ({
       setDetails(fetchedData);
       setIsLoading(false);
     } else if (index == 4) {
-      console.log(index);
+      //console.log(index);
       setIsLoading(true);
       setShowSortDropdown(false);
       fetchedData.sort((a, b) => {

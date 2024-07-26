@@ -19,6 +19,10 @@ jest.mock("react-router-dom", () => ({
 }));
 
 describe("List of holtes by city", () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   test("fetching list of hotels and rendering on screen", async () => {
     const user = userEvent.setup();
     const navigate = jest.fn();
