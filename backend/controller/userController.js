@@ -123,7 +123,7 @@ const fetchCurrentBooking = async (req, res) => {
 const fetchBookingDetails = async (req, res) => {
   try {
     const userId = req.userId;
-    console.log("in fetch bookingDetails");
+    //console.log("in fetch bookingDetails");
     const bookingId = req.params.bookingId;
 
     const bookingDetails = await BookingDetails.findById(bookingId);

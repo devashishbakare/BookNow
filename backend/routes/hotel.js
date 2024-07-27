@@ -639,6 +639,50 @@ router.get("/search", hotelController.fetchSearchResult);
 
 router.post("/confirmBooking", authenticate, hotelController.bookHotel);
 
+/**
+ * @swagger
+ * /hotel/getBookingDetails/{bookingId}:
+ *   get:
+ *     summary: Fetch details for a specific booking
+ *     tags: [Hotel]
+ *     parameters:
+ *       - in: path
+ *         name: bookingId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The ID of the booking to fetch details for
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Booking details fetched successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     $ref: '#/components/schemas/BookingDetails'
+ *                   description: An array of booking detail objects
+ *                 message:
+ *                   type: string
+ *                   description: Success message
+ *       500:
+ *         description: Internal server error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Error message
+ */
+
 router.get(
   "/getBookingDetails/:bookingId",
   hotelController.fetchBookingDetails
