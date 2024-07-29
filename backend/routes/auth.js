@@ -14,11 +14,11 @@ router.get("/google/callback", (req, res, next) => {
       return next(err);
     }
     if (!user) {
-      return res.redirect(`${process.env.FRONTEND_URL}/signIn`);
+      return res.redirect("https://booknow1.netlify.app/signIn");
     }
     // Generate token and redirect
     const token = user.token;
-    res.redirect(`${process.env.FRONTEND_URL}/?token=${token}`);
+    res.redirect("https://booknow1.netlify.app/?token=${token}");
   })(req, res, next);
 });
 
