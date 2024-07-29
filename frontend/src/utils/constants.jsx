@@ -1,4 +1,6 @@
-export const baseUrl = "http://localhost:8000";
+//export const baseUrl = "http://localhost:8000";
+export const baseUrl =
+  "http://booknowbackend-env.eba-hh3mrvkm.ap-south-1.elasticbeanstalk.com";
 
 export const createHeader = (token) => {
   return {

@@ -1,4 +1,5 @@
 import React from "react";
+import { baseUrl } from "../utils/constants";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
@@ -62,13 +63,15 @@ export const SignInForm = () => {
   const handleSignInWithGoogle = () => {
     setLocalLoader(true);
     localStorage.setItem("pathToNavigate", pathToNavigate);
-    window.location.href = "http://localhost:8000/auth/google";
+    //window.location.href = "http://localhost:8000/auth/google";
+    window.location.href = `${baseUrl}/auth/google`;
   };
 
   const handleSignUpWithGitHub = () => {
     setLocalLoader(true);
     localStorage.setItem("pathToNavigate", pathToNavigate);
-    window.location.href = "http://localhost:8000/auth/github";
+    //window.location.href = "http://localhost:8000/auth/github";
+    window.location.href = `${baseUrl}/auth/github`;
   };
 
   return (

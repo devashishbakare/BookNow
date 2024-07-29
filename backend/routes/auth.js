@@ -14,11 +14,11 @@ router.get("/google/callback", (req, res, next) => {
       return next(err);
     }
     if (!user) {
-      return res.redirect("http://localhost:5173/signIn");
+      return res.redirect(`${process.env.FRONTEND_URL}/signIn`);
     }
     // Generate token and redirect
     const token = user.token;
-    res.redirect(`http://localhost:5173/?token=${token}`);
+    res.redirect(`${process.env.FRONTEND_URL}/?token=${token}`);
   })(req, res, next);
 });
 
@@ -33,11 +33,11 @@ router.get("/github/callback", (req, res, next) => {
       return next(err);
     }
     if (!user) {
-      return res.redirect("http://localhost:5173/signIn");
+      return res.redirect(`${process.env.FRONTEND_URL}/signIn`);
     }
     // Generate token and redirect
     const token = user.token;
-    res.redirect(`http://localhost:5173/?token=${token}`);
+    res.redirect(`${process.env.FRONTEND_URL}/?token=${token}`);
   })(req, res, next);
 });
 

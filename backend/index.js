@@ -26,7 +26,7 @@ const options = {
     },
     servers: [
       {
-        url: `http://localhost:${process.env.PORT}`,
+        url: process.env.BASE_API_URL,
       },
     ],
   },
