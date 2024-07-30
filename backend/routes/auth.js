@@ -1,11 +1,13 @@
 const express = require("express");
 const passport = require("passport");
-
 const router = express.Router();
 
 router.get(
   "/google",
-  passport.authenticate("google", { scope: ["profile", "email"] })
+  passport.authenticate("google", {
+    scope: ["profile", "email"],
+    callbackURL: `${process.env.BACKEND_URL}/auth/google/callback`,
+  })
 );
 
 router.get("/google/callback", (req, res, next) => {
@@ -14,17 +16,20 @@ router.get("/google/callback", (req, res, next) => {
       return next(err);
     }
     if (!user) {
-      return res.redirect("https://booknow1.netlify.app/signIn");
+      return res.redirect(`${process.env.FRONTEND_URL}/signIn`);
     }
     // Generate token and redirect
     const token = user.token;
-    res.redirect("https://booknow1.netlify.app/?token=${token}");
+    res.redirect(`${process.env.FRONTEND_URL}/?token=${token}`);
   })(req, res, next);
 });
 
 router.get(
   "/github",
-  passport.authenticate("github", { scope: ["user:email"] })
+  passport.authenticate("github", {
+    scope: ["user:email"],
+    callbackURL: `${process.env.BACKEND_URL}/auth/github/callback`,
+  })
 );
 
 router.get("/github/callback", (req, res, next) => {
