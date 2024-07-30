@@ -4,10 +4,7 @@ const router = express.Router();
 
 router.get(
   "/google",
-  passport.authenticate("google", {
-    scope: ["profile", "email"],
-    callbackURL: `${process.env.BACKEND_URL}/auth/google/callback`,
-  })
+  passport.authenticate("google", { scope: ["profile", "email"] })
 );
 
 router.get("/google/callback", (req, res, next) => {
@@ -26,10 +23,7 @@ router.get("/google/callback", (req, res, next) => {
 
 router.get(
   "/github",
-  passport.authenticate("github", {
-    scope: ["user:email"],
-    callbackURL: `${process.env.BACKEND_URL}/auth/github/callback`,
-  })
+  passport.authenticate("github", { scope: ["user:email"] })
 );
 
 router.get("/github/callback", (req, res, next) => {
