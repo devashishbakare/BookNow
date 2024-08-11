@@ -9,6 +9,7 @@ import { BookingConfirmation } from "./Components/BookingConfirmation";
 import { ConfirmBooking } from "./Components/ConfirmBooking";
 import { Profile } from "./Components/Profile";
 import { BookingDetails } from "./Components/BookingDetails";
+import { ResetPassword } from "./Components/ResetPassword";
 
 function App() {
   return (
@@ -30,6 +31,10 @@ function App() {
           <Route
             path="/bookingConfirmation"
             element={<BookingConfirmation />}
+          />
+          <Route
+            path="/resetPassword/:resetPasswordToken"
+            element={<ResetPassword />}
           />
         </Routes>
       </BrowserRouter>

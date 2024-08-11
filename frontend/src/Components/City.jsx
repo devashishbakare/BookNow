@@ -22,7 +22,7 @@ export const City = () => {
     const fetchCityData = async (fetchForCity) => {
       const response = await getHotelsFromCity(fetchForCity);
       if (response.success === true) {
-        console.log(response);
+        //console.log(response);
         setHotels(response.data);
       } else {
         showErrorNotification("something wrong with data fetching");

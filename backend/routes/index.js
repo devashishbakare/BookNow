@@ -104,6 +104,8 @@ router.use("/hotel", require("./hotel"));
 router.use("/update", require("./update"));
 router.use("/user", require("./user"));
 router.use("/auth", require("./auth"));
+router.use("/resetPassword", require("./resetPassword"));
+
 /**
  * @swagger
  * /signUp:

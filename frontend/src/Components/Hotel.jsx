@@ -138,20 +138,18 @@ export const Hotel = () => {
   return (
     <>
       {isLoading ? (
-        <>
-          <div data-testid="loader-testid" className="h-full w-full centerDiv">
-            <Spinners />
-          </div>
-        </>
+        <div data-testid="loader-testid" className="h-full w-full centerDiv">
+          <Spinners />
+        </div>
       ) : (
         hotelDetails && (
-          <div className="h-auto w-auto centerDiv flex flex-col">
-            <div className="h-[8vh] w-[100vw] min-h-[72px] max-w-[1150px] ">
+          <div className="h-auto w-[100vw] flex flex-col centerDiv">
+            <div className="h-[8vh] w-[100vw] min-h-[72px] max-w-[1150px]">
               <Navbar />
             </div>
 
             <div className="h-auto w-[100vw] flex flex-col max-w-[1150px] shadow-lg">
-              <div className="h-[35vh] w-full">
+              <div className="h-[300px] w-full">
                 <Slider {...settings}>
                   {hotelDetails.images.map((image, index) => (
                     <img
@@ -168,8 +166,8 @@ export const Hotel = () => {
                   className="h-full w-full object-cover"
                 /> */}
               </div>
-              <div className="h-full w-full flex flex-col pt-[20px] md:flex-row">
-                <div className="h-auto w-[100%] flex flex-col centerDiv md:w-[65%]">
+              <div className="h-full w-full flex flex-col pt-[40px] md:flex-row">
+                <div className="h-auto w-[100%] flex flex-col gap-3 centerDiv md:w-[65%]">
                   <div className="h-auto min-h-[20vh] w-full flex flex-col p-3">
                     <div className="addFont text-[20px] p-2 font-semibold">
                       {hotelDetails.name}
@@ -323,9 +321,9 @@ export const Hotel = () => {
                     </div>
                   </div>
                   <hr className="border-1 border-gray-400 w-[95%] mt-2" />
-                  <div className="h-auto w-full flex flex-col">
+                  <div className="h-auto w-full flex flex-col p-2">
                     <div className="h-auto w-full flex flex-col">
-                      <div className="h-[35px] w-full items-center addFont text-[20px] pl-[20px]">
+                      <div className="h-[60px] w-full addFont text-[20px] pl-[15px]">
                         Available Dates for this vanue
                       </div>
                       <div className="h-[70px] w-[320px] flex ml-3 centerDiv border-2 border-gray-400">
@@ -414,7 +412,7 @@ export const Hotel = () => {
                   <hr className="border-1 border-gray-400 w-[95%] mt-5" />
                   {hotelDetails.reviews.length > 0 && (
                     <>
-                      <div className="h-[35vh] w-full" ref={reviewSectionRef}>
+                      <div className="h-[300px] w-full" ref={reviewSectionRef}>
                         <Slider {...reviewSettings}>
                           {hotelDetails &&
                             hotelDetails.reviews.map((reviewObject, index) => (

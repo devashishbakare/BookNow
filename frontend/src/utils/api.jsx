@@ -230,3 +230,21 @@ export const editProfile = async (token, userInfo) => {
     return { success: false, error: error.response.data.error };
   }
 };
+//forgotPassword
+export const forgotPassword = async (userEmail) => {
+  try {
+    await axios.get(`${baseUrl}/resetPassword/forgotPassword/${userEmail}`);
+    return { success: true };
+  } catch (error) {
+    return { success: false, error: error.response.data.error };
+  }
+};
+
+export const updatePassword = async (userInfo) => {
+  try {
+    await axios.patch(`${baseUrl}/resetPassword/reset/`, userInfo);
+    return { success: true };
+  } catch (error) {
+    return { success: false, error: error.response.data.error };
+  }
+};

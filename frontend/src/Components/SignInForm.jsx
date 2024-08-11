@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useRef } from "react";
+import propType from "prop-types";
 import { baseUrl } from "../utils/constants";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -9,17 +10,20 @@ import { useFormik } from "formik";
 import { SignInSchema } from "../ValidationSchemas/SignInSchema";
 import { SignUpSchema } from "../ValidationSchemas/signUpSchema";
 import { signIn, signUp } from "../utils/api";
+import { GoEyeClosed, GoEye } from "react-icons/go";
 import {
   showErrorNotification,
   showSuccessNotification,
 } from "../utils/notification";
 import { ToastContainer } from "react-toastify";
 
-export const SignInForm = () => {
+export const SignInForm = ({ showForgotPasswordModal }) => {
   const navigate = useNavigate();
   const pathToNavigate = useLocation().state;
   const [isUserSignIn, setIsUserSignIn] = useState(true);
-  const [localLoader, setLocalLoader] = useState(false);
+  const [showPasswordStatus, setShowPasswordStatus] = useState(false);
+  const [confirmPasswordStatus, setConfirmPasswordStatus] = useState(false);
+
   const initialValues = {
     name: "",
     email: "",
@@ -59,19 +63,37 @@ export const SignInForm = () => {
       action.resetForm();
     },
   });
+
   // todo : here we need to add the production url when we deploy our backend
   const handleSignInWithGoogle = () => {
-    setLocalLoader(true);
     localStorage.setItem("pathToNavigate", pathToNavigate);
     //window.location.href = "http://localhost:8000/auth/google";
     window.location.href = `${baseUrl}/auth/google`;
   };
 
   const handleSignUpWithGitHub = () => {
-    setLocalLoader(true);
     localStorage.setItem("pathToNavigate", pathToNavigate);
     //window.location.href = "http://localhost:8000/auth/github";
     window.location.href = `${baseUrl}/auth/github`;
+  };
+
+  const signInFormikRef = useRef(null);
+  signInFormikRef.current = signInFormik;
+  const signUpFormikRef = useRef(null);
+  signUpFormikRef.current = signUpFormik;
+
+  const toggleSignInUpForm = (requestFor) => {
+    if (requestFor == "signIn") {
+      setIsUserSignIn(true);
+    } else {
+      setIsUserSignIn(false);
+    }
+    if (signInFormikRef) {
+      signInFormikRef.current.resetForm();
+    }
+    if (signUpFormikRef) {
+      signUpFormikRef.current.resetForm();
+    }
   };
 
   return (
@@ -111,15 +133,25 @@ export const SignInForm = () => {
                 <div className="h-[18%] w-full flex flex-col gap-1 centerDiv min-h-[90px]">
                   <div className="h-[60%] w-[95%] flex items-center rounded-3xl border-[1px] border-gray-500 min-h-[50px]">
                     <input
-                      type="password"
+                      type={showPasswordStatus ? "text" : "password"}
                       name="password"
-                      className="h-[85%] w-[90%] ml-4 outline-none baseColor placeHolder"
+                      className="h-[85%] w-[80%] ml-4 outline-none baseColor placeHolder"
                       placeholder="Password"
                       value={signInFormik.values.password}
                       onChange={signInFormik.handleChange}
                       onBlur={signInFormik.handleBlur}
                       data-testid="signIn-password-input-testid"
                     />
+                    <span
+                      onClick={() => setShowPasswordStatus(!showPasswordStatus)}
+                      className="h-full w-[17%] mr-2 centerDiv"
+                    >
+                      {showPasswordStatus == false ? (
+                        <GoEyeClosed className="text-[1.3rem]" />
+                      ) : (
+                        <GoEye className="text-[1.3rem]" />
+                      )}
+                    </span>
                   </div>
                   {signInFormik.errors.password &&
                   signInFormik.touched.password ? (
@@ -131,7 +163,10 @@ export const SignInForm = () => {
                   ) : null}
                 </div>
                 <div className="h-[7%] w-full flex flex-row-reverse">
-                  <p className="mr-5 text-[15px] theamColor">
+                  <p
+                    className="mr-5 text-[15px] theamColor"
+                    onClick={() => showForgotPasswordModal(true)}
+                  >
                     Forgot Password?
                   </p>
                 </div>
@@ -149,22 +184,17 @@ export const SignInForm = () => {
                   <p className="">or</p>
                   <hr className="w-[40%] border-gray-400 mr-4" />
                 </div>
-                {localLoader ? (
-                  <div className="h-[70px] w-[95%] flex gap-[20px] centerDiv min-h-[50px]">
-                    <CirculareSpinner />
-                  </div>
-                ) : (
-                  <div className="h-[15%] w-[95%] flex gap-[20px] centerDiv min-h-[50px]">
-                    <FcGoogle
-                      onClick={() => handleSignInWithGoogle()}
-                      className="text-[45px] cursor-pointer"
-                    />
-                    <FaGithub
-                      onClick={() => handleSignUpWithGitHub()}
-                      className="text-[45px] cursor-pointer"
-                    />
-                  </div>
-                )}
+
+                <div className="h-[15%] w-[95%] flex gap-[20px] centerDiv min-h-[50px]">
+                  <FcGoogle
+                    onClick={() => handleSignInWithGoogle()}
+                    className="text-[45px] cursor-pointer"
+                  />
+                  <FaGithub
+                    onClick={() => handleSignUpWithGitHub()}
+                    className="text-[45px] cursor-pointer"
+                  />
+                </div>
               </div>
               <div className="h-[15%] w-full centerDiv gap-1 min-h-[50px]">
                 <span className="addFont text-[15px]">
@@ -172,7 +202,7 @@ export const SignInForm = () => {
                 </span>
                 <span
                   className="addFont text-[15px] theamColor underline cursor-pointer"
-                  onClick={() => setIsUserSignIn(false)}
+                  onClick={() => toggleSignInUpForm("signUp")}
                   data-testid="show-user-signup-form"
                 >
                   Sign-Up
@@ -187,12 +217,12 @@ export const SignInForm = () => {
               onSubmit={signUpFormik.handleSubmit}
               className="h-full w-[370px] flex flex-col gap-2"
             >
-              <div className="min-h-[500px] w-full flex flex-col">
-                <div className="h-[8%] w-[80%] text-[19px] addFont ml-4 flex items-center min-h-[50px]">
+              <div className="h-auto w-full flex flex-col overflow-y-scroll">
+                <div className="h-[15px] w-[80%] text-[19px] addFont ml-4 flex items-center min-h-[50px]">
                   Sign Up
                 </div>
-                <div className="h-[20%] w-full flex flex-col gap-1 centerDiv min-h-[70px]">
-                  <div className="h-[60%] w-[95%] flex items-center rounded-3xl border-[1px] border-gray-500 min-h-[40px]">
+                <div className="h-auto w-full flex flex-col gap-1 centerDi">
+                  <div className="h-[50px] w-[95%] flex items-center rounded-3xl border-[1px] border-gray-500 min-h-[40px]">
                     <input
                       type="text"
                       name="name"
@@ -206,14 +236,14 @@ export const SignInForm = () => {
                   </div>
                   {signUpFormik.errors.name && signUpFormik.touched.name ? (
                     <>
-                      <p className="h-auto w-full pl-5 theamColor addFont text-[15px] truncate">
+                      <div className="h-auto w-full pl-5 mt-1 theamColor addFont text-[15px] truncate">
                         {signUpFormik.errors.name}
-                      </p>
+                      </div>
                     </>
                   ) : null}
                 </div>
-                <div className="h-[20%] w-full flex flex-col gap-1 centerDiv  min-h-[70px]">
-                  <div className="h-[60%] w-[95%] flex items-center rounded-3xl border-[1px] border-gray-500 min-h-[40px]">
+                <div className="h-auto w-full flex flex-col gap-1 centerDiv">
+                  <div className="h-[50px] w-[95%] flex items-center rounded-3xl border-[1px] border-gray-500 min-h-[40px]">
                     <input
                       type="email"
                       name="email"
@@ -227,59 +257,81 @@ export const SignInForm = () => {
                   </div>
                   {signUpFormik.errors.email && signUpFormik.touched.email ? (
                     <>
-                      <p className="h-auto w-full pl-5 theamColor addFont text-[15px] truncate">
+                      <div className="h-auto w-full pl-5 mt-1 theamColor addFont text-[15px] truncate">
                         {signUpFormik.errors.email}
-                      </p>
+                      </div>
                     </>
                   ) : null}
                 </div>
-                <div className="h-[20%] w-full flex flex-col gap-1 centerDiv  min-h-[70px]">
-                  <div className="h-[60%] w-[95%] flex items-center rounded-3xl border-[1px] border-gray-500 min-h-[40px]">
+                <div className="h-auto w-full flex flex-col gap-1 centerDiv">
+                  <div className="h-[50px] w-[95%] flex items-center rounded-3xl border-[1px] border-gray-500 min-h-[40px]">
                     <input
-                      type="password"
+                      type={showPasswordStatus ? "text" : "password"}
                       name="password"
-                      className="h-[85%] w-[90%] ml-4 outline-none baseColor placeHolder"
+                      className="h-[85%] w-[80%] ml-4 outline-none baseColor placeHolder"
                       placeholder="Password"
                       value={signUpFormik.values.password}
                       onChange={signUpFormik.handleChange}
                       onBlur={signUpFormik.handleBlur}
                       data-testid="signUp-password-input-testid"
                     />
+                    <span
+                      onClick={() => setShowPasswordStatus(!showPasswordStatus)}
+                      className="h-full w-[17%] mr-2 centerDiv"
+                    >
+                      {showPasswordStatus == false ? (
+                        <GoEyeClosed className="text-[1.3rem]" />
+                      ) : (
+                        <GoEye className="text-[1.3rem]" />
+                      )}
+                    </span>
                   </div>
                   {signUpFormik.errors.password &&
                   signUpFormik.touched.password ? (
                     <>
-                      <p className="h-auto w-full pl-5 theamColor addFont text-[15px]">
+                      <div className="h-auto w-full mt-1 pl-5 theamColor addFont text-[15px] z-10">
                         {signUpFormik.errors.password}
-                      </p>
+                      </div>
                     </>
                   ) : null}
                 </div>
-                <div className="h-[20%] w-full flex flex-col gap-1 centerDiv  min-h-[70px]">
-                  <div className="h-[60%] w-[95%] flex items-center rounded-3xl border-[1px] border-gray-500 min-h-[40px]">
+                <div className="h-auto w-full flex flex-col gap-1 centerDiv">
+                  <div className="h-[50px] w-[95%] flex items-center rounded-3xl border-[1px] border-gray-500 min-h-[40px]">
                     <input
-                      type="password"
+                      type={confirmPasswordStatus ? "text" : "password"}
                       name="confirm_password"
-                      className="h-[85%] w-[90%] ml-4 outline-none baseColor placeHolder"
+                      className="h-[85%] w-[80%] ml-4 outline-none baseColor placeHolder"
                       placeholder="confirm password"
                       value={signUpFormik.values.confirm_password}
                       onChange={signUpFormik.handleChange}
                       onBlur={signUpFormik.handleBlur}
                       data-testid="signUp-confirm_password-input-testid"
                     />
+                    <span
+                      onClick={() =>
+                        setConfirmPasswordStatus(!confirmPasswordStatus)
+                      }
+                      className="h-full w-[17%] mr-2 centerDiv"
+                    >
+                      {confirmPasswordStatus == false ? (
+                        <GoEyeClosed className="text-[1.3rem]" />
+                      ) : (
+                        <GoEye className="text-[1.3rem]" />
+                      )}
+                    </span>
                   </div>
                   {signUpFormik.errors.confirm_password &&
                   signUpFormik.touched.confirm_password ? (
                     <>
-                      <p className="h-auto w-full pl-5 theamColor addFont text-[15px] truncate">
+                      <div className="h-auto w-full pl-5 mt-1 theamColor addFont text-[15px] truncate">
                         {signUpFormik.errors.confirm_password}
-                      </p>
+                      </div>
                     </>
                   ) : null}
                 </div>
 
-                <div className="h-[20%] w-full flex flex-col gap-1 centerDiv  min-h-[70px]">
-                  <div className="h-[60%] w-[95%] flex items-center rounded-3xl border-[1px] border-gray-500 min-h-[40px]">
+                <div className="h-auto w-full flex flex-col gap-1 centerDiv">
+                  <div className="h-[50px] w-[95%] flex items-center rounded-3xl border-[1px] border-gray-500 min-h-[40px]">
                     <input
                       type="text"
                       name="phone_number"
@@ -294,9 +346,9 @@ export const SignInForm = () => {
                   {signUpFormik.errors.phone_number &&
                   signUpFormik.touched.phone_number ? (
                     <>
-                      <p className="min-h-[40px] w-full pl-5 theamColor addFont text-[15px]">
+                      <div className="h-auto w-full mt-1 pl-5 theamColor addFont text-[15px]">
                         {signUpFormik.errors.phone_number}
-                      </p>
+                      </div>
                     </>
                   ) : null}
                 </div>
@@ -314,22 +366,17 @@ export const SignInForm = () => {
                   <p className="">or</p>
                   <hr className="w-[40%] border-gray-400 mr-4" />
                 </div>
-                {localLoader ? (
-                  <div className="h-[70px] w-[95%] flex gap-[20px] centerDiv min-h-[50px]">
-                    <CirculareSpinner />
-                  </div>
-                ) : (
-                  <div className="h-[15%] w-full flex gap-[20px] centerDiv min-h-[40px]">
-                    <FcGoogle
-                      onClick={() => handleSignInWithGoogle()}
-                      className="text-[35px] mr-4 cursor-pointer"
-                    />
-                    <FaGithub
-                      onClick={() => handleSignUpWithGitHub()}
-                      className="text-[35px] mr-4 cursor-pointer"
-                    />
-                  </div>
-                )}
+
+                <div className="h-[15%] w-full flex gap-[20px] centerDiv min-h-[40px]">
+                  <FcGoogle
+                    onClick={() => handleSignInWithGoogle()}
+                    className="text-[35px] mr-4 cursor-pointer"
+                  />
+                  <FaGithub
+                    onClick={() => handleSignUpWithGitHub()}
+                    className="text-[35px] mr-4 cursor-pointer"
+                  />
+                </div>
 
                 <div className="h-[10%] w-full centerDiv gap-1 min-h-[50px]">
                   <span className="addFont text-[15px]">
@@ -337,7 +384,7 @@ export const SignInForm = () => {
                   </span>
                   <span
                     className="addFont text-[15px] theamColor underline cursor-pointer"
-                    onClick={() => setIsUserSignIn(true)}
+                    onClick={() => toggleSignInUpForm("signIn")}
                   >
                     Sign-In
                   </span>
@@ -351,4 +398,8 @@ export const SignInForm = () => {
       </div>
     </>
   );
+};
+
+SignInForm.propType = {
+  showForgotPasswordModal: propType.func.isRequired,
 };

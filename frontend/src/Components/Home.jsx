@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Navbar } from "./Navbar";
 import { Homepage } from "./Homepage";
@@ -6,6 +6,7 @@ import { showSuccessNotification } from "../utils/notification";
 export const Home = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const [reRender, setReRender] = useState(false);
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
     const token = searchParams.get("token");
@@ -15,8 +16,11 @@ export const Home = () => {
       showSuccessNotification("login successfull");
       window.history.replaceState({}, document.title, "/");
       navigate(localStorage.getItem("pathToNavigate"));
+      if (!reRender) {
+        setReRender(true);
+      }
     }
-  }, [location.search]);
+  }, [location.search, navigate, reRender]);
 
   return (
     <>

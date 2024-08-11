@@ -73,7 +73,7 @@ export const Navbar = () => {
             <div
               onClick={() => navigate("/")}
               data-testid="navbarHeading-testid"
-              className="h-full w-[150px] flex-shrink-0  centerDiv gap-2"
+              className="h-full w-[150px] flex-shrink-0  centerDiv gap-2 cursor-pointer"
             >
               <img
                 className="h-[40px] w-[40px] rounded-[50%] object-cover"
@@ -211,7 +211,7 @@ export const Navbar = () => {
             </div>
           </div>
         </div>
-        {!searchBarClicked && saveToken == null ? (
+        {saveToken == null ? (
           <>
             <div
               onClick={() => navigatePage()}

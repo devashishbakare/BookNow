@@ -68,11 +68,22 @@ export const Profile = () => {
     navigate(`/`);
   };
 
-  const handleCurrentBooking = () => {
+  const handleCurrentBooking = async () => {
     if (windowSize.width < 768) {
-      setStoreFetchInfo(currentBooking);
-      setModalSelectedOptions(0);
-      setProfileInfoModalStatus(true);
+      setIsLoading(true);
+      const token = localStorage.getItem("token");
+      const response = await fetchCurrentBooking(token);
+      if (response.success) {
+        //console.log("curr result", response.data);
+        setStoreFetchInfo(response.data);
+        setModalSelectedOptions(0);
+        setProfileInfoModalStatus(true);
+      } else {
+        showErrorNotification(
+          "Something went wrong while fetching details, try again later"
+        );
+      }
+      setIsLoading(false);
     } else {
       setSelectedOptions(0);
     }
