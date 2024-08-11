@@ -22,7 +22,8 @@ const forgotPassword = async (req, res) => {
     });
     await resetPasswordInformation.save();
     // send mail here
-    const url = `http://localhost:5173/resetPassword/${token}`;
+    //const url = `http://localhost:5173/resetPassword/${token}`;
+    const url = `${process.env.FRONTEND_URL}/resetPassword/${token}`;
     const resetPasswordInfo = {
       name: user.name,
       url,
