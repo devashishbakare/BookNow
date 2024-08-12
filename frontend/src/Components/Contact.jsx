@@ -1,9 +1,5 @@
 import React, { useState } from "react";
-import {
-  AiOutlineCopyrightCircle,
-  AiOutlinePlus,
-  AiOutlineClose,
-} from "react-icons/ai";
+import { AiOutlinePlus, AiOutlineClose } from "react-icons/ai";
 
 export const Contact = () => {
   const [showMenu, setShowMenu] = useState(Array(4).fill(false));

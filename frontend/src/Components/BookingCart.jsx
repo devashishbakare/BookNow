@@ -30,11 +30,11 @@ export const BookingCart = ({ bookingStatus, details, updateParentCart }) => {
   const updateReviews = () => {};
 
   const handleCancelBooking = async (bookingId) => {
-    console.log(bookingId);
+    //console.log(bookingId);
     setLocalLoader(true);
     const token = localStorage.getItem("token");
     const cancelBookingResponse = await cancleBooking(token, bookingId);
-    console.log(cancelBookingResponse);
+    //console.log(cancelBookingResponse);
     if (cancelBookingResponse.success) {
       updateParentCart(bookingId);
       showSuccessNotification("Your Booking Has Been cancel");

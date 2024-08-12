@@ -16,7 +16,7 @@ export const BookingDetails = () => {
       setIsLoading(true);
       const response = await fetchBookingDetails(token, bookingId);
       if (response.success) {
-        console.log(response.data);
+        //console.log(response.data);
         setBookingDetails(response.data.bookingDetails);
         setRoomType(response.data.roomType);
       } else {

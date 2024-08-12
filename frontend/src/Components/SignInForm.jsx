@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
-import CirculareSpinner from "../utils/CirculareSpinner";
+import WhiteSpinner from "../utils/WhiteSpinner";
 import { useFormik } from "formik";
 import { SignInSchema } from "../ValidationSchemas/SignInSchema";
 import { SignUpSchema } from "../ValidationSchemas/signUpSchema";
@@ -23,7 +23,8 @@ export const SignInForm = ({ showForgotPasswordModal }) => {
   const [isUserSignIn, setIsUserSignIn] = useState(true);
   const [showPasswordStatus, setShowPasswordStatus] = useState(false);
   const [confirmPasswordStatus, setConfirmPasswordStatus] = useState(false);
-
+  const [signInButtonLocalLoader, setSignInButtonLocalLoader] = useState(false);
+  const [signUpButtonLocalLoader, setSignUpButtonLocalLoader] = useState(false);
   const initialValues = {
     name: "",
     email: "",
@@ -36,6 +37,7 @@ export const SignInForm = ({ showForgotPasswordModal }) => {
     initialValues: { ...initialValues, formType: "signup" },
     validationSchema: SignUpSchema,
     onSubmit: async (values, action) => {
+      setSignUpButtonLocalLoader(true);
       const response = await signUp(values);
       if (response.success === true) {
         localStorage.setItem("token", response.data);
@@ -44,6 +46,7 @@ export const SignInForm = ({ showForgotPasswordModal }) => {
       } else {
         showErrorNotification(response.error);
       }
+      setSignUpButtonLocalLoader(false);
       action.resetForm();
     },
   });
@@ -52,6 +55,7 @@ export const SignInForm = ({ showForgotPasswordModal }) => {
     initialValues: { ...initialValues, formType: "signin" },
     validationSchema: SignInSchema,
     onSubmit: async (values, action) => {
+      setSignInButtonLocalLoader(true);
       const response = await signIn(values);
       if (response.success === true) {
         localStorage.setItem("token", response.data);
@@ -60,6 +64,7 @@ export const SignInForm = ({ showForgotPasswordModal }) => {
       } else {
         showErrorNotification(response.error);
       }
+      setSignInButtonLocalLoader(false);
       action.resetForm();
     },
   });
@@ -164,7 +169,7 @@ export const SignInForm = ({ showForgotPasswordModal }) => {
                 </div>
                 <div className="h-[7%] w-full flex flex-row-reverse">
                   <p
-                    className="mr-5 text-[15px] theamColor"
+                    className="mr-5 text-[15px] theamColor cursor-pointer"
                     onClick={() => showForgotPasswordModal(true)}
                   >
                     Forgot Password?
@@ -173,10 +178,18 @@ export const SignInForm = ({ showForgotPasswordModal }) => {
                 <div className="h-[12%] w-full flex items-center centerDiv mt-2">
                   <button
                     type="submit"
-                    className="h-[90%] w-[90%] rounded-full text-[white] bg-[#003b95] text-[1rem] cursor-pointer min-h-[50px]"
+                    className="h-[90%] w-[90%] rounded-full bg-[#003b95]  cursor-pointer min-h-[50px]"
                     data-testid="signIn-submit-button"
                   >
-                    Sign-In
+                    {signInButtonLocalLoader ? (
+                      <div className="h-full w-full centerDiv">
+                        <WhiteSpinner />
+                      </div>
+                    ) : (
+                      <span className="addFont text-[1rem] text-white">
+                        Sign-In
+                      </span>
+                    )}
                   </button>
                 </div>
                 <div className="h-[7%] w-full flex centerDiv gap-2 mt-3">
@@ -217,11 +230,11 @@ export const SignInForm = ({ showForgotPasswordModal }) => {
               onSubmit={signUpFormik.handleSubmit}
               className="h-full w-[370px] flex flex-col gap-2"
             >
-              <div className="h-auto w-full flex flex-col overflow-y-scroll">
+              <div className="h-auto w-full flex flex-col gap-5 overflow-y-scroll">
                 <div className="h-[15px] w-[80%] text-[19px] addFont ml-4 flex items-center min-h-[50px]">
                   Sign Up
                 </div>
-                <div className="h-auto w-full flex flex-col gap-1 centerDi">
+                <div className="h-auto w-full flex flex-col gap-1 centerDiv">
                   <div className="h-[50px] w-[95%] flex items-center rounded-3xl border-[1px] border-gray-500 min-h-[40px]">
                     <input
                       type="text"
@@ -356,9 +369,17 @@ export const SignInForm = ({ showForgotPasswordModal }) => {
                 <div className="h-[13%] w-full flex items-center centerDiv mt-2">
                   <button
                     type="submit"
-                    className="h-[90%] w-[90%] rounded-full text-[white] bg-[#003b95] text-[1rem] cursor-pointer min-h-[50px]"
+                    className="h-[90%] w-[90%] rounded-full bg-[#003b95] cursor-pointer min-h-[50px]"
                   >
-                    Sign-up
+                    {signUpButtonLocalLoader ? (
+                      <div className="h-full w-full centerDiv">
+                        <WhiteSpinner />
+                      </div>
+                    ) : (
+                      <span className="addFont text-[1rem] text-white">
+                        Sign-Up
+                      </span>
+                    )}
                   </button>
                 </div>
                 <div className="h-[7%] w-full flex centerDiv gap-2 mt-3">

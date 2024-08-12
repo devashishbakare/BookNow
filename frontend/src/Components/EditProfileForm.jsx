@@ -26,7 +26,7 @@ export const EditProfileForm = ({ handleUpdateUser }) => {
     initialValues: { ...initialValues, formType: "editProfile" },
     validationSchema: EditProfileSchema,
     onSubmit: async (values, action) => {
-      console.log(values);
+      //console.log(values);
       setLocalLoader(true);
       const token = localStorage.getItem("token");
       const response = await editProfile(token, values);

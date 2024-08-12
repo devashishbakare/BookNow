@@ -29,13 +29,13 @@ export const SignInHomePage = () => {
     validationSchema: ForgotPasswordSchema,
     onSubmit: async (values, action) => {
       setLocalLoader(true);
-      console.log(values.email);
+      //console.log(values.email);
       const response = await forgotPassword(values.email);
       if (response.success) {
-        console.log("show noti");
+        //console.log("show noti");
         showSuccessNotification("Email has been sent, Check your email");
       } else {
-        console.log("show else noti");
+        //console.log("show else noti");
         showErrorNotification("Something went wrong, please try again later");
       }
       setLocalLoader(false);

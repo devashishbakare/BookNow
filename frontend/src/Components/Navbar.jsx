@@ -4,6 +4,7 @@ import { IoSearchOutline, IoArrowBack } from "react-icons/io5";
 import { getSearchResult } from "../utils/api";
 import { showErrorNotification } from "../utils/notification";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useUpdateToken } from "./TokenContext";
 export const Navbar = () => {
   const navigate = useNavigate();
   const timeoutId = useRef(null);
@@ -13,14 +14,7 @@ export const Navbar = () => {
   const [searchResult, setSearchResult] = useState();
   const [searchKey, setSearchKey] = useState();
   const [showDropdown, setShowDropDown] = useState(false);
-  const [saveToken, setSaveToken] = useState(null);
-
-  useEffect(() => {
-    const checkLogin = () => {
-      setSaveToken(localStorage.getItem("token"));
-    };
-    checkLogin();
-  }, []);
+  const { token, updateToken } = useUpdateToken();
 
   const handleInput = (event) => {
     if (event.target.value.length == 0) {
@@ -35,7 +29,7 @@ export const Navbar = () => {
   };
   const fetchResultForSearch = async (searchFor) => {
     const response = await getSearchResult(searchFor);
-    console.log(response);
+    //console.log(response);
     if (response.success == true) {
       setSearchResult(response.data);
     } else {
@@ -58,9 +52,8 @@ export const Navbar = () => {
   };
 
   const signOutUser = () => {
-    localStorage.removeItem("token");
+    updateToken(null);
     localStorage.removeItem("pathToNavigate");
-    setSaveToken(null);
     navigate("/");
   };
 
@@ -211,7 +204,7 @@ export const Navbar = () => {
             </div>
           </div>
         </div>
-        {saveToken == null ? (
+        {token == null ? (
           <>
             <div
               onClick={() => navigatePage()}

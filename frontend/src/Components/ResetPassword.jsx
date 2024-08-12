@@ -37,7 +37,8 @@ export const ResetPassword = () => {
         setTimeout(() => {
           showSuccessNotification("Password has been updated successfully");
         }, 1000);
-        navigate("/signIn");
+        const currentPath = "/";
+        navigate("/signIn", { state: currentPath });
       } else {
         showErrorNotification(
           "Password reset token is invalid or has expired, try again later"
