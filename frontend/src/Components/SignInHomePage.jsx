@@ -8,7 +8,8 @@ import {
   showSuccessNotification,
 } from "../utils/notification";
 import { forgotPassword } from "../utils/api";
-import CirculareSpinner from "../utils/CirculareSpinner";
+
+import WhiteSpinner from "../utils/WhiteSpinner";
 import { ToastContainer } from "react-toastify";
 import { useFormik } from "formik";
 import { ForgotPasswordSchema } from "../ValidationSchemas/ForgotPasswordSchema";
@@ -84,13 +85,13 @@ export const SignInHomePage = () => {
               alt="bg-image"
               className="hidden md:flex md:h-full md:w-full md:bg-cover"
             />
-            <div className="centerToPage left-0 h-auto w-[400px] flex flex-col rounded-md p-2 shadow-lg border-[1px] border-gray-400 bg-[#f4f4f4]">
+            <div className="centerToPage left-0 h-auto w-[350px] flex flex-col rounded-md p-2 shadow-lg border-[1px] border-gray-400 bg-[#f4f4f4]">
               <div className="relative h-[65px] w-full addFont centerDiv text-[1.3rem] bg-[#003b95] text-white">
                 BookNow
               </div>
               <span
                 onClick={() => showForgotPasswordModal(false)}
-                className="absolute h-[65px] right-[10px] w-[50px] centerDiv"
+                className="absolute h-[65px] right-[10px] w-[50px] centerDiv cursor-pointer"
               >
                 <IoMdClose className="text-[2rem] text-white" />
               </span>
@@ -102,7 +103,7 @@ export const SignInHomePage = () => {
                   <span className="h-[50px] w-[90%] p-2 addFont text-[1.2rem] ml-3 mt-2">
                     Email
                   </span>
-                  <div className="h-[60px] w-[92%] border-[1px] border-gray-400 rounded-md ml-4">
+                  <div className="h-[50px] w-[92%] border-[1px] border-gray-400 rounded-md ml-4">
                     <input
                       type="text"
                       className="h-full w-[80%] ml-4 outline-none baseColor text-[1.1rem]"
@@ -121,9 +122,15 @@ export const SignInHomePage = () => {
                 </div>
 
                 <div className="h-auto w-full flex flex-col gap-2">
-                  <span className="h-[40px] w-[90%] ml-4 addFont flex items-center gap-1">
-                    <FcInfo /> Reset Your Password in Simple Steps:
-                  </span>
+                  <div className="h-[50px] w-full flex">
+                    <span className="h-full w-[20%] flex justify-center mt-2">
+                      <FcInfo className="text-[1.5rem]" />
+                    </span>
+                    <span className="h-full w-[80%] addFont">
+                      Reset Your Password in Simple Steps:
+                    </span>
+                  </div>
+                  {/* <span className="h-[40px] w-[90%] ml-4 addFont flex items-center gap-1"></span> */}
                   <div className="h-auto w-full flex flex-col pl-6 gap-2">
                     <div className="h-auto w-full flex items-center">
                       <LuDot className="text-[2.3rem]" />{" "}
@@ -156,7 +163,9 @@ export const SignInHomePage = () => {
                     className="h-[60%] w-[85%] rounded-full bg-[#003b95] cursor-pointer min-h-[50px]"
                   >
                     {localLoader ? (
-                      <CirculareSpinner />
+                      <div className="h-full w-full centerDiv">
+                        <WhiteSpinner />
+                      </div>
                     ) : (
                       <span className="text-[1rem] text-[white]">
                         Request Password Reset

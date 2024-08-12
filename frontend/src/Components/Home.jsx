@@ -15,10 +15,10 @@ export const Home = () => {
       localStorage.setItem("token", token);
       showSuccessNotification("login successfull");
       window.history.replaceState({}, document.title, "/");
-      navigate(localStorage.getItem("pathToNavigate"));
       if (!reRender) {
         setReRender(true);
       }
+      navigate(localStorage.getItem("pathToNavigate"));
     }
   }, [location.search, navigate, reRender]);
 

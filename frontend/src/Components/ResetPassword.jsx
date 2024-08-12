@@ -11,6 +11,7 @@ import {
 import { updatePassword } from "../utils/api";
 import { ToastContainer } from "react-toastify";
 import CirculareSpinner from "../utils/CirculareSpinner";
+import WhiteSpinner from "../utils/WhiteSpinner";
 export const ResetPassword = () => {
   const [localLoader, setLocalLoader] = useState(false);
   const [showPasswordStatus, setShowPasswordStatus] = useState(false);
@@ -36,7 +37,7 @@ export const ResetPassword = () => {
         setTimeout(() => {
           showSuccessNotification("Password has been updated successfully");
         }, 1000);
-        navigate("/");
+        navigate("/signIn");
       } else {
         showErrorNotification(
           "Password reset token is invalid or has expired, try again later"
@@ -61,7 +62,7 @@ export const ResetPassword = () => {
         />
         <form
           onSubmit={ResetPasswordFormik.handleSubmit}
-          className="centerToPage left-0 h-auto w-[400px] flex flex-col rounded-md p-2 shadow-lg border-[1px] border-gray-400 bg-[#f4f4f4]"
+          className="centerToPage left-0 h-auto w-[350px] flex flex-col rounded-md p-2 shadow-lg border-[1px] border-gray-400 bg-[#f4f4f4] "
         >
           <div className="h-[65px] w-full addFont centerDiv text-[1.3rem] bg-[#003b95] text-white">
             BookNow
@@ -142,7 +143,9 @@ export const ResetPassword = () => {
                 className="h-[60%] w-[60%] rounded-full bg-[#003b95] cursor-pointer min-h-[50px]"
               >
                 {localLoader ? (
-                  <CirculareSpinner />
+                  <div className="h-full w-full centerDiv">
+                    <WhiteSpinner />
+                  </div>
                 ) : (
                   <span className="text-[1rem] text-[white]">submit</span>
                 )}
