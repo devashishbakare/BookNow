@@ -12,6 +12,7 @@ import { RiSortDesc } from "react-icons/ri";
 import { Review } from "./Review";
 import { useEffect, useState } from "react";
 import { ShowProfileInfo } from "./ShowProfileInfo";
+import { useUpdateToken } from "./TokenContext";
 import {
   fetchUserDetails,
   fetchCurrentBooking,
@@ -40,6 +41,7 @@ export const Profile = () => {
   const location = useLocation();
   const token = localStorage.getItem("token");
   const windowSize = useWindowSize();
+  const { updateToken } = useUpdateToken();
   useEffect(() => {
     const fetchDetails = async () => {
       setIsLoading(true);
@@ -65,6 +67,7 @@ export const Profile = () => {
 
   const logout = () => {
     localStorage.removeItem("token");
+    updateToken(null);
     navigate(`/`);
   };
 
@@ -409,77 +412,77 @@ export const Profile = () => {
                 ) : (
                   <>
                     <div className="h-full w-full flex flex-col relative">
-                      {pastBookings.length > 1 ||
+                      {(pastBookings.length > 1 ||
                         currentBooking.length > 1 ||
-                        (userReviews.length > 1 && (
-                          <div className="absolute top-2 right-1 h-[50px] w-full flex items-center flex-row-reverse pr-[20px]">
-                            <button
-                              onClick={() => setShowSortDropdown(true)}
-                              className="flex h-[90%] w-[100px] centerDiv gap-2 bg-[#fbfbfb] text-black  border-[1px] border-[#cacaca] rounded-md"
-                            >
-                              Sort <RiSortDesc />
-                            </button>
-                            {showSortDropdown && (
-                              <div className="absolute h-auto w-auto top-[110%] right-5 z-50 flex flex-col bg-[#fbfbfb] text-black shadow-md rounded-md">
-                                {selectedOptions !== 2 && (
-                                  <span
-                                    onClick={() => sortFetchData(1)}
-                                    className="h-[50px] w-auto mr-4 ml-2 flex items-center pl-2 font-light border-b-[1px] border-[#cacaca]"
-                                  >
-                                    newest to oldest by booking date
-                                  </span>
-                                )}
-                                {selectedOptions !== 2 && (
-                                  <span
-                                    onClick={() => sortFetchData(2)}
-                                    className="h-[50px] w-auto mr-4 ml-2 flex items-center pl-2 font-light border-b-[1px] border-[#cacaca]"
-                                  >
-                                    oldest to newest by booking date
-                                  </span>
-                                )}
-
-                                {selectedOptions !== 2 && (
-                                  <span
-                                    onClick={() => sortFetchData(3)}
-                                    className="h-[50px] w-auto mr-4 ml-2 flex items-center pl-2 font-light border-b-[1px] border-[#cacaca]"
-                                  >
-                                    newest to oldest by check in date
-                                  </span>
-                                )}
-                                {selectedOptions !== 2 && (
-                                  <span
-                                    onClick={() => sortFetchData(4)}
-                                    className="h-[50px] w-auto mr-4 ml-2 flex items-center pl-2 font-light border-b-[1px] border-[#cacaca]"
-                                  >
-                                    oldest to newest by check in date
-                                  </span>
-                                )}
-                                {selectedOptions == 2 && (
-                                  <span
-                                    onClick={() => sortFetchData(5)}
-                                    className="h-[50px] w-auto mr-4 ml-2 flex items-center pl-2 font-light border-b-[1px] border-[#cacaca]"
-                                  >
-                                    newest to oldest
-                                  </span>
-                                )}
-                                {selectedOptions == 2 && (
-                                  <span
-                                    onClick={() => sortFetchData(6)}
-                                    className="h-[50px] w-auto mr-4 ml-2 flex items-center pl-2 font-light border-b-[1px] border-[#cacaca]"
-                                  >
-                                    oldest to newest
-                                  </span>
-                                )}
+                        userReviews.length > 1) && (
+                        <div className="absolute top-2 right-1 h-[50px] w-full flex items-center flex-row-reverse pr-[20px]">
+                          <button
+                            onClick={() => setShowSortDropdown(true)}
+                            className="flex h-[90%] w-[100px] centerDiv gap-2 bg-[#fbfbfb] text-black  border-[1px] border-[#cacaca] rounded-md"
+                          >
+                            Sort <RiSortDesc />
+                          </button>
+                          {showSortDropdown && (
+                            <div className="absolute h-auto w-auto top-[110%] right-5 z-50 flex flex-col bg-[#fbfbfb] text-black shadow-md rounded-md">
+                              {selectedOptions !== 2 && (
                                 <span
-                                  onClick={() => setShowSortDropdown(false)}
-                                  className="h-[50px] w-auto mr-4 ml-2 flex items-center pl-2 font-light"
+                                  onClick={() => sortFetchData(1)}
+                                  className="h-[50px] w-auto mr-4 ml-2 flex items-center pl-2 font-light border-b-[1px] border-[#cacaca]"
                                 >
-                                  close
+                                  newest to oldest by booking date
                                 </span>
-                              </div>
-                            )}
-                          </div>
-                        ))}
+                              )}
+                              {selectedOptions !== 2 && (
+                                <span
+                                  onClick={() => sortFetchData(2)}
+                                  className="h-[50px] w-auto mr-4 ml-2 flex items-center pl-2 font-light border-b-[1px] border-[#cacaca]"
+                                >
+                                  oldest to newest by booking date
+                                </span>
+                              )}
+
+                              {selectedOptions !== 2 && (
+                                <span
+                                  onClick={() => sortFetchData(3)}
+                                  className="h-[50px] w-auto mr-4 ml-2 flex items-center pl-2 font-light border-b-[1px] border-[#cacaca]"
+                                >
+                                  newest to oldest by check in date
+                                </span>
+                              )}
+                              {selectedOptions !== 2 && (
+                                <span
+                                  onClick={() => sortFetchData(4)}
+                                  className="h-[50px] w-auto mr-4 ml-2 flex items-center pl-2 font-light border-b-[1px] border-[#cacaca]"
+                                >
+                                  oldest to newest by check in date
+                                </span>
+                              )}
+                              {selectedOptions == 2 && (
+                                <span
+                                  onClick={() => sortFetchData(5)}
+                                  className="h-[50px] w-auto mr-4 ml-2 flex items-center pl-2 font-light border-b-[1px] border-[#cacaca]"
+                                >
+                                  newest to oldest
+                                </span>
+                              )}
+                              {selectedOptions == 2 && (
+                                <span
+                                  onClick={() => sortFetchData(6)}
+                                  className="h-[50px] w-auto mr-4 ml-2 flex items-center pl-2 font-light border-b-[1px] border-[#cacaca]"
+                                >
+                                  oldest to newest
+                                </span>
+                              )}
+                              <span
+                                onClick={() => setShowSortDropdown(false)}
+                                className="h-[50px] w-auto mr-4 ml-2 flex items-center pl-2 font-light"
+                              >
+                                close
+                              </span>
+                            </div>
+                          )}
+                        </div>
+                      )}
                       <div className="h-full w-full overflow-x-scroll">
                         {/* <div className="h-full w-full flex flex-col"></div> */}
                         {selectedOptions === 0 && (

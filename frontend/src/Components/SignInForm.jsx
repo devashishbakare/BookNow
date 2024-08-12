@@ -376,7 +376,7 @@ export const SignInForm = ({ showForgotPasswordModal }) => {
                     className="h-[90%] w-[90%] rounded-full bg-[#003b95] cursor-pointer min-h-[50px]"
                   >
                     {signUpButtonLocalLoader ? (
-                      <div className="h-full w-full centerDiv">
+                      <div className="h-[55px] w-full centerDiv">
                         <WhiteSpinner />
                       </div>
                     ) : (
