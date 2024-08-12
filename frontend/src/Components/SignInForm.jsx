@@ -16,6 +16,7 @@ import {
   showSuccessNotification,
 } from "../utils/notification";
 import { ToastContainer } from "react-toastify";
+import { useUpdateToken } from "./TokenContext";
 
 export const SignInForm = ({ showForgotPasswordModal }) => {
   const navigate = useNavigate();
@@ -25,6 +26,7 @@ export const SignInForm = ({ showForgotPasswordModal }) => {
   const [confirmPasswordStatus, setConfirmPasswordStatus] = useState(false);
   const [signInButtonLocalLoader, setSignInButtonLocalLoader] = useState(false);
   const [signUpButtonLocalLoader, setSignUpButtonLocalLoader] = useState(false);
+  const { updateToken } = useUpdateToken();
   const initialValues = {
     name: "",
     email: "",
@@ -41,6 +43,7 @@ export const SignInForm = ({ showForgotPasswordModal }) => {
       const response = await signUp(values);
       if (response.success === true) {
         localStorage.setItem("token", response.data);
+        updateToken(response.data);
         showSuccessNotification("Sign Up Successfull");
         navigate(`${pathToNavigate}`);
       } else {
@@ -59,6 +62,7 @@ export const SignInForm = ({ showForgotPasswordModal }) => {
       const response = await signIn(values);
       if (response.success === true) {
         localStorage.setItem("token", response.data);
+        updateToken(response.data);
         showSuccessNotification("Login Successfull");
         navigate(`${pathToNavigate}`);
       } else {
@@ -182,7 +186,7 @@ export const SignInForm = ({ showForgotPasswordModal }) => {
                     data-testid="signIn-submit-button"
                   >
                     {signInButtonLocalLoader ? (
-                      <div className="h-full w-full centerDiv">
+                      <div className="h-[55px] w-full centerDiv">
                         <WhiteSpinner />
                       </div>
                     ) : (
