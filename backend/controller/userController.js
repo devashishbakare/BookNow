@@ -190,13 +190,13 @@ const cancelBooking = async (req, res) => {
 
     await BookingDetails.findByIdAndDelete(bookingId).session(session);
 
-    // await emailQueue.add("Cancel Booking", {
-    //   from: "booknow@gmail.com",
-    //   to: bookingDetails.email,
-    //   reason: 1,
-    //   subject: "Hotel Booking Cancelation Response",
-    //   data: bookingDetails,
-    // });
+    await emailQueue.add("Cancel Booking", {
+      from: "booknow@gmail.com",
+      to: bookingDetails.email,
+      reason: 1,
+      subject: "Hotel Booking Cancelation Response",
+      data: bookingDetails,
+    });
 
     await session.commitTransaction();
     session.endSession();

@@ -286,14 +286,14 @@ const bookHotel = async (req, res) => {
       "Payment Method": bookingDetails.paymentMethod,
     };
 
-    // await emailQueue.add("confirm booking", {
-    //   from: "booknow@gmail.com",
-    //   to: email,
-    //   reason: 0,
-    //   subject: "Hotel Booking Confirmation Response",
-    //   pdfData: pdfBookingDetails,
-    //   data: bookingDetails,
-    // });
+    await emailQueue.add("confirm booking", {
+      from: "booknow@gmail.com",
+      to: email,
+      reason: 0,
+      subject: "Hotel Booking Confirmation Response",
+      pdfData: pdfBookingDetails,
+      data: bookingDetails,
+    });
 
     return res.status(200).json({
       data: bookingDetails,
