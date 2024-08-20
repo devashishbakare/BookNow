@@ -6,7 +6,7 @@ const hotel = require("../model/hotel");
 const addAllReview = async (req, res) => {
   const reviewData = req.body;
   try {
-    const reviews = Promise.all(
+    const reviews = await Promise.all(
       reviewData.map(
         async (reviewDetails) => await Review.create(reviewDetails)
       )
