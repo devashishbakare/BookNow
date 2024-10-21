@@ -404,7 +404,7 @@ export const Profile = () => {
                 </div>
               </div>
 
-              <div className="hidden md:flex h-full w-[65%]">
+              <div className="hide md:flex h-full w-[65%]">
                 {localLoader ? (
                   <div className="h-full w-full centerDiv">
                     <CirculareSpinner />

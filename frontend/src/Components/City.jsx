@@ -130,7 +130,7 @@ export const City = () => {
               <img
                 src={hotels[0].backgroundImage[1]}
                 alt="CityImage"
-                className="hidden md:flex md:h-full md:w-full md:object-cover md:max-w-[1150px]"
+                className="hide md:flex md:h-full md:w-full md:object-cover md:max-w-[1150px]"
               />
               <div className="absolute top-3 left-4 md:left-10">
                 <MdTune
@@ -144,7 +144,7 @@ export const City = () => {
             </div>
             {/* this is for larger screen */}
             <div className="h-auto w-[100vw] flex gap-1 max-w-[1150px]">
-              <div className="hidden lg:shadow-[-2px_0px_4px_rgba(0,0,0,0.1)] lg:flex lg:h-[63vh] lg:w-[25vw] lg:flex-col lg:gap-6 shadow-xl">
+              <div className="hide lg:shadow-[-2px_0px_4px_rgba(0,0,0,0.1)] lg:flex lg:h-[63vh] lg:w-[25vw] lg:flex-col lg:gap-6 shadow-xl">
                 <div className="h-[50px] w-full ml-3  pt-3 flex justify-between items-center">
                   <span className=" addFont font-bold text-[25px]">
                     Filters

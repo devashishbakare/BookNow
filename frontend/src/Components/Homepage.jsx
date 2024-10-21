@@ -17,7 +17,7 @@ export const Homepage = () => {
         <img
           src="http://res.cloudinary.com/djgouef8q/image/upload/v1712815309/mgibmpwdltrbe0ejjoz2.png"
           alt="homePageImage"
-          className="hidden lg:flex h-full w-full object-fill"
+          className="hide lg:flex h-full w-full object-fill"
         />
         <img
           src="http://res.cloudinary.com/djgouef8q/image/upload/v1712816160/y4inyymhzk8exr6p3phu.jpg"
@@ -70,7 +70,7 @@ export const Homepage = () => {
             </span>
           </div>
         </div>
-        <div className="hidden sm:flex sm:w-full sm:centerDiv sm:addBorder gap-3">
+        <div className="hide sm:flex sm:w-full sm:centerDiv sm:addBorder gap-3">
           <div
             onClick={() => navigateToCity("Delhi")}
             className="h-full w-[50%] relative p-2 cursor-pointer"

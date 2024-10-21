@@ -585,7 +585,7 @@ export const Hotel = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="hidden md:flex flex-col h-[1200px] w-full items-center overflow-y-scroll">
+                  <div className="hide md:flex flex-col h-[1200px] w-full items-center overflow-y-scroll">
                     <div className="h-[50px] w-full text-[1.2rem] addFont centerDiv mt-2">
                       Expore Hotel Packages
                     </div>

@@ -20,7 +20,7 @@ export const BookingConfirmation = () => {
                 roomType={roomType}
               />
             </div>
-            <div className="hidden rounded-lg md:flex flex-col justify-between h-[720px] w-[80%] bg-[#003b95] text-[#f8f8f8] lg:w-[65%]">
+            <div className="hide rounded-lg md:flex flex-col justify-between h-[720px] w-[80%] bg-[#003b95] text-[#f8f8f8] lg:w-[65%]">
               <div className="mt-2 pl-5 pt-5 font-gilroy-bold text-[45px] tracking-tighter leading-[61.5px] text-left font-bold">
                 BookNow
               </div>
@@ -29,7 +29,7 @@ export const BookingConfirmation = () => {
               </div>
             </div>
           </div>
-          <div className="hidden md:flex h-full w-[50%] flex-col gap-3">
+          <div className="hide md:flex h-full w-[50%] flex-col gap-3">
             <div className="min-h-[500px] h-auto w-full flex flex-col gap-3">
               <BookingSummery
                 bookingDetails={bookingDetails}

@@ -59,7 +59,7 @@ export const ResetPassword = () => {
         <img
           src="http://res.cloudinary.com/djgouef8q/image/upload/v1723028023/hc3lqgymxrshnpv3otl5.png"
           alt="bg-image"
-          className="hidden md:flex md:h-full md:w-full md:bg-cover"
+          className="hide md:flex md:h-full md:w-full md:bg-cover"
         />
         <form
           onSubmit={ResetPasswordFormik.handleSubmit}

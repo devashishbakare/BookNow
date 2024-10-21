@@ -8,7 +8,8 @@ import { FaGithub } from "react-icons/fa";
 import WhiteSpinner from "../utils/WhiteSpinner";
 import { useFormik } from "formik";
 import { SignInSchema } from "../ValidationSchemas/SignInSchema";
-import { SignUpSchema } from "../ValidationSchemas/signUpSchema";
+//import { SignUpSchema } from "../ValidationSchemas/signUpSchema";
+import { SignUpSchema } from "../ValidationSchemas/SignUpSchema";
 import { signIn, signUp } from "../utils/api";
 import { GoEyeClosed, GoEye } from "react-icons/go";
 import {

@@ -59,7 +59,7 @@ export const SignInHomePage = () => {
               <SignInForm showForgotPasswordModal={showForgotPasswordModal} />
             </div>
           </div>
-          <div className="hidden md:flex h-auto w-[767px] border-2 border-gray-200 baseColor rounded-md">
+          <div className="hide md:flex h-auto w-[767px] border-2 border-gray-200 baseColor rounded-md">
             <div className="min-h-[500px] w-[50%]">
               <img
                 src="http://res.cloudinary.com/djgouef8q/image/upload/v1707548707/jilrdxdgvnvtkobg0oew.jpg"
@@ -83,7 +83,7 @@ export const SignInHomePage = () => {
             <img
               src="http://res.cloudinary.com/djgouef8q/image/upload/v1723028023/hc3lqgymxrshnpv3otl5.png"
               alt="bg-image"
-              className="hidden md:flex md:h-full md:w-full md:bg-cover"
+              className="hide md:flex md:h-full md:w-full md:bg-cover"
             />
             <div className="centerToPage left-0 h-auto w-[350px] flex flex-col rounded-md p-2 shadow-lg border-[1px] border-gray-400 bg-[#f4f4f4]">
               <div className="relative h-[65px] w-full addFont centerDiv text-[1.3rem] bg-[#003b95] text-white">

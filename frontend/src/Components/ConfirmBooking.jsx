@@ -326,7 +326,7 @@ export const ConfirmBooking = () => {
                   confidence and ease. we offer you your perfect escape!
                 </div>
               </div>
-              <div className="hidden sm:h-[300px] sm:w-full sm:flex sm:items-center sm:justify-center">
+              <div className="hide sm:h-[300px] sm:w-full sm:flex sm:items-center sm:justify-center">
                 <div className="h-[95%] w-[90%] rounded-lg bg-[hsl(225,100%,94%)] flex flex-col gap-2 centerDiv p-3 shadow-xl">
                   <div className="h-auto w-full flex items-center ml-1 addFont text-[#003b95]">
                     Booking Information

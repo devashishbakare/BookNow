@@ -164,7 +164,7 @@ export const Contact = () => {
             )}
           </div>
 
-          <div className="hidden sm:flex min-h-[450px] mt-5 h-[50vh] ml-[7%] w-full flex-col  md:w-[50%] md:max-w-[400px]">
+          <div className="hide sm:flex min-h-[450px] mt-5 h-[50vh] ml-[7%] w-full flex-col  md:w-[50%] md:max-w-[400px]">
             <div className="h-[50%] w-full flex">
               <div className="h-auto w-[50%] flex flex-col opacity-[0.7] gap-2 mb-5">
                 <span className="font-gilroy-bold text-[1.2rem] tracking-tighter leading-[30.5px] font-semibold mb-3">
