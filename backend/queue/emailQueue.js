@@ -46,6 +46,7 @@ const emailWorker = new Worker(
       } else {
         await sendEmailWithAttachment(job.data.to, "", 1, bookingDetails);
       }
+      await retryJobRemoval(job);
       return true;
     } catch (error) {
       console.error("Error sending email from queue:", error);
@@ -75,6 +76,28 @@ const generatePdf = async (htmlContent, bookingId) => {
   return filePath;
 };
 
+const retryJobRemoval = async (job, maxRetries = 3, delay = 1000) => {
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      await job.remove();
+      console.log(`Job successfully removed`);
+      break;
+    } catch (error) {
+      if (attempt < maxRetries) {
+        console.log(
+          `Retrying job removal... (${attempt}/${maxRetries} attempts)`
+        );
+        await new Promise((resolve) => setTimeout(resolve, delay));
+      } else {
+        console.error(
+          `Failed to remove job after ${maxRetries} attempts:`,
+          error
+        );
+      }
+    }
+  }
+};
+
 const sendEmailWithAttachment = async (
   sendEmailTo,
   filePath,
@@ -101,7 +124,7 @@ const sendEmailWithAttachment = async (
       ],
     };
     return new Promise((resolve, reject) => {
-      transporter.sendMail(mailOptions, (error, info) => {
+      transporter.sendMail(mailOptions, async (error, info) => {
         if (error) {
           reject(error);
         } else {
